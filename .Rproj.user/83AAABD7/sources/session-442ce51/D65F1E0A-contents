@@ -1,0 +1,29 @@
+@Book{xie2015,
+  title = {Dynamic Documents with {R} and knitr},
+  author = {Yihui Xie},
+  publisher = {Chapman and Hall/CRC},
+  address = {Boca Raton, Florida},
+  year = {2015},
+  edition = {2nd},
+  note = {ISBN 978-1498716963},
+  url = {http://yihui.org/knitr/},
+}
+@Book{melanie2021,
+  title = {Design and Analysis of Epigenetics and ChIP-Sequencing Data},
+  author = {Melanie Kappelmann-Fenzl},
+  publisher = {Springer},
+  year = {2021},
+  note = {ISBN 978-3-030-62490-3},
+  url = {https://doi.org/10.1007/978-3-030-62490-3_12},
+}
+@Book{allis2015,
+  title = {Design and Analysis of Epigenetics and ChIP-Sequencing Data},
+  author = {Allis, C. D. and Jenuwein, T. and Reinberg, D. and Caparros, M. L.},
+  publisher = {Cold Spring Harbor Laboratory Press},
+  year = {2015},
+  edition = {2nd},
+  note = {ISBN 978-1-936113-59-0},
+  url = {https://www.cshlpress.com/pdf/sample/2014/epigenetics2/EPIFM.pdf},
+}
+
+

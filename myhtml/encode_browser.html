@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ENCODE Genome Browser</title>
+</head>
+<body>
+    <iframe id="encodeFrame" src="https://www.encodeproject.org/experiments/ENCSR875FZN/#browser" width="100%" height="800"></iframe>
+
+    <script>
+        function clickGenomeBrowserButton() {
+            var iframe = document.getElementById('encodeFrame');
+            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            // Function to search and click the button
+            function tryClickButton() {
+                if (innerDoc.readyState === 'complete') {
+                    // Update the selector based on the actual attributes of the "Genome browser" button
+                    var button = innerDoc.querySelector('a:contains("Genome browser"), a[href*="genome-browser"], button:contains("Genome browser")');
+                    if (button) {
+                        button.click();
+                    } else {
+                        // Retry if the button is not found
+                        setTimeout(tryClickButton, 1000);
+                    }
+                } else {
+                    // Retry if the iframe content is not fully loaded
+                    setTimeout(tryClickButton, 1000);
+                }
+            }
+
+            tryClickButton();
+        }
+
+        // Wait for the iframe to load and then attempt to click the button
+        var iframe = document.getElementById('encodeFrame');
+        iframe.onload = function() {
+            clickGenomeBrowserButton();
+        };
+    </script>
+</body>
+</html>

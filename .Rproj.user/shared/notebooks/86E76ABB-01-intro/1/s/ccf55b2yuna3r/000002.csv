@@ -1,0 +1,24 @@
+"0","<script>
+function runPythonCode() {
+    var codeCell = document.createElement('code');
+    codeCell.innerText = `
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Sine Wave')
+plt.grid(True)
+plt.savefig('sine_wave.png')
+plt.show()
+    `;
+    document.body.appendChild(codeCell);
+    window.eval(codeCell.innerText);
+}
+</script>"
+"2","/bin/sh: html: command not found
+"

@@ -1,0 +1,78 @@
+"0","import ipywidgets as widgets"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+  File ""[90m]8;line = 122;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 122, in _find_and_load_hook
+    return _run_hook(name, _hook)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 96;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 96, in _run_hook
+    module = hook()
+             ^^^^^^
+  File ""[90m]8;line = 120;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 120, in _hook
+    return _find_and_load(name, import_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'ipywidgets'
+"
+"0","from IPython.display import display"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+  File ""[90m]8;line = 122;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 122, in _find_and_load_hook
+    return _run_hook(name, _hook)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 96;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 96, in _run_hook
+    module = hook()
+             ^^^^^^
+  File ""[90m]8;line = 120;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 120, in _hook
+    return _find_and_load(name, import_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 122;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 122, in _find_and_load_hook
+    return _run_hook(name, _hook)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 96;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 96, in _run_hook
+    module = hook()
+             ^^^^^^
+  File ""[90m]8;line = 120;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/loader.py]8;;[39m"", line 120, in _hook
+    return _find_and_load(name, import_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'IPython'
+"
+"0","import numpy as np"
+"0","import matplotlib.pyplot as plt"
+"0",""
+"0","def plot_sine_wave(amplitude, frequency):"
+"0","    x = np.linspace(0, 10, 100)"
+"0","    y = amplitude * np.sin(frequency * x)"
+"0","    plt.plot(x, y)"
+"0","    plt.xlabel('x')"
+"0","    plt.ylabel('y')"
+"0","    plt.title('Sine Wave')"
+"0","    plt.grid(True)"
+"0","    plt.show()"
+"0","    "
+"0","amplitude_slider = widgets.FloatSlider(value=1, min=0.1, max=10, step=0.1, description='Amplitude:')"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+NameError: name 'widgets' is not defined
+"
+"0","frequency_slider = widgets.FloatSlider(value=1, min=0.1, max=10, step=0.1, description='Frequency:')"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+NameError: name 'widgets' is not defined
+"
+"0","interact_button = widgets.Button(description=""Plot Sine Wave"")"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+NameError: name 'widgets' is not defined
+"
+"0","def on_button_clicked(b):"
+"0","    plot_sine_wave(amplitude_slider.value, frequency_slider.value)"
+"0","    "
+"0","interact_button.on_click(on_button_clicked)"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+NameError: name 'interact_button' is not defined
+"
+"0","display(amplitude_slider, frequency_slider, interact_button)"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+NameError: name 'display' is not defined
+"

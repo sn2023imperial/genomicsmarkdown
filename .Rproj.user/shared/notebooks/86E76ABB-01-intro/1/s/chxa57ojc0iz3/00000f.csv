@@ -1,0 +1,18 @@
+"0","import numpy as np"
+"0","import matplotlib.pyplot as plt"
+"0",""
+"0","x = np.linspace(0, 10, 100)"
+"0","y = np.sin(x)"
+"0",""
+"0","plt.plot(x, y)"
+"1","[<matplotlib.lines.Line2D object at 0x171eb3b10>]"
+"1","
+"
+"0","plt.show()"
+"2","Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+  File ""[90m]8;line = 6;file:///Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/call.py/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/reticulate/python/rpytools/call.py]8;;[39m"", line 6, in python_function
+    return call_r_function(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: invalid 'path' argument
+"

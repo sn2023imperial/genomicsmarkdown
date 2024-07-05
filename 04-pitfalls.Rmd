@@ -1,0 +1,9 @@
+# (PART) ML pitfalls in genomics {-}
+
+# Pitfalls overview
+## Distributional differences
+## Dependent examples
+## Confounding
+## Leaky pre-processing
+## Unbalanced classes
+## Balancing the proportion of peaks / no-peaks in validation sets

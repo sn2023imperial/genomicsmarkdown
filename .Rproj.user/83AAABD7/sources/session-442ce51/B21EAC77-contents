@@ -1,0 +1,52 @@
+# (PART) Introduction {-}
+
+
+# Epigenetic Data
+
+## What is epigenetic data?
+<br> Epigenetic data arises from "the study of heritable and stable changes in gene expression that occur through alterations in the chromosome rather than in the DNA sequence."^[@nora2023] 
+
+Some alterations include:
+
+1. **DNA Methylation**: Addition of methyl groups to DNA, affecting gene expression regulation^[@nora2023].
+2. **Histone Modifications**: Chemical changes to histone proteins that DNA wraps around. These changes influence chromatin structure and gene accessibility.^[@allis2015]
+3. **Chromatin Accessibility**: Regions of open chromatin that are accessible to transcription factors (a special type of protein invovled in converting DNA to RNA) further dictate which regions of DNA can be expressed^[@melanie2021].
+
+<br>
+![Alt text](images/Epigenetic_Mechanisms.png "Epigenetic Mechanisms")
+<div style="text-align: center;">
+[commonfund.nih.gov](https://commonfund.nih.gov/sites/default/files/epigeneticmechanisms.pdf){target="_blank"}
+</div>
+
+<br><br>
+
+**ATAC-Seq** (Assay for Transposase-Accessible Chromatin with Sequencing) and **ChIP-Seq** (Chromatin Immunoprecipitation Sequencing) are common methods used to analyse chromatin accessibility and protein interactions in/with DNA.
+
+
+
+## What does epigenetic data look like?
+
+## Sources of epigenetic data
+
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python("/opt/homebrew/bin/python3")
+```
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Sine Wave')
+plt.grid(True)
+plt.savefig('images/sine_wave.png')
+plt.show()
+```
+

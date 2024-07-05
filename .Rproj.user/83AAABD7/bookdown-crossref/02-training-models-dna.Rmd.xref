@@ -1,0 +1,11 @@
+h1:part-training-models-with-dna-input (PART) Training models with DNA input
+h1:loss-functions-and-peak-metrics Loss functions, and peak metrics
+h1:base-pair-averaging Base pair averaging
+h1:training-tricks Training tricks
+h1:choosing-which-genomic-regions-to-train-on Choosing which genomic regions to train on
+h1:effect-of-differences-in-sequencing-depths Effect of differences in sequencing depths
+h1:reproducibility-of-machine-learning-models Reproducibility of machine learning models
+h2:seeding Seeding
+h2:dashboarding Dashboarding
+h1:testing Testing
+
