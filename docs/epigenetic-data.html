@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
+  <meta name="description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  
+  <meta name="twitter:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
+  
+
+<meta name="author" content=" Sach Nehal" />
+
+
+<meta name="date" content="2024-07-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="loss-functions-and-peak-metrics.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Machine Learning in Genomics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="1" data-path="epigenetic-data.html"><a href="epigenetic-data.html"><i class="fa fa-check"></i><b>1</b> Epigenetic Data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-is-epigenetic-data"><i class="fa fa-check"></i><b>1.1</b> What is epigenetic data?</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#key-epigenetic-techniques"><i class="fa fa-check"></i><b>1.1.1</b> Key Epigenetic Techniques:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
+<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#example-data-representations"><i class="fa fa-check"></i><b>1.2.2</b> Example Data Representations:</a></li>
+<li class="chapter" data-level="1.2.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.3</b> Transformations to stop extreme p-values</a></li>
+<li class="chapter" data-level="1.2.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#epigenetic-data-and-gene-expression"><i class="fa fa-check"></i><b>1.2.4</b> Epigenetic Data and Gene Expression:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
+</ul></li>
+<li class="part"><span><b>II Training models with DNA input</b></span></li>
+<li class="chapter" data-level="2" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>2</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="3" data-path="base-pair-averaging.html"><a href="base-pair-averaging.html"><i class="fa fa-check"></i><b>3</b> Base pair averaging</a></li>
+<li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a></li>
+<li class="chapter" data-level="5" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>5</b> Choosing which genomic regions to train on</a></li>
+<li class="chapter" data-level="6" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>6</b> Effect of differences in sequencing depths</a></li>
+<li class="chapter" data-level="7" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>7</b> Reproducibility of machine learning models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>7.1</b> Seeding</a></li>
+<li class="chapter" data-level="7.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>7.2</b> Dashboarding</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>8</b> Testing</a></li>
+<li class="part"><span><b>III Software libraries for model building</b></span></li>
+<li class="chapter" data-level="9" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>9</b> gReLU</a></li>
+<li class="chapter" data-level="10" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>10</b> Kipoi</a></li>
+<li class="chapter" data-level="11" data-path="weights-and-biases.html"><a href="weights-and-biases.html"><i class="fa fa-check"></i><b>11</b> Weights and Biases</a></li>
+<li class="part"><span><b>IV ML pitfalls in genomics</b></span></li>
+<li class="chapter" data-level="12" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>12</b> Pitfalls overview</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#distributional-differences"><i class="fa fa-check"></i><b>12.1</b> Distributional differences</a></li>
+<li class="chapter" data-level="12.2" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#dependent-examples"><i class="fa fa-check"></i><b>12.2</b> Dependent examples</a></li>
+<li class="chapter" data-level="12.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>12.3</b> Confounding</a></li>
+<li class="chapter" data-level="12.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>12.4</b> Leaky pre-processing</a></li>
+<li class="chapter" data-level="12.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>12.5</b> Unbalanced classes</a></li>
+<li class="chapter" data-level="12.6" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#balancing-the-proportion-of-peaks-no-peaks-in-validation-sets"><i class="fa fa-check"></i><b>12.6</b> Balancing the proportion of peaks / no-peaks in validation sets</a></li>
+</ul></li>
+<li class="part"><span><b>V Model interpretability</b></span></li>
+<li class="chapter" data-level="13" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>13</b> Creating and visualising a simple model</a></li>
+<li class="chapter" data-level="14" data-path="tf-mo-disco.html"><a href="tf-mo-disco.html"><i class="fa fa-check"></i><b>14</b> TF mo-Disco</a></li>
+<li class="part"><span><b>VI Using existing models</b></span></li>
+<li class="chapter" data-level="15" data-path="using-the-grelu-model-zoo.html"><a href="using-the-grelu-model-zoo.html"><i class="fa fa-check"></i><b>15</b> Using the gReLU model zoo</a></li>
+<li class="chapter" data-level="16" data-path="fine-tuning-of-enformer.html"><a href="fine-tuning-of-enformer.html"><i class="fa fa-check"></i><b>16</b> Fine tuning of Enformer</a></li>
+<li class="part"><span><b>VII Predicting in novel cell types</b></span></li>
+<li class="chapter" data-level="17" data-path="incorporating-atac-seq-info.html"><a href="incorporating-atac-seq-info.html"><i class="fa fa-check"></i><b>17</b> Incorporating ATAC-seq info</a></li>
+<li class="chapter" data-level="18" data-path="use-of-cell-type-averages.html"><a href="use-of-cell-type-averages.html"><i class="fa fa-check"></i><b>18</b> Use of cell type averages</a></li>
+<li class="part"><span><b>VIII More complex models</b></span></li>
+<li class="chapter" data-level="19" data-path="training-multi-headed-models.html"><a href="training-multi-headed-models.html"><i class="fa fa-check"></i><b>19</b> Training multi-headed models</a></li>
+<li class="chapter" data-level="20" data-path="training-siamese-twin-models.html"><a href="training-siamese-twin-models.html"><i class="fa fa-check"></i><b>20</b> Training siamese twin models</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="epigenetic-data" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Epigenetic Data<a href="epigenetic-data.html#epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-epigenetic-data" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is epigenetic data?<a href="epigenetic-data.html#what-is-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><br> As you may already know, all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression, “the way each cell deploys its genome.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><br><strong><em>Epigenetic data</em></strong> arises from “the study of heritable and stable changes in gene expression that occur through alterations in the chromosome rather than in the DNA sequence.”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<br>
+<img src="images/Epigenetic_Mechanisms.png" title="Epigenetic Mechanisms" alt="Epigenetic Mechanisms" />
+<div style="text-align: center;">
+<p><a href="https://commonfund.nih.gov/sites/default/files/epigeneticmechanisms.pdf" target="_blank">commonfund.nih.gov</a></p>
+</div>
+<p><br>
+The key takeaways from this image:
+<br>-Genetic structure of DNA, chromatin, chromosomes
+<br>-Understanding histones and DNA accessibility which has implications on gene expression.</p>
+<p><br>
+Some epigenetic alterations include:</p>
+<ol style="list-style-type: decimal">
+<li><strong>DNA Methylation</strong>: Addition of methyl groups to DNA, affecting gene expression regulation<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</li>
+<li><strong>Histone Modifications</strong>: Chemical changes to histone proteins that DNA wraps around. These changes influence chromatin structure and gene accessibility.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></li>
+<li><strong>Chromatin Accessibility</strong>: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.
+<br></li>
+</ol>
+<div id="key-epigenetic-techniques" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Key Epigenetic Techniques:<a href="epigenetic-data.html#key-epigenetic-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p><strong><em>ATAC-Seq</em></strong> (Assay for Transposase-Accessible Chromatin with Sequencing):
+<br><br><code>o      Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.</code>
+<br><br><code>o      Output: Peaks indicating accessible chromatin regions.</code>
+<br><br></p></li>
+<li><p><strong><em>ChIP-Seq</em></strong> (Chromatin Immunoprecipitation Sequencing):
+<br><br><code>o      Used to identify DNA regions bound by specific proteins (e.g., transcription factors, histones with specific modifications).</code>
+<br><br><code>o      Output: Peaks indicating binding sites or modification locations.</code></p></li>
+</ol>
+</div>
+</div>
+<div id="what-does-epigenetic-data-look-like" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> What does epigenetic data look like?<a href="epigenetic-data.html#what-does-epigenetic-data-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. <strong>ATAC-Seq</strong> and <strong>ChIP-Seq</strong> are the common methods I will focus on, but there are others that may produce different forms of data.</p>
+<div id="representing-epigenetic-data" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Representing epigenetic data<a href="epigenetic-data.html#representing-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong><em>Raw Sequence Reads:</em></strong>
+<br><br><code>o      These are the basic output of sequencing experiments, such as those from ChIP-Seq or ATAC-Seq.</code>
+<br><br><code>o      Reads are processed and aligned to a reference genome before undergoing peak calling.</code>
+<br><br></li>
+<li><strong><em>Peak Calling:</em></strong>
+<br><br><code>o      A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites) or accessible chromatin regions.</code>
+<br><br><code>o      Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.</code>
+<br><br></li>
+</ol>
+<div style="margin-left: 40px;">
+<p><strong><em>Representing Peaks:</em></strong>
+<br><br>
+- <strong><em>P-value or Fold-change:</em></strong>
+<br><br>P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
+<br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
+<br><br>
+- <strong><em>Types of Peaks:</em></strong>
+<br><br>Categorical Peaks: Simple yes/no indication of a peak’s presence.
+<br><br>Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.</p>
+</div>
+<br>
+<div style="text-align: center;">
+<p><strong><em>Example Data Pipeline</em></strong></p>
+</div>
+<p><img src="images/chIP-Seq_pipeline.png" title="Example Data Pipeline" /></p>
+<div style="text-align: center;">
+<p><a href="https://www.encodeproject.org/experiments/ENCSR817LUF/" target="_blank">encodeproject.org</a></p>
+</div>
+<p><br>
+EXPLANATION OF PIPELINE + WHAT DATA WE NORMALLY USE IN ML</p>
+<p><br></p>
+</div>
+<div id="example-data-representations" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Example Data Representations:<a href="epigenetic-data.html#example-data-representations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><br>
+The following is an example of what chIP-Seq data looks like using UCSC’s Genome Browser. The experiment data comes from the <a href="https://www.encodeproject.org/experiments/ENCSR817LUF/" target="_blank">encodeproject.org</a>.
+<br>
+EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH</p>
+<iframe src="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&amp;lastVirtModeType=default&amp;lastVirtModeExtraState=&amp;virtModeType=default&amp;virtMode=0&amp;nonVirtPosition=&amp;position=chr1%3A11084744%2D11095920&amp;hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27" width="100%" height="510">
+</iframe>
+<div style="text-align: center;">
+
+</div>
+<div style="text-align: center;">
+<p><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&amp;lastVirtModeType=default&amp;lastVirtModeExtraState=&amp;virtModeType=default&amp;virtMode=0&amp;nonVirtPosition=&amp;position=chr1%3A11084744%2D11095920&amp;hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27" target="_blank">UCSC Genome Browser</a></p>
+</div>
+<p><br><br><br><br><br><br></p>
+<iframe src="myhtml/encode_browser.html" width="100%" height="800">
+</iframe>
+<div style="text-align: center;">
+<p><a href="https://www.encodeproject.org/experiments/ENCSR875FZN/" target="_blank">encodeproject.org</a></p>
+</div>
+</div>
+<div id="transformations-to-stop-extreme-p-values" class="section level3 hasAnchor" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Transformations to stop extreme p-values<a href="epigenetic-data.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Arcsinh-transformation</p>
+</div>
+<div id="epigenetic-data-and-gene-expression" class="section level3 hasAnchor" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Epigenetic Data and Gene Expression:<a href="epigenetic-data.html#epigenetic-data-and-gene-expression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While epigenetic data provides crucial insights into gene regulation, it is not the same as direct measurements of gene expression (such as RNA-Seq data).
+Epigenetic modifications can influence gene expression, but they do so by altering the chromatin state and regulatory landscape rather than directly measuring mRNA levels.</p>
+</div>
+</div>
+<div id="sources-of-epigenetic-data" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Sources of epigenetic data<a href="epigenetic-data.html#sources-of-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Blueprint
+Roadmap
+Encode (Main Focus)</p>
+<p>Handling bigWig files
+Data loaders and pre-processing
+Dealing with missing data (oversampling, undersampling, weighting)</p>
+<p>##testpython code</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="epigenetic-data.html#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="epigenetic-data.html#cb1-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="epigenetic-data.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="epigenetic-data.html#cb1-4" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb1-5"><a href="epigenetic-data.html#cb1-5" tabindex="-1"></a>y <span class="op">=</span> np.sin(x)</span>
+<span id="cb1-6"><a href="epigenetic-data.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="epigenetic-data.html#cb1-7" tabindex="-1"></a>plt.plot(x, y)</span>
+<span id="cb1-8"><a href="epigenetic-data.html#cb1-8" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x&#39;</span>)</span>
+<span id="cb1-9"><a href="epigenetic-data.html#cb1-9" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y&#39;</span>)</span>
+<span id="cb1-10"><a href="epigenetic-data.html#cb1-10" tabindex="-1"></a>plt.title(<span class="st">&#39;Sine Wave&#39;</span>)</span>
+<span id="cb1-11"><a href="epigenetic-data.html#cb1-11" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-12"><a href="epigenetic-data.html#cb1-12" tabindex="-1"></a>plt.savefig(<span class="st">&#39;images/sine_wave.png&#39;</span>)</span>
+<span id="cb1-13"><a href="epigenetic-data.html#cb1-13" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+
+</div>
+</div>
+
+
+
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-nora2023" class="csl-entry">
+Al-Aboud, Nora M., Connor Tupper, and Ishwarlal Jialal. 2023. <em>Genetics, Epigenetic Mechanism</em>. National Library of Medicine. <a href="https://www.ncbi.nlm.nih.gov/books/NBK532999/#article-22137.r1">https://www.ncbi.nlm.nih.gov/books/NBK532999/#article-22137.r1</a>.
+</div>
+<div id="ref-melanie2021" class="csl-entry">
+Kappelmann-Fenzl, Melanie. 2021. <em>Design and Analysis of Epigenetics and ChIP-Sequencing Data</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-62490-3_12">https://doi.org/10.1007/978-3-030-62490-3_12</a>.
+</div>
+<div id="ref-ralston2008" class="csl-entry">
+Ralston, Amy, and Kenna Shaw. 2008. <em>Gene Expression Regulates Cell Differentiation</em>. Nature Education. <a href="https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.">https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.</a>
+</div>
+<div id="ref-Kouzarides2007" class="csl-entry">
+T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. National Library of Medicine. <a href="https://doi.org/10.1016/j.cell.2007.02.005">https://doi.org/10.1016/j.cell.2007.02.005</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><span class="citation">Ralston and Shaw (<a href="#ref-ralston2008">2008</a>)</span><a href="epigenetic-data.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><span class="citation">Al-Aboud, Tupper, and Jialal (<a href="#ref-nora2023">2023</a>)</span><a href="epigenetic-data.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><span class="citation">Al-Aboud, Tupper, and Jialal (<a href="#ref-nora2023">2023</a>)</span><a href="epigenetic-data.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><span class="citation">T. (<a href="#ref-Kouzarides2007">2007</a>)</span><a href="epigenetic-data.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation">Kappelmann-Fenzl (<a href="#ref-melanie2021">2021</a>)</span><a href="epigenetic-data.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loss-functions-and-peak-metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-epigenetic-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
