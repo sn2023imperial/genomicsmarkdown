@@ -1,57 +1,0 @@
-"2","
-
-processing file: _main.Rmd
-"
-"1","  |                                                               "
-"1","  |                                                         |   0%"
-"1","  |                                                               "
-"1","  |...........                                              |  20%"
-"1","                  "
-"1","  |                                                               "
-"1","  |.......................                                  |  40%"
-"1"," [setup]          "
-"2","
-Quitting from lines 55-58 [setup] (_main.Rmd)
-"
-"1",""
-"1",""
-"1","                                                                                                                 "
-"1","
-"
-"1","[1m[34m<error/rlang_error>[39m[22m
-[1m[33mError[39m in [1m[94m`if (options$engine != ""R"") ...`[39m[1m:[22m
-[33m![39m argument is of length zero
----
-[1mBacktrace:[22m
-[90m     [39m▆
-[90m  1. [39m└─[1mhttpuv[22m (local) `<fn>`(`<externalptr>`, FALSE, ""/epigenetic-data.html"")
-[90m  2. [39m  ├[38;5;246m─[1mbase[22m::try(handler(binary, message))[39m
-[90m  3. [39m  │ [38;5;246m└─base::tryCatch(...)[39m
-[90m  4. [39m  │   [38;5;246m└─base (local) tryCatchList(expr, classes, parentenv, handlers)[39m
-[90m  5. [39m  │     [38;5;246m└─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])[39m
-[90m  6. [39m  │       [38;5;246m└─base (local) doTryCatch(return(expr), name, parentenv, handler)[39m
-[90m  7. [39m  └─[1mservr[22m (local) handler(binary, message)
-[90m  8. [39m    ├[38;5;246m─[1mxfun[22m::in_dir(...)[39m
-[90m  9. [39m    ├[38;5;246m─ws$send(...)[39m
-[90m 10. [39m    ├[38;5;246m─[1mbase[22m::tryCatch(...)[39m
-[90m 11. [39m    │ [38;5;246m└─base (local) tryCatchList(expr, classes, parentenv, handlers)[39m
-[90m 12. [39m    │   [38;5;246m└─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])[39m
-[90m 13. [39m    │     [38;5;246m└─base (local) doTryCatch(return(expr), name, parentenv, handler)[39m
-[90m 14. [39m    ├[38;5;246m─[1mjsonlite[22m::toJSON(build(message), auto_unbox = TRUE, null = ""null"")[39m
-[90m 15. [39m    │ [38;5;246m└─[1mbase[22m::force(x)[39m
-[90m 16. [39m    └─[1mservr[22m (local) build(message)
-[90m 17. [39m      └─[1mbookdown[22m (local) handler(c(f3, na.omit(f5)))
-[90m 18. [39m        └─bookdown::render_book(...)
-[90m 19. [39m          └─bookdown:::render_cur_session(...)
-[90m 20. [39m            └─[1mrmarkdown[22m::render(main, output_format, ..., clean = clean, envir = envir)
-[90m 21. [39m              └─[1mknitr[22m::knit(knit_input, knit_output, envir = envir, quiet = quiet)
-[90m 22. [39m                └─knitr:::process_file(text, output)
-[90m 23. [39m                  ├[38;5;246m─[1mxfun[22m:::handle_error(...)[39m
-[90m 24. [39m                  ├[38;5;246m─[1mbase[22m::withCallingHandlers(...)[39m
-[90m 25. [39m                  └─[1mknitr[22m:::process_group(group)
-[90m 26. [39m                    └─knitr:::call_block(x)
-[90m 27. [39m                      └─knitr:::fix_options(params)
-"
-"0","library(reticulate)"
-"0","use_python(""/opt/homebrew/bin/python3"")"
-"0","library(IRdisplay)"

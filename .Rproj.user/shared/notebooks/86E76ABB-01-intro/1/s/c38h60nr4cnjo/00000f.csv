@@ -1,7 +1,0 @@
-"0","library(webshot)"
-"0","library(shiny)"
-"0",""
-"0","fluidPage("
-"0","  actionButton(""runPython"", ""Run Python Code""),"
-"0","  tags$div(id = ""plot_output"")"
-"0",")"
