@@ -87,7 +87,7 @@ The following is an example of what chIP-Seq data looks like using UCSC's Genome
 <br>
 EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH
 
-<iframe src="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11084744%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27" width="100%" height="510"></iframe>
+<iframe src="myhtml/ucsc_genome_browser.html" width="100%" height="510"></iframe>
 <div style="text-align: center;">
 </div>
 <div style="text-align: center;">
