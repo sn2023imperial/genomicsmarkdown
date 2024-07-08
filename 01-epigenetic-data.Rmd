@@ -91,7 +91,7 @@ EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH
 <div style="text-align: center;">
 </div>
 <div style="text-align: center;">
-[UCSC Genome Browser](http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11084744%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27){target="_blank"}
+[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11084744%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27){target="_blank"}
 </div
 
 <br><br><br><br><br><br><br>
