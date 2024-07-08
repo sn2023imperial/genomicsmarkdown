@@ -1,8 +1,0 @@
-install.packages("bookdown")
-ls
-setwd("/Users/sach/Desktop/Markdown_Book")
-getwd()
-library()
-install.packages("bookdown")
-library()
-install.packages("bookdown")
