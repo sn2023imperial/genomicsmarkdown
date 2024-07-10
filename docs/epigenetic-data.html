@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-07-08" />
+<meta name="date" content="2024-07-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -169,16 +169,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-is-epigenetic-data"><i class="fa fa-check"></i><b>1.1</b> What is epigenetic data?</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#key-epigenetic-techniques"><i class="fa fa-check"></i><b>1.1.1</b> Key Epigenetic Techniques:</a></li>
+<li class="chapter" data-level="1.1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#common-epigenetic-techniques"><i class="fa fa-check"></i><b>1.1.1</b> Common Epigenetic Techniques:</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
 <li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#example-data-representations"><i class="fa fa-check"></i><b>1.2.2</b> Example Data Representations:</a></li>
 <li class="chapter" data-level="1.2.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.3</b> Transformations to stop extreme p-values</a></li>
-<li class="chapter" data-level="1.2.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#epigenetic-data-and-gene-expression"><i class="fa fa-check"></i><b>1.2.4</b> Epigenetic Data and Gene Expression:</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
+<li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#handling-bigwig-files"><i class="fa fa-check"></i><b>1.4</b> Handling bigWig files</a></li>
+<li class="chapter" data-level="1.5" data-path="epigenetic-data.html"><a href="epigenetic-data.html#data-loaders-and-pre-processing"><i class="fa fa-check"></i><b>1.5</b> Data loaders and pre-processing</a></li>
+<li class="chapter" data-level="1.6" data-path="epigenetic-data.html"><a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>1.6</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
 <li class="chapter" data-level="2" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>2</b> Loss functions, and peak metrics</a></li>
@@ -243,7 +245,7 @@ div.csl-indent {
 <h1><span class="header-section-number">1</span> Epigenetic Data<a href="epigenetic-data.html#epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="what-is-epigenetic-data" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> What is epigenetic data?<a href="epigenetic-data.html#what-is-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><br> As you may already know, all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression, “the way each cell deploys its genome.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><br> As you may already know, typically all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression and regulation, i.e. “the way each cell deploys its genome.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p><br><strong><em>Epigenetic data</em></strong> arises from “the study of heritable and stable changes in gene expression that occur through alterations in the chromosome rather than in the DNA sequence.”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <br>
 <img src="images/Epigenetic_Mechanisms.png" title="Epigenetic Mechanisms" alt="Epigenetic Mechanisms" />
@@ -251,55 +253,56 @@ div.csl-indent {
 <p><a href="https://commonfund.nih.gov/sites/default/files/epigeneticmechanisms.pdf" target="_blank">commonfund.nih.gov</a></p>
 </div>
 <p><br>
-The key takeaways from this image:
-<br>-Genetic structure of DNA, chromatin, chromosomes
-<br>-Understanding histones and DNA accessibility which has implications on gene expression.</p>
+The image above shows quite simply the basics of genetic structures. Several more complex processes are involved during cell replication such as DNA transcription and translation in order to make proteins. A key takeaway in coming closer to understanding gene expression is that <strong>Chromatin</strong> is a complex structure made up of DNA wound around histone proteins, with some segments of DNA being accessible/inaccessible to further processes. <strong>Euchromatin</strong> refers to the accessible state, while <strong>Heterochromatin</strong> refers to a chromatin state in which DNA cannot be transcribed (inaccessible).<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> There are many different epigenetic modifications that affect chromatin accessibility.</p>
 <p><br>
-Some epigenetic alterations include:</p>
+Some common epigenetic modifications include:</p>
 <ol style="list-style-type: decimal">
-<li><strong>DNA Methylation</strong>: Addition of methyl groups to DNA, affecting gene expression regulation<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</li>
-<li><strong>Histone Modifications</strong>: Chemical changes to histone proteins that DNA wraps around. These changes influence chromatin structure and gene accessibility.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></li>
-<li><strong>Chromatin Accessibility</strong>: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.
+<li><strong>DNA Methylation</strong>: Addition of methyl groups to DNA, affecting gene expression regulation<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</li>
+<li><strong>Histone Modifications</strong>: Chemical changes to histone proteins that DNA wraps around, including acetylation, methylation, or phosphorylation. These changes influence chromatin structure and gene accessibility.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></li>
+<li><strong>Chromatin Accessibility</strong>: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
 <br></li>
 </ol>
-<div id="key-epigenetic-techniques" class="section level3 hasAnchor" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Key Epigenetic Techniques:<a href="epigenetic-data.html#key-epigenetic-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In studying gene expression and epigenetic modifications, we can more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.</p>
+<p><br></p>
+<div id="common-epigenetic-techniques" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Common Epigenetic Techniques:<a href="epigenetic-data.html#common-epigenetic-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p><strong><em>ATAC-Seq</em></strong> (Assay for Transposase-Accessible Chromatin with Sequencing):
-<br><br><code>o      Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.</code>
-<br><br><code>o      Output: Peaks indicating accessible chromatin regions.</code>
+<br><br>o<code>Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.</code>
+<br><br>o<code>Output: Peaks indicating accessible chromatin regions.</code>
 <br><br></p></li>
 <li><p><strong><em>ChIP-Seq</em></strong> (Chromatin Immunoprecipitation Sequencing):
-<br><br><code>o      Used to identify DNA regions bound by specific proteins (e.g., transcription factors, histones with specific modifications).</code>
-<br><br><code>o      Output: Peaks indicating binding sites or modification locations.</code></p></li>
+<br><br>o<code>Used to identify DNA regions bound by specific proteins (e.g., transcription factors, histones with specific modifications).</code>
+<br><br>o<code>Output: Peaks indicating binding sites or modification locations.</code></p></li>
 </ol>
 </div>
 </div>
 <div id="what-does-epigenetic-data-look-like" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> What does epigenetic data look like?<a href="epigenetic-data.html#what-does-epigenetic-data-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. <strong>ATAC-Seq</strong> and <strong>ChIP-Seq</strong> are the common methods I will focus on, but there are others that may produce different forms of data.</p>
+<p>Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. <strong>ATAC-Seq</strong> and <strong>ChIP-Seq</strong> are the common methods I will focus on, but there are others that may produce different forms of data, such as WGS (whole-genome sequencing) which produces nucleotide sequencing data, or Bisulfite conversion of DNA producing data on methylation levels across the genome.</p>
 <div id="representing-epigenetic-data" class="section level3 hasAnchor" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> Representing epigenetic data<a href="epigenetic-data.html#representing-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><strong><em>Raw Sequence Reads:</em></strong>
-<br><br><code>o      These are the basic output of sequencing experiments, such as those from ChIP-Seq or ATAC-Seq.</code>
-<br><br><code>o      Reads are processed and aligned to a reference genome before undergoing peak calling.</code>
+<br><br>o<code>These are the basic output of sequencing experiments, such as those from ChIP-Seq or ATAC-Seq.</code>
+<br><br>o<code>Reads are processed and aligned to a reference genome before undergoing peak calling.</code>
 <br><br></li>
 <li><strong><em>Peak Calling:</em></strong>
-<br><br><code>o      A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites) or accessible chromatin regions.</code>
-<br><br><code>o      Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.</code>
+<br><br>o<code>A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites) or accessible chromatin regions.</code>
+<br><br>o<code>Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.</code>
 <br><br></li>
 </ol>
 <div style="margin-left: 40px;">
 <p><strong><em>Representing Peaks:</em></strong>
 <br><br>
-- <strong><em>P-value or Fold-change:</em></strong>
+o <strong><em>P-value or Fold-change:</em></strong>
 <br><br>P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
 <br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
 <br><br>
-- <strong><em>Types of Peaks:</em></strong>
+o <strong><em>Types of Peaks:</em></strong>
 <br><br>Categorical Peaks: Simple yes/no indication of a peak’s presence.
-<br><br>Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.</p>
+<br><br>Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.
+<br><br>Thresholded/Pseudoreplicated Peaks: Usually categorical, these peaks are of high confidence regions from multiple replicates (experiments) or pseudoreplicates (artificial data splits), to ensure reliability and reproducibility.</p>
 </div>
 <br>
 <div style="text-align: center;">
@@ -310,15 +313,14 @@ Some epigenetic alterations include:</p>
 <p><a href="https://www.encodeproject.org/experiments/ENCSR817LUF/" target="_blank">encodeproject.org</a></p>
 </div>
 <p><br>
-EXPLANATION OF PIPELINE + WHAT DATA WE NORMALLY USE IN ML</p>
+This example data pipeline originates from a ChIP-seq experiment targeting the H3K36me3 histone modification in brain tissue. The aim of the experiement is to map the locations where the H3K36me3 histone modification is present along the genome. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g. peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.</p>
 <p><br></p>
 </div>
 <div id="example-data-representations" class="section level3 hasAnchor" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Example Data Representations:<a href="epigenetic-data.html#example-data-representations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><br>
-The following is an example of what chIP-Seq data looks like using UCSC’s Genome Browser. The experiment data comes from the <a href="https://www.encodeproject.org/experiments/ENCSR817LUF/" target="_blank">encodeproject.org</a>.
-<br>
-EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH</p>
+The following is an example of what this same chIP-Seq data targeting the H3K36me3 histone modification in brain tissue looks like using UCSC’s Genome Browser. The pseudoreplicated peaks represent categorically, the significant locations along the genome where the H3K36me3 histone modification is present.
+<br></p>
 <iframe src="myhtml/ucsc_genome_browser.html" width="100%" height="510">
 </iframe>
 <div style="text-align: center;">
@@ -338,20 +340,21 @@ EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH</p>
 <h3><span class="header-section-number">1.2.3</span> Transformations to stop extreme p-values<a href="epigenetic-data.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Arcsinh-transformation</p>
 </div>
-<div id="epigenetic-data-and-gene-expression" class="section level3 hasAnchor" number="1.2.4">
-<h3><span class="header-section-number">1.2.4</span> Epigenetic Data and Gene Expression:<a href="epigenetic-data.html#epigenetic-data-and-gene-expression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>While epigenetic data provides crucial insights into gene regulation, it is not the same as direct measurements of gene expression (such as RNA-Seq data).
-Epigenetic modifications can influence gene expression, but they do so by altering the chromatin state and regulatory landscape rather than directly measuring mRNA levels.</p>
-</div>
 </div>
 <div id="sources-of-epigenetic-data" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> Sources of epigenetic data<a href="epigenetic-data.html#sources-of-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Blueprint
 Roadmap
 Encode (Main Focus)</p>
-<p>Handling bigWig files
-Data loaders and pre-processing
-Dealing with missing data (oversampling, undersampling, weighting)</p>
+</div>
+<div id="handling-bigwig-files" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Handling bigWig files<a href="epigenetic-data.html#handling-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="data-loaders-and-pre-processing" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Data loaders and pre-processing<a href="epigenetic-data.html#data-loaders-and-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>##testpython code</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="epigenetic-data.html#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="epigenetic-data.html#cb1-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -384,6 +387,9 @@ Kappelmann-Fenzl, Melanie. 2021. <em>Design and Analysis of Epigenetics and ChIP
 <div id="ref-ralston2008" class="csl-entry">
 Ralston, Amy, and Kenna Shaw. 2008. <em>Gene Expression Regulates Cell Differentiation</em>. Nature Education. <a href="https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.">https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.</a>
 </div>
+<div id="ref-shahid2023" class="csl-entry">
+Shahid, Zainab, Brittany Simpson, Kathleen H. Miao, and Gurdeep Singh. 2023. <em>Genetics, Histone Code</em>. StatPearls Publishing LLC. <a href="https://www.ncbi.nlm.nih.gov/books/NBK538477/">https://www.ncbi.nlm.nih.gov/books/NBK538477/</a>.
+</div>
 <div id="ref-Kouzarides2007" class="csl-entry">
 T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. National Library of Medicine. <a href="https://doi.org/10.1016/j.cell.2007.02.005">https://doi.org/10.1016/j.cell.2007.02.005</a>.
 </div>
@@ -393,9 +399,10 @@ T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. Natio
 <ol start="1">
 <li id="fn1"><p><span class="citation">Ralston and Shaw (<a href="#ref-ralston2008">2008</a>)</span><a href="epigenetic-data.html#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p><span class="citation">Al-Aboud, Tupper, and Jialal (<a href="#ref-nora2023">2023</a>)</span><a href="epigenetic-data.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><span class="citation">Al-Aboud, Tupper, and Jialal (<a href="#ref-nora2023">2023</a>)</span><a href="epigenetic-data.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p><span class="citation">T. (<a href="#ref-Kouzarides2007">2007</a>)</span><a href="epigenetic-data.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation">Kappelmann-Fenzl (<a href="#ref-melanie2021">2021</a>)</span><a href="epigenetic-data.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><span class="citation">Shahid et al. (<a href="#ref-shahid2023">2023</a>)</span><a href="epigenetic-data.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><span class="citation">Al-Aboud, Tupper, and Jialal (<a href="#ref-nora2023">2023</a>)</span><a href="epigenetic-data.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation">T. (<a href="#ref-Kouzarides2007">2007</a>)</span><a href="epigenetic-data.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><span class="citation">Kappelmann-Fenzl (<a href="#ref-melanie2021">2021</a>)</span><a href="epigenetic-data.html#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

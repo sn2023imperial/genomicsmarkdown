@@ -120,7 +120,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-07-08}
+\date{2024-07-10}
 
 \begin{document}
 \maketitle
@@ -142,7 +142,7 @@ The aim of this project is to provide you with \textbf{a set of reproducible, co
 
 \section{What is epigenetic data?}\label{what-is-epigenetic-data}
 
-As you may already know, all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression, ``the way each cell deploys its genome.''\footnote{\citet{ralston2008}}
+As you may already know, typically all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression and regulation, i.e.~``the way each cell deploys its genome.''\footnote{\citet{ralston2008}}
 
 \textbf{\emph{Epigenetic data}} arises from ``the study of heritable and stable changes in gene expression that occur through alterations in the chromosome rather than in the DNA sequence.''\footnote{\citet{nora2023}}
 
@@ -150,11 +150,9 @@ As you may already know, all of the cells in your body contain the same DNA. How
 
 \href{https://commonfund.nih.gov/sites/default/files/epigeneticmechanisms.pdf}{commonfund.nih.gov}
 
-The key takeaways from this image:
--Genetic structure of DNA, chromatin, chromosomes
--Understanding histones and DNA accessibility which has implications on gene expression.
+The image above shows quite simply the basics of genetic structures. Several more complex processes are involved during cell replication such as DNA transcription and translation in order to make proteins. A key takeaway in coming closer to understanding gene expression is that \textbf{Chromatin} is a complex structure made up of DNA wound around histone proteins, with some segments of DNA being accessible/inaccessible to further processes. \textbf{Euchromatin} refers to the accessible state, while \textbf{Heterochromatin} refers to a chromatin state in which DNA cannot be transcribed (inaccessible).\footnote{\citet{shahid2023}} There are many different epigenetic modifications that affect chromatin accessibility.
 
-Some epigenetic alterations include:
+Some common epigenetic modifications include:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -162,28 +160,30 @@ Some epigenetic alterations include:
 \item
   \textbf{DNA Methylation}: Addition of methyl groups to DNA, affecting gene expression regulation\footnote{\citet{nora2023}}.
 \item
-  \textbf{Histone Modifications}: Chemical changes to histone proteins that DNA wraps around. These changes influence chromatin structure and gene accessibility.\footnote{\citet{Kouzarides2007}}
+  \textbf{Histone Modifications}: Chemical changes to histone proteins that DNA wraps around, including acetylation, methylation, or phosphorylation. These changes influence chromatin structure and gene accessibility.\footnote{\citet{Kouzarides2007}}
 \item
   \textbf{Chromatin Accessibility}: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed\footnote{\citet{melanie2021}}.
 \end{enumerate}
 
-\subsection{Key Epigenetic Techniques:}\label{key-epigenetic-techniques}
+In studying gene expression and epigenetic modifications, we can more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.
+
+\subsection{Common Epigenetic Techniques:}\label{common-epigenetic-techniques}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   \textbf{\emph{ATAC-Seq}} (Assay for Transposase-Accessible Chromatin with Sequencing):
-  \texttt{o\ \ \ \ \ \ Measures\ chromatin\ accessibility\ to\ identify\ open\ regions\ of\ the\ genome\ where\ transcription\ factors\ can\ bind.}
-  \texttt{o\ \ \ \ \ \ Output:\ Peaks\ indicating\ accessible\ chromatin\ regions.}
+  o\texttt{Measures\ chromatin\ accessibility\ to\ identify\ open\ regions\ of\ the\ genome\ where\ transcription\ factors\ can\ bind.}
+  o\texttt{Output:\ Peaks\ indicating\ accessible\ chromatin\ regions.}
 \item
   \textbf{\emph{ChIP-Seq}} (Chromatin Immunoprecipitation Sequencing):
-  \texttt{o\ \ \ \ \ \ Used\ to\ identify\ DNA\ regions\ bound\ by\ specific\ proteins\ (e.g.,\ transcription\ factors,\ histones\ with\ specific\ modifications).}
-  \texttt{o\ \ \ \ \ \ Output:\ Peaks\ indicating\ binding\ sites\ or\ modification\ locations.}
+  o\texttt{Used\ to\ identify\ DNA\ regions\ bound\ by\ specific\ proteins\ (e.g.,\ transcription\ factors,\ histones\ with\ specific\ modifications).}
+  o\texttt{Output:\ Peaks\ indicating\ binding\ sites\ or\ modification\ locations.}
 \end{enumerate}
 
 \section{What does epigenetic data look like?}\label{what-does-epigenetic-data-look-like}
 
-Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. \textbf{ATAC-Seq} and \textbf{ChIP-Seq} are the common methods I will focus on, but there are others that may produce different forms of data.
+Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. \textbf{ATAC-Seq} and \textbf{ChIP-Seq} are the common methods I will focus on, but there are others that may produce different forms of data, such as WGS (whole-genome sequencing) which produces nucleotide sequencing data, or Bisulfite conversion of DNA producing data on methylation levels across the genome.
 
 \subsection{Representing epigenetic data}\label{representing-epigenetic-data}
 
@@ -192,21 +192,22 @@ Epigenetic data can be represented in various forms, depending on the type of mo
 \tightlist
 \item
   \textbf{\emph{Raw Sequence Reads:}}
-  \texttt{o\ \ \ \ \ \ These\ are\ the\ basic\ output\ of\ sequencing\ experiments,\ such\ as\ those\ from\ ChIP-Seq\ or\ ATAC-Seq.}
-  \texttt{o\ \ \ \ \ \ Reads\ are\ processed\ and\ aligned\ to\ a\ reference\ genome\ before\ undergoing\ peak\ calling.}
+  o\texttt{These\ are\ the\ basic\ output\ of\ sequencing\ experiments,\ such\ as\ those\ from\ ChIP-Seq\ or\ ATAC-Seq.}
+  o\texttt{Reads\ are\ processed\ and\ aligned\ to\ a\ reference\ genome\ before\ undergoing\ peak\ calling.}
 \item
   \textbf{\emph{Peak Calling:}}
-  \texttt{o\ \ \ \ \ \ A\ method\ used\ to\ identify\ regions\ in\ the\ genome\ where\ there\ is\ significant\ enrichment\ of\ sequencing\ reads.\ This\ indicates\ the\ presence\ of\ DNA-protein\ interactions\ (e.g.,\ transcription\ factor\ binding\ sites)\ or\ accessible\ chromatin\ regions.}
-  \texttt{o\ \ \ \ \ \ Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ accessibility\ are\ concentrated.}
+  o\texttt{A\ method\ used\ to\ identify\ regions\ in\ the\ genome\ where\ there\ is\ significant\ enrichment\ of\ sequencing\ reads.\ This\ indicates\ the\ presence\ of\ DNA-protein\ interactions\ (e.g.,\ transcription\ factor\ binding\ sites)\ or\ accessible\ chromatin\ regions.}
+  o\texttt{Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ accessibility\ are\ concentrated.}
 \end{enumerate}
 
 \textbf{\emph{Representing Peaks:}}
-- \textbf{\emph{P-value or Fold-change:}}
+o \textbf{\emph{P-value or Fold-change:}}
 P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
 Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
-- \textbf{\emph{Types of Peaks:}}
+o \textbf{\emph{Types of Peaks:}}
 Categorical Peaks: Simple yes/no indication of a peak's presence.
 Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.
+Thresholded/Pseudoreplicated Peaks: Usually categorical, these peaks are of high confidence regions from multiple replicates (experiments) or pseudoreplicates (artificial data splits), to ensure reliability and reproducibility.
 
 \textbf{\emph{Example Data Pipeline}}
 
@@ -214,12 +215,11 @@ Continuous Peaks: More nuanced representation that includes the intensity or enr
 
 \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{encodeproject.org}
 
-EXPLANATION OF PIPELINE + WHAT DATA WE NORMALLY USE IN ML
+This example data pipeline originates from a ChIP-seq experiment targeting the H3K36me3 histone modification in brain tissue. The aim of the experiement is to map the locations where the H3K36me3 histone modification is present along the genome. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g.~peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.
 
 \subsection{Example Data Representations:}\label{example-data-representations}
 
-The following is an example of what chIP-Seq data looks like using UCSC's Genome Browser. The experiment data comes from the \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{encodeproject.org}.
-EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH
+The following is an example of what this same chIP-Seq data targeting the H3K36me3 histone modification in brain tissue looks like using UCSC's Genome Browser. The pseudoreplicated peaks represent categorically, the significant locations along the genome where the H3K36me3 histone modification is present.
 
 \href{https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1\%3A11084744\%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27}{UCSC Genome Browser}
 
@@ -229,20 +229,17 @@ EXPLANATION OF EXPERIMENT + EXPLAIN GRAPH
 
 Arcsinh-transformation
 
-\subsection{Epigenetic Data and Gene Expression:}\label{epigenetic-data-and-gene-expression}
-
-While epigenetic data provides crucial insights into gene regulation, it is not the same as direct measurements of gene expression (such as RNA-Seq data).
-Epigenetic modifications can influence gene expression, but they do so by altering the chromatin state and regulatory landscape rather than directly measuring mRNA levels.
-
 \section{Sources of epigenetic data}\label{sources-of-epigenetic-data}
 
 Blueprint
 Roadmap
 Encode (Main Focus)
 
-Handling bigWig files
-Data loaders and pre-processing
-Dealing with missing data (oversampling, undersampling, weighting)
+\section{Handling bigWig files}\label{handling-bigwig-files}
+
+\section{Data loaders and pre-processing}\label{data-loaders-and-pre-processing}
+
+\section{Dealing with missing data (oversampling, undersampling, weighting)}\label{dealing-with-missing-data-oversampling-undersampling-weighting}
 
 \#\#testpython code
 

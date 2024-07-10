@@ -1,12 +1,14 @@
 epigenetic-data
 what-is-epigenetic-data
-key-epigenetic-techniques
+common-epigenetic-techniques
 what-does-epigenetic-data-look-like
 representing-epigenetic-data
 example-data-representations
 transformations-to-stop-extreme-p-values
-epigenetic-data-and-gene-expression
 sources-of-epigenetic-data
+handling-bigwig-files
+data-loaders-and-pre-processing
+dealing-with-missing-data-oversampling-undersampling-weighting
 loss-functions-and-peak-metrics
 base-pair-averaging
 training-tricks
