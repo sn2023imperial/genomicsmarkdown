@@ -330,22 +330,45 @@ The following is an example of what this same chIP-Seq data targeting the H3K36m
 <p><a href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&amp;lastVirtModeType=default&amp;lastVirtModeExtraState=&amp;virtModeType=default&amp;virtMode=0&amp;nonVirtPosition=&amp;position=chr1%3A11084744%2D11095920&amp;hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27" target="_blank">UCSC Genome Browser</a></p>
 </div>
 <p><br><br><br><br><br><br></p>
-<iframe src="myhtml/encode_browser.html" width="100%" height="800">
+<p><br>
+The following is an example of ATAC-Seq data from an experiment on T-helper 17 cells (a type of immune system cell). Recall that the ATAC-Seq method aims to find chromatin regions that are accessible for transcription factor binding. The p-value and fold change graphs show continuous peaks, while the IDR thresholded peaks and pseudoreplicated peaks represent the significant locations of accessible chromatin along the genome.
+<br></p>
+<iframe src="myhtml/ucsc_gb_atacseq.html" width="100%" height="510">
 </iframe>
 <div style="text-align: center;">
-<p><a href="https://www.encodeproject.org/experiments/ENCSR875FZN/" target="_blank">encodeproject.org</a></p>
+
+</div>
+<div style="text-align: center;">
+<p><a href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&amp;lastVirtModeType=default&amp;lastVirtModeExtraState=&amp;virtModeType=default&amp;virtMode=0&amp;nonVirtPosition=&amp;position=chr1%3A88379533%2D113275174&amp;hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW" target="_blank">UCSC Genome Browser</a></p>
 </div>
 </div>
 <div id="transformations-to-stop-extreme-p-values" class="section level3 hasAnchor" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Transformations to stop extreme p-values<a href="epigenetic-data.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Arcsinh-transformation</p>
+<p>When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine).
+<br><br>
+<span class="math inline">\(\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)\)</span>
+<br></p>
+<p>The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.</p>
 </div>
 </div>
 <div id="sources-of-epigenetic-data" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> Sources of epigenetic data<a href="epigenetic-data.html#sources-of-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Blueprint
-Roadmap
-Encode (Main Focus)</p>
+<p>There are numerous public data banks which contain genomic datasets ready to be downloaded.
+<br><br>
+<a href="https://projects.ensembl.org/blueprint/" target="_blank">Blueprint</a>
+<br>
+Blueprint’s genomic datasets are focused on gene expression in healthy and diseased cells mostly relating to haematopoietic cells (cells which develop into different types of blood cells).
+<br></p>
+<p><a href="https://www.ncbi.nlm.nih.gov/geo/roadmap/epigenomics/" target="_blank">Roadmap</a>
+<br>
+The National Institute of Health’s Roadmap Epigenomics Project contains sample datasets from multiple experiements as well as reference and mapping datasets.
+<br></p>
+<p><a href="https://www.encodeproject.org/" target="_blank">Encode</a>
+<br>
+The Encode Project contains a large amount of publicly available genomic data easily filtered and downloaded. The genomic data used in this markdown book is sourced from Encode.
+<br></p>
+<p>The largest genomic data bank is the <a href="https://www.ukbiobank.ac.uk/" target="_blank">UK Biobank</a>, however they require that you apply for access to their datasets.
+<br></p>
 </div>
 <div id="handling-bigwig-files" class="section level2 hasAnchor" number="1.4">
 <h2><span class="header-section-number">1.4</span> Handling bigWig files<a href="epigenetic-data.html#handling-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -355,21 +378,6 @@ Encode (Main Focus)</p>
 </div>
 <div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="1.6">
 <h2><span class="header-section-number">1.6</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>##testpython code</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="epigenetic-data.html#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="epigenetic-data.html#cb1-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="epigenetic-data.html#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="epigenetic-data.html#cb1-4" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb1-5"><a href="epigenetic-data.html#cb1-5" tabindex="-1"></a>y <span class="op">=</span> np.sin(x)</span>
-<span id="cb1-6"><a href="epigenetic-data.html#cb1-6" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="epigenetic-data.html#cb1-7" tabindex="-1"></a>plt.plot(x, y)</span>
-<span id="cb1-8"><a href="epigenetic-data.html#cb1-8" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x&#39;</span>)</span>
-<span id="cb1-9"><a href="epigenetic-data.html#cb1-9" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y&#39;</span>)</span>
-<span id="cb1-10"><a href="epigenetic-data.html#cb1-10" tabindex="-1"></a>plt.title(<span class="st">&#39;Sine Wave&#39;</span>)</span>
-<span id="cb1-11"><a href="epigenetic-data.html#cb1-11" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb1-12"><a href="epigenetic-data.html#cb1-12" tabindex="-1"></a>plt.savefig(<span class="st">&#39;images/sine_wave.png&#39;</span>)</span>
-<span id="cb1-13"><a href="epigenetic-data.html#cb1-13" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -465,6 +473,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

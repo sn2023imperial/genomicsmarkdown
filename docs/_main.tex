@@ -223,23 +223,40 @@ The following is an example of what this same chIP-Seq data targeting the H3K36m
 
 \href{https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1\%3A11084744\%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27}{UCSC Genome Browser}
 
-\href{https://www.encodeproject.org/experiments/ENCSR875FZN/}{encodeproject.org}
+The following is an example of ATAC-Seq data from an experiment on T-helper 17 cells (a type of immune system cell). Recall that the ATAC-Seq method aims to find chromatin regions that are accessible for transcription factor binding. The p-value and fold change graphs show continuous peaks, while the IDR thresholded peaks and pseudoreplicated peaks represent the significant locations of accessible chromatin along the genome.
+
+\href{https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1\%3A88379533\%2D113275174&hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW}{UCSC Genome Browser}
 
 \subsection{Transformations to stop extreme p-values}\label{transformations-to-stop-extreme-p-values}
 
-Arcsinh-transformation
+When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine).
+\(\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)\)
+
+The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.
 
 \section{Sources of epigenetic data}\label{sources-of-epigenetic-data}
 
-Blueprint
-Roadmap
-Encode (Main Focus)
+There are numerous public data banks which contain genomic datasets ready to be downloaded.
+\href{https://projects.ensembl.org/blueprint/}{Blueprint}
+Blueprint's genomic datasets are focused on gene expression in healthy and diseased cells mostly relating to haematopoietic cells (cells which develop into different types of blood cells).
+
+\href{https://www.ncbi.nlm.nih.gov/geo/roadmap/epigenomics/}{Roadmap}
+The National Institute of Health's Roadmap Epigenomics Project contains sample datasets from multiple experiements as well as reference and mapping datasets.
+
+\href{https://www.encodeproject.org/}{Encode}
+The Encode Project contains a large amount of publicly available genomic data easily filtered and downloaded. The genomic data used in this markdown book is sourced from Encode.
+
+The largest genomic data bank is the \href{https://www.ukbiobank.ac.uk/}{UK Biobank}, however they require that you apply for access to their datasets.
 
 \section{Handling bigWig files}\label{handling-bigwig-files}
 
 \section{Data loaders and pre-processing}\label{data-loaders-and-pre-processing}
 
 \section{Dealing with missing data (oversampling, undersampling, weighting)}\label{dealing-with-missing-data-oversampling-undersampling-weighting}
+
+\part{Training models with DNA input}\label{part-training-models-with-dna-input}
+
+\chapter{Loss functions, and peak metrics}\label{loss-functions-and-peak-metrics}
 
 \#\#testpython code
 
@@ -262,10 +279,6 @@ Encode (Main Focus)
 \end{Shaded}
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-2-1.pdf}
-
-\part{Training models with DNA input}\label{part-training-models-with-dna-input}
-
-\chapter{Loss functions, and peak metrics}\label{loss-functions-and-peak-metrics}
 
 \chapter{Base pair averaging}\label{base-pair-averaging}
 

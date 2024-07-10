@@ -243,6 +243,21 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="loss-functions-and-peak-metrics" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">2</span> Loss functions, and peak metrics<a href="loss-functions-and-peak-metrics.html#loss-functions-and-peak-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>##testpython code</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="loss-functions-and-peak-metrics.html#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="loss-functions-and-peak-metrics.html#cb1-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="loss-functions-and-peak-metrics.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="loss-functions-and-peak-metrics.html#cb1-4" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb1-5"><a href="loss-functions-and-peak-metrics.html#cb1-5" tabindex="-1"></a>y <span class="op">=</span> np.sin(x)</span>
+<span id="cb1-6"><a href="loss-functions-and-peak-metrics.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="loss-functions-and-peak-metrics.html#cb1-7" tabindex="-1"></a>plt.plot(x, y)</span>
+<span id="cb1-8"><a href="loss-functions-and-peak-metrics.html#cb1-8" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x&#39;</span>)</span>
+<span id="cb1-9"><a href="loss-functions-and-peak-metrics.html#cb1-9" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y&#39;</span>)</span>
+<span id="cb1-10"><a href="loss-functions-and-peak-metrics.html#cb1-10" tabindex="-1"></a>plt.title(<span class="st">&#39;Sine Wave&#39;</span>)</span>
+<span id="cb1-11"><a href="loss-functions-and-peak-metrics.html#cb1-11" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-12"><a href="loss-functions-and-peak-metrics.html#cb1-12" tabindex="-1"></a>plt.savefig(<span class="st">&#39;images/sine_wave.png&#39;</span>)</span>
+<span id="cb1-13"><a href="loss-functions-and-peak-metrics.html#cb1-13" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
             </section>
 
@@ -304,6 +319,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

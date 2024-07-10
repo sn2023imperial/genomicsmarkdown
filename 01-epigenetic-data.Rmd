@@ -98,46 +98,51 @@ The following is an example of what this same chIP-Seq data targeting the H3K36m
 
 <br><br><br><br><br><br><br>
 
-<iframe src="myhtml/encode_browser.html" width="100%" height="800"></iframe>
+<br>
+The following is an example of ATAC-Seq data from an experiment on T-helper 17 cells (a type of immune system cell). Recall that the ATAC-Seq method aims to find chromatin regions that are accessible for transcription factor binding. The p-value and fold change graphs show continuous peaks, while the IDR thresholded peaks and pseudoreplicated peaks represent the significant locations of accessible chromatin along the genome.
+<br>
+
+<iframe src="myhtml/ucsc_gb_atacseq.html" width="100%" height="510"></iframe>
 <div style="text-align: center;">
-[encodeproject.org](https://www.encodeproject.org/experiments/ENCSR875FZN/){target="_blank"}
 </div>
+<div style="text-align: center;">
+[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A88379533%2D113275174&hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW){target="_blank"}
+</div
+
+<br>
 
 ### Transformations to stop extreme p-values
-Arcsinh-transformation
+When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine). 
+<br><br>
+$\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)$
+<br>
 
-
+The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.
 
 ## Sources of epigenetic data
-Blueprint
-Roadmap
-Encode (Main Focus)
+There are numerous public data banks which contain genomic datasets ready to be downloaded.
+<br><br>
+[Blueprint](https://projects.ensembl.org/blueprint/){target="_blank"}
+<br>
+Blueprint's genomic datasets are focused on gene expression in healthy and diseased cells mostly relating to haematopoietic cells (cells which develop into different types of blood cells).
+<br>
+
+[Roadmap](https://www.ncbi.nlm.nih.gov/geo/roadmap/epigenomics/){target="_blank"}
+<br>
+The National Institute of Health's Roadmap Epigenomics Project contains sample datasets from multiple experiements as well as reference and mapping datasets. 
+<br>
+
+[Encode](https://www.encodeproject.org/){target="_blank"}
+<br>
+The Encode Project contains a large amount of publicly available genomic data easily filtered and downloaded. The genomic data used in this markdown book is sourced from Encode.
+<br>
+
+The largest genomic data bank is the [UK Biobank](https://www.ukbiobank.ac.uk/){target="_blank"}, however they require that you apply for access to their datasets.
+<br>
 
 ## Handling bigWig files
+
+
 ## Data loaders and pre-processing
 ## Dealing with missing data (oversampling, undersampling, weighting)
-
-
-
-##testpython code
-```{r setup, include=FALSE}
-library(reticulate)
-use_python("/opt/homebrew/bin/python3")
-```
-
-```{python}
-import numpy as np
-import matplotlib.pyplot as plt
-
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-
-plt.plot(x, y)
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Sine Wave')
-plt.grid(True)
-plt.savefig('images/sine_wave.png')
-plt.show()
-```
 
