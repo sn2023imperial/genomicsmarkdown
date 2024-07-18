@@ -117,7 +117,7 @@ When utlising genomic data which incorporates p-values, it is important to consi
 $\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)$
 <br>
 
-The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.
+The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing depth while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.
 
 ## Sources of epigenetic data
 There are numerous public data banks which contain genomic datasets ready to be downloaded.
