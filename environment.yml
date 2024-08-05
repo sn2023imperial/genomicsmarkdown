@@ -8,7 +8,7 @@ dependencies:
   - gcc_linux-64
   - curl
   - zlib
-  - numpy=2.0.1
+  - numpy
   - pytest
   - pyBigWig
   - pip
