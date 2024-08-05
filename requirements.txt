@@ -10,13 +10,11 @@ numpy==2.0.1
 packaging==24.1
 pandas==2.2.2
 pillow==10.4.0
-pip==23.3.1
 pyBigWig==0.3.23
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 pytz==2024.1
 requests==2.32.3
-setuptools==69.0.2
 six==1.16.0
 tzdata==2024.1
-urllib3==.2.2
+urllib3==2.2.2
