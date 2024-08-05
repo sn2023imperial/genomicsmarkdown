@@ -1,0 +1,11 @@
+name: binder environment
+channels:
+  - conda-forge
+dependencies:
+  - gcc_linux-64
+  - curl
+  - zlib
+  - python = 3.9
+  - pip
+  - numpy
+  - pytest
