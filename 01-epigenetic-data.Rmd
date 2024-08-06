@@ -25,11 +25,28 @@ Some common epigenetic modifications include:
 3. **Chromatin Accessibility**: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed^[@melanie2021].
 <br>
 
-In studying gene expression and epigenetic modifications, we can more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.
+In studying gene expression and epigenetic modifications, we aim to more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.
 
 <br>
 
-### Common Epigenetic Techniques:
+### What Does DNA Look Like?
+
+As illustrated in the image above, DNA is structured as a double helix, with two complementary strands intertwined to form the characteristic helical shape. DNA consists of an extremely long sequence composed of four types of nucleotides: Adenine (A), Cytosine (C), Thymine (T), and Guanine (G).
+
+According to the National Cancer Institute (USA), nucleotides within the DNA double helix form complementary pairs—Adenine pairs with Thymine, and Guanine pairs with Cytosine^[@ncidefinitions]. These pairs are commonly referred to as base pairs. For example, if one strand of the double helix has the sequence "ATCGG", the complementary strand will have the sequence "TAGCC".
+
+Genes are sequences of DNA located at specific positions on chromosomes and can vary in length. Each gene encodes information necessary for producing proteins or RNA molecules, which are essential for the structure, function, and regulation of an organism^[@ncidefinitions]. The complete set of genetic material in an organism is known as its genome.
+
+![](images/dna_sequence.png)
+<div style="text-align: center;">
+
+Image highlighting part of a [dna sequence and base pairs](https://www.researchgate.net/profile/Pratik-Kanani/publication/341901570/figure/fig1/AS:898621708984321@1591259519483/A-human-DNA-and-Part-of-DNA-sequence-28-29.jpg).^[@kanani2020]
+
+</div>
+<br>
+
+
+### Common Epigenetic Sequencing Techniques:
 1.	***ATAC-Seq*** (Assay for Transposase-Accessible Chromatin with Sequencing):
 <br><br>o```      Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.```
 <br><br>o```      Output: Peaks indicating accessible chromatin regions.```
@@ -45,12 +62,62 @@ Epigenetic data can be represented in various forms, depending on the type of mo
 
 
 ### Representing epigenetic data
+<br><br>
+
+![](images/sequencing_pipeline.png)
+<div style="text-align: center;">
+
+Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images/HTseq.png) from high-throughput sequencing methods^[@akalin2020].
+
+</div>
+<br><br>
 1.	***Raw Sequence Reads:***
 <br><br>o```      These are the basic output of sequencing experiments, such as those from ChIP-Seq or ATAC-Seq.```
 <br><br>o```      Reads are processed and aligned to a reference genome before undergoing peak calling.```
 <br><br>
+
+Lets look at what a few lines of raw sequence read data consists of: 
+The data is taken from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/) (chIP-Seq). The accession ID of the raw sequence read data is [ENCFF397NRK](https://www.encodeproject.org/files/ENCFF397NRK/). Genomic data comes in many file formats. These specific raw sequence reads is a compressed FASTQ file.
+
+```{r setup-python, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(reticulate)
+use_virtualenv("notebook_tutorials/venv")
+```
+
+
+
+```{python echo=TRUE}
+import gzip
+from Bio import SeqIO
+import requests
+import io
+
+# Define the URL of the FASTQ file
+url = "https://www.encodeproject.org/files/ENCFF397NRK/@@download/ENCFF397NRK.fastq.gz"
+
+# Stream the file from the URL
+response = requests.get(url, stream=True)
+if response.status_code == 200:
+    # Use BytesIO to handle the file content in memory
+    with io.BytesIO(response.content) as file_content:
+        with gzip.open(file_content, "rt") as handle:
+            for i, record in enumerate(SeqIO.parse(handle, "fastq")):
+                if i >= 3:
+                    break
+                print(f"ID: {record.id}")
+                print(f"Sequence: {record.seq}")
+                print(f"Quality Scores: {record.letter_annotations['phred_quality']}")
+                print()  # Newline for better readability
+else:
+    print(f"Failed to retrieve the file: Status code {response.status_code}")
+
+```
+
+As you can see, each data entry is a DNA sequence (read). While I'm only showing the first three entries, for each experiment there are millions of sequencing reads. The quality scores indicate the confidence of each base call in the sequence. Higher scores suggest higher confidence. The scores are in Phred format, where a score of 20 corresponds to a 99% base call accuracy, 30 corresponds to 99.9%, and so on.^[@green]
+<br><br>
 2.	***Peak Calling:***
-<br><br>o```      A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites) or accessible chromatin regions.```
+<br><br>o```      A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites or accessible chromatin regions).```
 <br><br>o```      Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.```
 <br><br>
 
@@ -72,7 +139,13 @@ o ***Types of Peaks:***
 ***Example Data Pipeline***
 </div>
 
-![](images/chIP-Seq_pipeline.png "Example Data Pipeline")
+
+
+<a href="images/chIP-Seq_pipeline.png" target="_blank">
+    <img src="images/chIP-Seq_pipeline.png" alt="Example Data Pipeline" style="width:100%; max-width:2000px;">
+</a>
+
+
 
 <div style="text-align: center;">
 [encodeproject.org](https://www.encodeproject.org/experiments/ENCSR817LUF/){target="_blank"}
@@ -85,31 +158,7 @@ This example data pipeline originates from a ChIP-seq experiment targeting the H
 
 ### Example Data Representations:
 
-<br>
-The following is an example of what this same chIP-Seq data targeting the H3K36me3 histone modification in brain tissue looks like using UCSC's Genome Browser. The pseudoreplicated peaks represent categorically, the significant locations along the genome where the H3K36me3 histone modification is present.
-<br>
-
-<iframe src="myhtml/ucsc_genome_browser.html" width="100%" height="510"></iframe>
-<div style="text-align: center;">
-</div>
-<div style="text-align: center;">
-[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11084744%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27){target="_blank"}
-</div
-
-<br><br><br><br><br><br><br>
-
-<br>
-The following is an example of ATAC-Seq data from an experiment on T-helper 17 cells (a type of immune system cell). Recall that the ATAC-Seq method aims to find chromatin regions that are accessible for transcription factor binding. The p-value and fold change graphs show continuous peaks, while the IDR thresholded peaks and pseudoreplicated peaks represent the significant locations of accessible chromatin along the genome.
-<br>
-
-<iframe src="myhtml/ucsc_gb_atacseq.html" width="100%" height="510"></iframe>
-<div style="text-align: center;">
-</div>
-<div style="text-align: center;">
-[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A88379533%2D113275174&hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW){target="_blank"}
-</div
-
-<br>
+SIMPLE PICTURES
 
 ### Transformations to stop extreme p-values
 When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine). 
@@ -117,7 +166,18 @@ When utlising genomic data which incorporates p-values, it is important to consi
 $\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)$
 <br>
 
-The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing depth while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage.
+
+
+The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing depth while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage. The graph below visualises how the transformation works. While extreme values are transformed logarithmically, the smaller values are barely transformed as the function for smaller values is more linear in nature. 
+
+![](images/arcsinh.png)
+
+<div style="text-align: center;">
+
+Plot of [Arcsinh Transformation](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png) compared to a log function, made with Desmos available under [CC BY-SA 4.0.](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png) Text, arrows, and box shape added to image.
+
+
+</div>
 
 ## Sources of epigenetic data
 There are numerous public data banks which contain genomic datasets ready to be downloaded.
@@ -140,9 +200,43 @@ The Encode Project contains a large amount of publicly available genomic data ea
 The largest genomic data bank is the [UK Biobank](https://www.ukbiobank.ac.uk/){target="_blank"}, however they require that you apply for access to their datasets.
 <br>
 
-## Handling bigWig files
 
+## UCSC'S Genome Browser
+
+<br>
+The UCSC Genome Browser is a powerful and versatile tool that allows the visualisation and exploration of many sets of genomic data, especially bigWig files. It offers an extensive collection of genome assemblies, annotation tracks, and functional data, enabling users to examine gene structures, regulatory elements, and genetic variations. With its user-friendly interface and customisable display options, the UCSC Genome Browser facilitates detailed genomic analyses and supports a wide range of applications in genomics and bioinformatics. Whether you're investigating gene functions, exploring genetic variants, or studying comparative genomics, the UCSC Genome Browser serves as an essential resource for understanding complex genomic information. It is also possible to load and visualise genomic data from other sources such as Encode. While the visualisations are extensive, as you can explore below, the browser can be quite overwhelming for first time users. 
+<br>
+
+<br>
+The following is an example of what the same chIP-Seq data targeting the H3K36me3 histone modification in brain tissue looks like using UCSC's Genome Browser. The pseudoreplicated peaks represent categorically, the significant locations along the genome where the H3K36me3 histone modification is present.
+<br>
+
+<iframe src="myhtml/ucsc_genome_browser.html" width="100%" height="510"></iframe>
+<div style="text-align: center;">
+</div>
+<div style="text-align: center;">
+[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11084744%2D11095920&hgsid=2307713234_Kap236Tjt6ZGnnNrXMkIhq2Ajn27){target="_blank"}
+</div>
+
+<br><br><br><br><br>
+
+<br>
+The following is an example of ATAC-Seq data from an experiment on T-helper 17 cells (a type of immune system cell). Recall that the ATAC-Seq method aims to find chromatin regions that are accessible for transcription factor binding. The p-value and fold change graphs show continuous peaks, while the IDR thresholded peaks and pseudoreplicated peaks represent the significant locations of accessible chromatin along the genome.
+<br>
+
+<iframe src="myhtml/ucsc_gb_atacseq.html" width="100%" height="510"></iframe>
+<div style="text-align: center;">
+</div>
+<div style="text-align: center;">
+[UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A88379533%2D113275174&hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW){target="_blank"}
+</div
+
+<br>
+
+## Handling bigWig files
+BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. <br>
+
+<a href="https://mybinder.org/v2/gh/sn2023imperial/genomicsmarkdown/main?labpath=notebook_tutorials%2FTutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs</a>
 
 ## Data loaders and pre-processing
 ## Dealing with missing data (oversampling, undersampling, weighting)
-
