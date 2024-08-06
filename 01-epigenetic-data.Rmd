@@ -77,7 +77,7 @@ Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images
 <br><br>
 
 Lets look at what a few lines of raw sequence read data consists of: 
-The data is taken from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/) (chIP-Seq). The accession ID of the raw sequence read data is [ENCFF397NRK](https://www.encodeproject.org/files/ENCFF397NRK/). Genomic data comes in many file formats. These specific raw sequence reads is a compressed FASTQ file.
+The data is taken from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/) (chIP-Seq). The accession ID of the raw sequence read data is [ENCFF397NRK](https://www.encodeproject.org/files/ENCFF397NRK/). Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.
 
 ```{r setup-python, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -126,7 +126,9 @@ As you can see, each data entry is a DNA sequence (read). While I'm only showing
 <br><br>
 o ***P-value or Fold-change:***
 <br><br>P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
-<br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
+<br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal. <br>
+
+![](images/coverage_p.png)
 <br><br>
 o ***Types of Peaks:***
 <br><br>Categorical Peaks: Simple yes/no indication of a peak’s presence.
