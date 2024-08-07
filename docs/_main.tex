@@ -120,7 +120,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-08-06}
+\date{2024-08-07}
 
 \begin{document}
 \maketitle
@@ -208,7 +208,7 @@ o\texttt{These\ are\ the\ basic\ output\ of\ sequencing\ experiments,\ such\ as\
 o\texttt{Reads\ are\ processed\ and\ aligned\ to\ a\ reference\ genome\ before\ undergoing\ peak\ calling.}
 
 Lets look at what a few lines of raw sequence read data consists of:
-The data is taken from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF} (chIP-Seq). The accession ID of the raw sequence read data is \href{https://www.encodeproject.org/files/ENCFF397NRK/}{ENCFF397NRK}. Genomic data comes in many file formats. These specific raw sequence reads is a compressed FASTQ file.
+The data is taken from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF} (chIP-Seq). The accession ID of the raw sequence read data is \href{https://www.encodeproject.org/files/ENCFF397NRK/}{ENCFF397NRK}. Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -261,6 +261,8 @@ o\texttt{Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ acces
 o \textbf{\emph{P-value or Fold-change:}}
 P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
 Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
+
+\includegraphics{images/coverage_p.png}
 o \textbf{\emph{Types of Peaks:}}
 Categorical Peaks: Simple yes/no indication of a peak's presence.
 Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.
@@ -317,7 +319,9 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 
 BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data.
 
-Tutorial 1: Dealing with bigWigs
+Tutorial 1: Dealing with bigWigs (interactive)
+
+Tutorial 1: Dealing with bigWigs (nbviewer)
 
 \section{Data loaders and pre-processing}\label{data-loaders-and-pre-processing}
 
