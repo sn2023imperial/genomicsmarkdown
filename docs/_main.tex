@@ -36,46 +36,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -171,7 +131,7 @@ In studying gene expression and epigenetic modifications, we aim to more closely
 
 As illustrated in the image above, DNA is structured as a double helix, with two complementary strands intertwined to form the characteristic helical shape. DNA consists of an extremely long sequence composed of four types of nucleotides: Adenine (A), Cytosine (C), Thymine (T), and Guanine (G).
 
-According to the National Cancer Institute (USA), nucleotides within the DNA double helix form complementary pairs---Adenine pairs with Thymine, and Guanine pairs with Cytosine\footnote{\citet{ncidefinitions}}. These pairs are commonly referred to as base pairs. For example, if one strand of the double helix has the sequence ``ATCGG'', the complementary strand will have the sequence ``TAGCC''.
+According to the National Cancer Institute (USA), nucleotides within the DNA double helix form complementary pairs---Adenine pairs with Thymine, and Guanine pairs with Cytosine\footnote{\citet{ncidefinitions}}. These pairs are commonly referred to as base pairs (bps). For example, if one strand of the double helix has the sequence ``ATCGG'', the complementary strand will have the sequence ``TAGCC''.
 
 Genes are sequences of DNA located at specific positions on chromosomes and can vary in length. Each gene encodes information necessary for producing proteins or RNA molecules, which are essential for the structure, function, and regulation of an organism\footnote{\citet{ncidefinitions}}. The complete set of genetic material in an organism is known as its genome.
 
@@ -199,6 +159,8 @@ Epigenetic data can be represented in various forms, depending on the type of mo
 
 \subsection{Representing epigenetic data}\label{representing-epigenetic-data}
 
+Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they `pile up' to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also examine mismatches where a read's base differs from the genome's base, and use them to identify SNPs (\href{https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism}{single nucleotide polymorphisms})\footnote{\citet{ncidefinitions}}. This mismatch information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.\footnote{\citet{akalin2020}}
+
 \includegraphics{images/sequencing_pipeline.png}
 
 Image showing the \href{https://compgenomr.github.io/book/images/HTseq.png}{sequencing pipeline} from high-throughput sequencing methods\footnote{\citet{akalin2020}}.
@@ -210,33 +172,7 @@ o\texttt{Reads\ are\ processed\ and\ aligned\ to\ a\ reference\ genome\ before\ 
 Lets look at what a few lines of raw sequence read data consists of:
 The data is taken from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF} (chIP-Seq). The accession ID of the raw sequence read data is \href{https://www.encodeproject.org/files/ENCFF397NRK/}{ENCFF397NRK}. Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\ImportTok{import}\NormalTok{ gzip}
-\ImportTok{from}\NormalTok{ Bio }\ImportTok{import}\NormalTok{ SeqIO}
-\ImportTok{import}\NormalTok{ requests}
-\ImportTok{import}\NormalTok{ io}
-
-\CommentTok{\# Define the URL of the FASTQ file}
-\NormalTok{url }\OperatorTok{=} \StringTok{"https://www.encodeproject.org/files/ENCFF397NRK/@@download/ENCFF397NRK.fastq.gz"}
-
-\CommentTok{\# Stream the file from the URL}
-\NormalTok{response }\OperatorTok{=}\NormalTok{ requests.get(url, stream}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
-\ControlFlowTok{if}\NormalTok{ response.status\_code }\OperatorTok{==} \DecValTok{200}\NormalTok{:}
-    \CommentTok{\# Use BytesIO to handle the file content in memory}
-    \ControlFlowTok{with}\NormalTok{ io.BytesIO(response.content) }\ImportTok{as}\NormalTok{ file\_content:}
-        \ControlFlowTok{with}\NormalTok{ gzip.}\BuiltInTok{open}\NormalTok{(file\_content, }\StringTok{"rt"}\NormalTok{) }\ImportTok{as}\NormalTok{ handle:}
-            \ControlFlowTok{for}\NormalTok{ i, record }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(SeqIO.parse(handle, }\StringTok{"fastq"}\NormalTok{)):}
-                \ControlFlowTok{if}\NormalTok{ i }\OperatorTok{\textgreater{}=} \DecValTok{3}\NormalTok{:}
-                    \ControlFlowTok{break}
-                \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"ID: }\SpecialCharTok{\{}\NormalTok{record}\SpecialCharTok{.}\BuiltInTok{id}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-                \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Sequence: }\SpecialCharTok{\{}\NormalTok{record}\SpecialCharTok{.}\NormalTok{seq}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-                \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Quality Scores: }\SpecialCharTok{\{}\NormalTok{record}\SpecialCharTok{.}\NormalTok{letter\_annotations[}\StringTok{\textquotesingle{}phred\_quality\textquotesingle{}}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-                \BuiltInTok{print}\NormalTok{()  }\CommentTok{\# Newline for better readability}
-\ControlFlowTok{else}\NormalTok{:}
-    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Failed to retrieve the file: Status code }\SpecialCharTok{\{}\NormalTok{response}\SpecialCharTok{.}\NormalTok{status\_code}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Note: The script I used involved streaming the data directly from a URL using the requests library. While files containing genomic data are generally quite large, for computational efficiency it is recommended that data be downloaded locally.
 
 \begin{verbatim}
 ## ID: B091JABXX110402:1:2204:12975:184709
@@ -252,10 +188,12 @@ The data is taken from Encode Experiment \href{https://www.encodeproject.org/exp
 ## Quality Scores: [33, 33, 36, 37, 31, 34, 34, 36, 37, 36, 29, 33, 35, 36, 39, 37, 32, 33, 35, 37, 34, 37, 33, 34, 36, 38, 39, 25, 32, 35, 36, 38, 37, 38, 32, 32]
 \end{verbatim}
 
-As you can see, each data entry is a DNA sequence (read). While I'm only showing the first three entries, for each experiment there are millions of sequencing reads. The quality scores indicate the confidence of each base call in the sequence. Higher scores suggest higher confidence. The scores are in Phred format, where a score of 20 corresponds to a 99\% base call accuracy, 30 corresponds to 99.9\%, and so on.\footnote{\citet{green}}
+As you can see, each data entry is a DNA sequence (read). While I'm only showing the first three entries, for each experiment there are millions of sequencing reads. The quality scores indicate the confidence of each base call in the sequence. Higher scores suggest higher confidence. The scores are in Phred format, where a score of 20 corresponds to a 99\% base call accuracy, 30 corresponds to 99.9\%, 40 corresponds to 99.99\%, and so on.\footnote{\citet{green}}
 2. \textbf{\emph{Peak Calling:}}
 o\texttt{A\ method\ used\ to\ identify\ regions\ in\ the\ genome\ where\ there\ is\ significant\ enrichment\ of\ sequencing\ reads.\ This\ indicates\ the\ presence\ of\ DNA-protein\ interactions\ (e.g.,\ transcription\ factor\ binding\ sites\ or\ accessible\ chromatin\ regions).}
 o\texttt{Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ accessibility\ are\ concentrated.}
+
+A common peak calling algorithm is \href{https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html}{MACS2}. Essentially, aligned sequencing reads are aggregated into regions where they `pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, with the continuous -log10(p-value) often averaged over bins (e.g., 25 base pairs). While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment. In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites\footnote{\citet{wilbanks2010}}. In ATAC-seq, the peaks primarily reflect regions of open chromatin.
 
 \textbf{\emph{Representing Peaks:}}
 o \textbf{\emph{P-value or Fold-change:}}
@@ -263,6 +201,7 @@ P-value: Indicates the statistical significance of the peak, helping to distingu
 Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
 
 \includegraphics{images/coverage_p.png}
+This image shows the signal p-value coverage over a small region (11,176bps) in chromosome one from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF} (The same chIP-Seq experiment we saw the raw sequence reads from). For further context, experiment ENCSR817LUF targets the H3K36me3 histone modification in brain tissue. The experiment aims to map the locations where the H3K36me3 histone modification is present along the genome. Therefore the peaks represent regions of the genome where the the H3K36me3 histone modification is enriched compared to the background or control. The accession ID of the signal p-value data is \href{https://www.encodeproject.org/files/ENCFF601VTB/}{ENCFF601VTB}. Genomic data comes in many file formats. This specific signal p-value data is a bigWig file.
 o \textbf{\emph{Types of Peaks:}}
 Categorical Peaks: Simple yes/no indication of a peak's presence.
 Continuous Peaks: More nuanced representation that includes the intensity or enrichment level of the peak, often visualized as a signal track.
@@ -272,11 +211,7 @@ Thresholded/Pseudoreplicated Peaks: Usually categorical, these peaks are of high
 
 \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{encodeproject.org}
 
-This example data pipeline originates from a ChIP-seq experiment targeting the H3K36me3 histone modification in brain tissue. The aim of the experiement is to map the locations where the H3K36me3 histone modification is present along the genome. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g.~peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.
-
-\subsection{Example Data Representations:}\label{example-data-representations}
-
-SIMPLE PICTURES
+This is an example data pipeline from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF}, the same chIP-Seq experiment we saw the raw sequence reads, and signal p-value coverage from. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g.~peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.
 
 \subsection{Transformations to stop extreme p-values}\label{transformations-to-stop-extreme-p-values}
 
@@ -317,13 +252,17 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 
 \section{Handling bigWig files}\label{handling-bigwig-files}
 
-BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data.
+BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.
+
+The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool, which outputs signals averaged over 25 base pair bins. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 
 Tutorial 1: Dealing with bigWigs (interactive)
 
 Tutorial 1: Dealing with bigWigs (nbviewer)
 
-\section{Data loaders and pre-processing}\label{data-loaders-and-pre-processing}
+\section{Data loaders and simplifying pre-processing}\label{data-loaders-and-simplifying-pre-processing}
+
+Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as \href{https://kipoi.org/kipoiseq/dataloaders/}{``Kipoi Dataloader''}, and \href{https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md}{``Dataloader for BigWig files''}.\footnote{\citet{retel_fast_2024}}, depending on the data used and model you build, they won't cover all of the use cases.
 
 \section{Dealing with missing data (oversampling, undersampling, weighting)}\label{dealing-with-missing-data-oversampling-undersampling-weighting}
 

@@ -4,12 +4,11 @@ what-does-dna-look-like
 common-epigenetic-sequencing-techniques
 what-does-epigenetic-data-look-like
 representing-epigenetic-data
-example-data-representations
 transformations-to-stop-extreme-p-values
 sources-of-epigenetic-data
 ucscs-genome-browser
 handling-bigwig-files
-data-loaders-and-pre-processing
+data-loaders-and-simplifying-pre-processing
 dealing-with-missing-data-oversampling-undersampling-weighting
 loss-functions-and-peak-metrics
 base-pair-averaging
