@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-06" />
+<meta name="date" content="2024-08-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -306,7 +306,7 @@ Some common epigenetic modifications include:</p>
 <br><br>o<code>Reads are processed and aligned to a reference genome before undergoing peak calling.</code>
 <br><br></p>
 <p>Lets look at what a few lines of raw sequence read data consists of:
-The data is taken from Encode Experiment <a href="https://www.encodeproject.org/experiments/ENCSR817LUF/">ENCSR817LUF</a> (chIP-Seq). The accession ID of the raw sequence read data is <a href="https://www.encodeproject.org/files/ENCFF397NRK/">ENCFF397NRK</a>. Genomic data comes in many file formats. These specific raw sequence reads is a compressed FASTQ file.</p>
+The data is taken from Encode Experiment <a href="https://www.encodeproject.org/experiments/ENCSR817LUF/">ENCSR817LUF</a> (chIP-Seq). The accession ID of the raw sequence read data is <a href="https://www.encodeproject.org/files/ENCFF397NRK/">ENCFF397NRK</a>. Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="epigenetic-data.html#cb1-1" tabindex="-1"></a><span class="im">import</span> gzip</span>
 <span id="cb1-2"><a href="epigenetic-data.html#cb1-2" tabindex="-1"></a><span class="im">from</span> Bio <span class="im">import</span> SeqIO</span>
 <span id="cb1-3"><a href="epigenetic-data.html#cb1-3" tabindex="-1"></a><span class="im">import</span> requests</span>
@@ -352,7 +352,8 @@ The data is taken from Encode Experiment <a href="https://www.encodeproject.org/
 <br><br>
 o <strong><em>P-value or Fold-change:</em></strong>
 <br><br>P-value: Indicates the statistical significance of the peak, helping to distinguish true peaks from background noise.
-<br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal.
+<br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal. <br></p>
+<p><img src="images/coverage_p.png" />
 <br><br>
 o <strong><em>Types of Peaks:</em></strong>
 <br><br>Categorical Peaks: Simple yes/no indication of a peak’s presence.
@@ -441,7 +442,9 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 <div id="handling-bigwig-files" class="section level2 hasAnchor" number="1.5">
 <h2><span class="header-section-number">1.5</span> Handling bigWig files<a href="epigenetic-data.html#handling-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. <br></p>
-<p><a href="https://mybinder.org/v2/gh/sn2023imperial/genomicsmarkdown/main?labpath=notebook_tutorials%2FTutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs</a></p>
+<p><a href="https://mybinder.org/v2/gh/sn2023imperial/genomicsmarkdown/main?labpath=notebook_tutorials%2FTutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (interactive)</a></p>
+<p><br></p>
+<p><a href="https://nbviewer.org/github/sn2023imperial/genomicsmarkdown/blob/main/notebook_tutorials/Tutorial_1_bigWigs.ipynb#" target="_blank">Tutorial 1: Dealing with bigWigs (nbviewer)</a></p>
 </div>
 <div id="data-loaders-and-pre-processing" class="section level2 hasAnchor" number="1.6">
 <h2><span class="header-section-number">1.6</span> Data loaders and pre-processing<a href="epigenetic-data.html#data-loaders-and-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
