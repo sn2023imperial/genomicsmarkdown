@@ -238,7 +238,7 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 ## Handling bigWig files
 BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. <br>
 
-<a href="https://mybinder.org/v2/gh/sn2023imperial/genomicsmarkdown/main?labpath=notebook_tutorials%2FTutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (interactive)</a>
+<a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (interactive)</a>
 
 <br>
 
