@@ -242,7 +242,7 @@ BigWig files can be quite tricky to deal with. However, libraries such as pyBigW
 
 <br>
 
-<a href="https://nbviewer.org/github/sn2023imperial/genomicsmarkdown/blob/main/notebook_tutorials/Tutorial_1_bigWigs.ipynb#" target="_blank">Tutorial 1: Dealing with bigWigs (nbviewer)</a>
+<a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (nbviewer)</a>
 
 
 
