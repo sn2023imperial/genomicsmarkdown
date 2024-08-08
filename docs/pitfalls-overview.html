@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-07" />
+<meta name="date" content="2024-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,6 @@ div.csl-indent {
 <li class="chapter" data-level="12.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>12.3</b> Confounding</a></li>
 <li class="chapter" data-level="12.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>12.4</b> Leaky pre-processing</a></li>
 <li class="chapter" data-level="12.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>12.5</b> Unbalanced classes</a></li>
-<li class="chapter" data-level="12.6" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#balancing-the-proportion-of-peaks-no-peaks-in-validation-sets"><i class="fa fa-check"></i><b>12.6</b> Balancing the proportion of peaks / no-peaks in validation sets</a></li>
 </ul></li>
 <li class="part"><span><b>V Model interpretability</b></span></li>
 <li class="chapter" data-level="13" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>13</b> Creating and visualising a simple model</a></li>
@@ -194,9 +193,9 @@ div.csl-indent {
 </div>
 <div id="unbalanced-classes" class="section level2 hasAnchor" number="12.5">
 <h2><span class="header-section-number">12.5</span> Unbalanced classes<a href="pitfalls-overview.html#unbalanced-classes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-</div>
-<div id="balancing-the-proportion-of-peaks-no-peaks-in-validation-sets" class="section level2 hasAnchor" number="12.6">
-<h2><span class="header-section-number">12.6</span> Balancing the proportion of peaks / no-peaks in validation sets<a href="pitfalls-overview.html#balancing-the-proportion-of-peaks-no-peaks-in-validation-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In genomics, imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, models can threaten to over-learn the majority class and under-learn the minority class. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. The extensive size of the human genome exacerbates this issue, especially in problems related to non-coding variants, such as predicting chromatin states, gene expression, and disease status from sequence data.</p>
+<p>Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.
+## Balancing the proportion of peaks / no-peaks in validation sets</p>
 
 </div>
 </div>

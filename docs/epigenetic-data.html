@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-07" />
+<meta name="date" content="2024-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,6 @@ div.csl-indent {
 <li class="chapter" data-level="12.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>12.3</b> Confounding</a></li>
 <li class="chapter" data-level="12.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>12.4</b> Leaky pre-processing</a></li>
 <li class="chapter" data-level="12.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>12.5</b> Unbalanced classes</a></li>
-<li class="chapter" data-level="12.6" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#balancing-the-proportion-of-peaks-no-peaks-in-validation-sets"><i class="fa fa-check"></i><b>12.6</b> Balancing the proportion of peaks / no-peaks in validation sets</a></li>
 </ul></li>
 <li class="part"><span><b>V Model interpretability</b></span></li>
 <li class="chapter" data-level="13" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>13</b> Creating and visualising a simple model</a></li>
@@ -368,6 +367,16 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 </div>
 <div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="1.7">
 <h2><span class="header-section-number">1.7</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> Imbalanced data will be further discussed in the pitfalls section.</p>
+<p>Methods for dealing with class imbalances: <br></p>
+<ul>
+<li><p><a href="https://imbalanced-learn.org/stable/user_guide.html#user-guide">Scikit-learn’s ‘imbalance-learn’ package</a> (Oversampling, Undersampling and Weighting)<br>
+“Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.”</p></li>
+<li><p><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/">SMOTE</a> (Oversampling) <br>
+“a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.” <br></p></li>
+<li><p><a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html">ADASYN</a> (Oversampling) <br>
+“similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.” <br></p></li>
+</ul>
 
 </div>
 </div>
@@ -406,6 +415,9 @@ Shahid, Zainab, Brittany Simpson, Kathleen H. Miao, and Gurdeep Singh. 2023. <em
 <div id="ref-Kouzarides2007" class="csl-entry">
 T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. National Library of Medicine. <a href="https://doi.org/10.1016/j.cell.2007.02.005">https://doi.org/10.1016/j.cell.2007.02.005</a>.
 </div>
+<div id="ref-whalen2022" class="csl-entry">
+Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
+</div>
 <div id="ref-wilbanks2010" class="csl-entry">
 Wilbanks, Elizabeth, and Marc Facciotti. 2010. <em>Evaluation of Algorithm Performance in ChIP-Seq Peak Detection</em>. Plos One Journal. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471</a>.
 </div>
@@ -428,6 +440,7 @@ Wilbanks, Elizabeth, and Marc Facciotti. 2010. <em>Evaluation of Algorithm Perfo
 <li id="fn13"><p><span class="citation">Green and Ewing (<a href="#ref-green">n.d.</a>)</span><a href="epigenetic-data.html#fnref13" class="footnote-back">↩︎</a></p></li>
 <li id="fn14"><p><span class="citation">Wilbanks and Facciotti (<a href="#ref-wilbanks2010">2010</a>)</span><a href="epigenetic-data.html#fnref14" class="footnote-back">↩︎</a></p></li>
 <li id="fn15"><p><span class="citation">Retel et al. (<a href="#ref-retel_fast_2024">2024</a>)</span><a href="epigenetic-data.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="epigenetic-data.html#fnref16" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

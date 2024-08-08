@@ -80,7 +80,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-08-07}
+\date{2024-08-08}
 
 \begin{document}
 \maketitle
@@ -266,6 +266,22 @@ Data loaders are scripts/functions to load batches of data into your model. They
 
 \section{Dealing with missing data (oversampling, undersampling, weighting)}\label{dealing-with-missing-data-oversampling-undersampling-weighting}
 
+In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.\footnote{\citet{whalen2022}} Imbalanced data will be further discussed in the pitfalls section.
+
+Methods for dealing with class imbalances:
+
+\begin{itemize}
+\item
+  \href{https://imbalanced-learn.org/stable/user_guide.html\#user-guide}{Scikit-learn's `imbalance-learn' package} (Oversampling, Undersampling and Weighting)
+  ``Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.''
+\item
+  \href{https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/}{SMOTE} (Oversampling)
+  ``a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.''
+\item
+  \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html}{ADASYN} (Oversampling)
+  ``similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.''
+\end{itemize}
+
 \part{Training models with DNA input}\label{part-training-models-with-dna-input}
 
 \chapter{Loss functions, and peak metrics}\label{loss-functions-and-peak-metrics}
@@ -308,7 +324,10 @@ Data loaders are scripts/functions to load batches of data into your model. They
 
 \section{Unbalanced classes}\label{unbalanced-classes}
 
-\section{Balancing the proportion of peaks / no-peaks in validation sets}\label{balancing-the-proportion-of-peaks-no-peaks-in-validation-sets}
+In genomics, imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, models can threaten to over-learn the majority class and under-learn the minority class. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. The extensive size of the human genome exacerbates this issue, especially in problems related to non-coding variants, such as predicting chromatin states, gene expression, and disease status from sequence data.
+
+Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.
+\#\# Balancing the proportion of peaks / no-peaks in validation sets
 
 \part{Model interpretability}\label{part-model-interpretability}
 

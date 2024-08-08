@@ -266,4 +266,20 @@ Data loaders are scripts/functions to load batches of data into your model. They
 
 ## Dealing with missing data (oversampling, undersampling, weighting)
 
+In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.^[@whalen2022] Imbalanced data will be further discussed in the pitfalls section. 
+
+Methods for dealing with class imbalances: <br> 
+
+- [Scikit-learn's 'imbalance-learn' package](https://imbalanced-learn.org/stable/user_guide.html#user-guide) (Oversampling, Undersampling and Weighting)<br>
+"Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes."
+
+- [SMOTE](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/) (Oversampling) <br>
+"a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space." <br>
+- [ADASYN](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html) (Oversampling) <br>
+"similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled." <br>
+
+
+
+
+
 

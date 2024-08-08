@@ -28,7 +28,6 @@ dependent-examples
 confounding
 leaky-pre-processing
 unbalanced-classes
-balancing-the-proportion-of-peaks-no-peaks-in-validation-sets
 creating-and-visualising-a-simple-model
 tf-mo-disco
 using-the-grelu-model-zoo
