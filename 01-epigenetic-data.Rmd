@@ -251,11 +251,11 @@ BigWig files can be quite tricky to deal with. However, libraries such as pyBigW
 The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool, which outputs signals averaged over 25 base pair bins. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 <br>
 
-<a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (interactive)</a>
+<a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a>
 
 <br>
 
-<a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Dealing with bigWigs (nbviewer)</a>
+<a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)</a>
 
 
 
@@ -266,7 +266,9 @@ Data loaders are scripts/functions to load batches of data into your model. They
 
 ## Dealing with missing data (oversampling, undersampling, weighting)
 
-In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.^[@whalen2022] Imbalanced data will be further discussed in the pitfalls section. 
+In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.^[@whalen2022] 
+
+In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the pitfalls section, we will explore how a model performs with and without regions of zero signal. <br>
 
 Methods for dealing with class imbalances: <br> 
 
