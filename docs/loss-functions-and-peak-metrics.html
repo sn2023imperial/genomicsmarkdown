@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-08" />
+<meta name="date" content="2024-08-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,6 +179,62 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="loss-functions-and-peak-metrics" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">2</span> Loss functions, and peak metrics<a href="loss-functions-and-peak-metrics.html#loss-functions-and-peak-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>When selecting the optimal loss function for your machine learning model in genomics, the decision should be informed by the nature of the problem and the specific type of data you’re working with. The principles for choosing loss functions in genomics are similar to those in other machine learning contexts. For regression based tasks, while Mean Squared Error (mse) loss functions have been used, models utilising data and making predictions associated with reads or counts use a Poisson loss function. Another two common loss functions include Binary Cross-Entropy loss and Categorical Cross-Entropy loss, when dealing with classification type predictions.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a><br><br></p>
+<p><strong>Mean Squared Error (MSE):</strong>
+<br><br>
+• <u>Use Case:</u> Regression problems where the goal is to predict continuous values, such as gene expression or coverage levels. <br><br>
+<u>Example:</u><br> <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6" target="_blank">DeepImpute</a>, a deep neural network-based imputation algorithm that allows for accurate imputation of single-cell RNA-seq data. The model is used to estimate missing or low-quality gene expression values in single-cell RNA sequencing datasets. It uses a “weighted mean squared error (MSE) loss function that gives higher weights to genes with higher expression values. This emphasizes accuracy on high confidence values and avoids over penalizing genes with extremely low values (e.g., zeros)”.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>
+<br><br></p>
+<p><strong>Poisson Loss:</strong>
+<br><br>
+• <u>Use Case:</u> Count data where the number of events (e.g., read counts in chIP-seq data) follows a Poisson distribution.<br><br>
+<u>Example:</u><br> A deep learning architecture called <a href="https://www.nature.com/articles/s41592-021-01252-x" target="_blank">Enformer</a> was used to predict gene expression more accurately in 2021 by integrating long range interactions within the genome. It utilises a <a href="https://pytorch.org/docs/stable/generated/torch.nn.PoissonNLLLoss.html" target="_blank">poisson negative log-likelihood loss function</a> resulting in a model that was able to integrate information from up to 100 kilobases away.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>
+<br><br></p>
+<p><strong>Cross-Entropy Loss:</strong>
+<br><br>
+• <u>Use Case:</u> Classification problems where the goal is to predict binary outcomes.
+<br><br>
+<u>Example:</u><br> A convolutional neural network was employed to create a software pipeline called <a href="https://www.nature.com/articles/s41598-020-64655-4" target="_blank">CNN-Peaks</a>, designed to categorically detect ChIP-Seq peaks without relying on traditional peak calling methods or manual inspection. The model utilizes a binary cross-entropy loss function, which was weighted to account for the scarcity of peaks in the data.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>
+<br><br></p>
+<p><strong>Categorical Cross-Entropy Loss:</strong>
+<br><br>
+• <u>Use Case:</u> Multi-class classification problems.
+<br><br>
+<u>Example:</u><br> Researchers developed a combined <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10085982/" target="_blank">model</a> that integrates cell-free DNA (cfDNA) methylation profile data with ATAC-seq data to enhance cancer detection and tissue-of-origin localization. This approach combines both epigenomic and chromatin accessibility information to improve the accuracy of identifying the specific tissue or organ from which a cancerous signal originates. The model employs a categorical cross-entropy loss function within each component to optimize tissue-of-origin localization, allowing it to effectively determine the most likely source of the cancerous signal.<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>
+<br><br></p>
+<p>In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use an MSE loss function, however I also compare its results to a model with a Poisson loss function. It is important to remember that “loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))”<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> when optimising.</p>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-cedric2019" class="csl-entry">
+Arisdakessian, Cédric, Olivier Poirion, Breck Yunits, Xun Zhu, and Lana Garmire. 2019. <em>DeepImpute: An Accurate, Fast, and Scalable Deep Neural Network Method to Impute Single-Cell RNA-Seq Data</em>. Springer Nature. <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6</a>.
+</div>
+<div id="ref-avsec2021" class="csl-entry">
+Avsec, Žiga, Vikram Agarwal, Daniel Visentin, and et al. 2021. <em>Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions</em>. Springer Nature. <a href="https://www.nature.com/articles/s41592-021-01252-x">https://www.nature.com/articles/s41592-021-01252-x</a>.
+</div>
+<div id="ref-bae2017" class="csl-entry">
+Bae, Mingyun, Gyuhee Kim, Tae-Rim Lee, and et al. 2017. <em>Integrative Modeling of Tumor Genomes and Epigenomes for Enhanced Cancer Diagnosis by Cell-Free DNA</em>. Nature Communications. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10085982/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10085982/</a>.
+</div>
+<div id="ref-oh2020" class="csl-entry">
+Oh, Dongpin, Seth Strattan, Junho Hur, and et al. 2020. <em>CNN-Peaks: ChIP-Seq Peak Detection Pipeline Using Convolutional Neural Networks That Imitate Human Visual Inspection</em>. Springer Nature. <a href="https://www.nature.com/articles/s41598-020-64655-4">https://www.nature.com/articles/s41598-020-64655-4</a>.
+</div>
+<div id="ref-patterson2017" class="csl-entry">
+Patterson, Josh, and Adam Gibson. 2017. <em>Deep Learning: A Practitioner’s Approach</em>. O’Reilly Media, Inc. <a href="https://www.oreilly.com/library/view/deep-learning/9781491924570/">https://www.oreilly.com/library/view/deep-learning/9781491924570/</a>.
+</div>
+<div id="ref-toneyan2022" class="csl-entry">
+Toneyan, Shushan, Ziqi Tang, and Peter Koo. 2022. <em>Evaluating Deep Learning for Predicting Epigenomic Profiles</em>. Springer Nature. <a href="https://www.nature.com/articles/s42256-022-00570-9">https://www.nature.com/articles/s42256-022-00570-9</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="17">
+<li id="fn17"><p><span class="citation">Patterson and Gibson (<a href="#ref-patterson2017">2017</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p><span class="citation">Arisdakessian et al. (<a href="#ref-cedric2019">2019</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p><span class="citation">Oh et al. (<a href="#ref-oh2020">2020</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p><span class="citation">Bae et al. (<a href="#ref-bae2017">2017</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="loss-functions-and-peak-metrics.html#fnref22" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
