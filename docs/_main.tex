@@ -36,6 +36,46 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -80,7 +120,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-08-20}
+\date{2024-08-21}
 
 \begin{document}
 \maketitle
@@ -193,7 +233,14 @@ As you can see, each data entry is a DNA sequence (read). While I'm only showing
 o\texttt{A\ method\ used\ to\ identify\ regions\ in\ the\ genome\ where\ there\ is\ significant\ enrichment\ of\ sequencing\ reads.\ This\ indicates\ the\ presence\ of\ DNA-protein\ interactions\ (e.g.,\ transcription\ factor\ binding\ sites\ or\ accessible\ chromatin\ regions).}
 o\texttt{Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ accessibility\ are\ concentrated.}
 
-A common peak calling algorithm is \href{https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html}{MACS2}. Essentially, aligned sequencing reads are aggregated into regions where they `pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, with the continuous -log10(p-value) often averaged over bins (e.g., 25 base pairs). While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment. In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites\footnote{\citet{wilbanks2010}}. In ATAC-seq, the peaks primarily reflect regions of open chromatin.
+A common peak calling algorithm is \href{https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html}{MACS2}. Essentially, aligned sequencing reads are aggregated into regions where they `pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.\footnote{\citet{mistry2022}} In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.\footnote{\citet{wilbanks2010}} Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, base pair averaging is commonly used.
+
+Imagine you have a set of read coverage data from a sequencing experiment. At each base pair position along a chromosome, you have a read count representing how many times that base pair was sequenced. However, due to technical noise, these counts might fluctuate wildly from one base to the next. By applying base pair averaging over a window (e.g.~32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, and signal smoothing.
+\includegraphics{notebook_tutorials/bp_resolution.png}
+
+Figure showing a 32 base pair resolution following base pair averaging of CHip-seq data\footnote{\citet{patel2024}}
+
+As you will see in the tutorials, you can re-average your data to a higher base pair average before using it in machine learning models. This can be implemented to decrease dimensionality, reduce computational intensity and tailor the model to understanding regions of a certain scale.
 
 \textbf{\emph{Representing Peaks:}}
 o \textbf{\emph{P-value or Fold-change:}}
@@ -250,19 +297,23 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 
 \href{https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1\%3A88379533\%2D113275174&hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW}{UCSC Genome Browser}
 
-\section{Handling bigWig files}\label{handling-bigwig-files}
+\chapter{Pre-processing of bigWig files}\label{pre-processing-of-bigwig-files}
 
-BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.
+BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.
 
-The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool, which outputs signals averaged over 25 base pair bins. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
+The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 
 Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)
 
 Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)
 
+note: MyBinder reduced their computational capacity in April 2023. If the interactive tutorial becomes stuck at ``pulling image'', I've found that manually launching binder through \href{https://notebooks.gesis.org/binder/}{notebooks.gesis} has a higher success rate. Use the following information:
+url: \texttt{https://github.com/sn2023imperial/tutorial\_1}
+notebook file: \texttt{Tutorial\_1\_bigWigs.ipynb}
+
 \section{Data loaders and simplifying pre-processing}\label{data-loaders-and-simplifying-pre-processing}
 
-Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as \href{https://kipoi.org/kipoiseq/dataloaders/}{``Kipoi Dataloader''}, and \href{https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md}{``Dataloader for BigWig files''}.\footnote{\citet{retel_fast_2024}}, depending on the data used and model you build, they won't cover all of the use cases.
+Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as \href{https://kipoi.org/kipoiseq/dataloaders/}{``Kipoi Dataloader''}, and \href{https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md}{``Dataloader for BigWig files''}.\footnote{\citet{retel_fast_2024}}, depending on the data used and model you build, they won't cover all of the use cases. When building one yourself, the PyTorch library has its own \href{https://pytorch.org/tutorials/beginner/basics/data_tutorial.html}{dataset and dataloader} modules, which include creating custom datasets.
 
 \section{Dealing with missing data (oversampling, undersampling, weighting)}\label{dealing-with-missing-data-oversampling-undersampling-weighting}
 
@@ -308,9 +359,59 @@ Example: Researchers developed a combined \href{https://www.ncbi.nlm.nih.gov/pmc
 
 In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use an MSE loss function, however I also compare its results to a model with a Poisson loss function. It is important to remember that ``loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))''\footnote{\citet{toneyan2022}} when optimising.
 
-\chapter{Base pair averaging}\label{base-pair-averaging}
-
 \chapter{Training tricks}\label{training-tricks}
+
+\section{Training on reverse complement}\label{training-on-reverse-complement}
+
+As explained in Part 1, DNA has a double helix structure. When we one-hot encode a segment of DNA in our models using a reference genome, we typically represent only one strand of the double helix. The complement of this strand is the opposite strand, where Adenine (A) pairs with Thymine (T), and Cytosine (C) pairs with Guanine (G). The reverse complement of a DNA strand is obtained by first taking its complement and then reading it in the reverse direction.
+
+\includegraphics{images/reverse_complement.png}
+
+This figure shows the reverse complement of a DNA sequence\footnote{\citet{clark2021}}
+
+Training on DNA sequences and augmenting the data with their reverse complements has been shown to improve model accuracy, prediction, and interpretability in DNA sequence-related models. This approach involves ``treating the reverse complement DNA sequence as another sample'' \citep{cao2019}. By incorporating reverse complements, the model is exposed to a wider variety of sequence patterns, which helps reduce overfitting and enhances generalization. As a result, models become better at recognizing patterns regardless of strand orientation. Although the logic to obtain the reverse complement of a DNA strand is straightforward, the Bio.Seq module from the Biopython library provides a simple way to do this. Augmenting your dataset with reverse complements is usually done to training sets, but can be applied to validation and test sets as well.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ Bio.Seq }\ImportTok{import}\NormalTok{ Seq}
+
+\CommentTok{\# Example DNA sequence}
+\NormalTok{dna\_sequence }\OperatorTok{=}\NormalTok{ Seq(}\StringTok{"ATGCGTAC"}\NormalTok{)}
+
+\CommentTok{\# Generate the reverse complement}
+\NormalTok{reverse\_complement }\OperatorTok{=}\NormalTok{ dna\_sequence.reverse\_complement()}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Original Sequence: "}\NormalTok{, dna\_sequence)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Original Sequence:  ATGCGTAC
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Reverse Complement: "}\NormalTok{, reverse\_complement)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Reverse Complement:  GTACGCAT
+\end{verbatim}
+
+\#\#Training on sequence shifts
+Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking ``extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.\footnote{\citet{cao2019}}
+
+note:
+A paper on evaluating deep learning for predicting epigenomic profiles found that models trained with augmentations (reverse complement and jittering), ``yielded improved robustness, especially when trained on peak-centered data. On the other hand, models that were trained on coverage-threshold data already benefited from the randomly-centered profiles.''\footnote{\citet{toneyan2022}}
+
+How many epochs are typically used to train on?
+Which learning rates are commonly used?
+Hyper-parameter optimisation
+Raytune
+Successive halving algorithm (SHA) and Asynchronous SHA (ASHA) - ASHA is one of the current `best in class' hyperparam opt
+How to optimise parameters when the models become huge, e.g.~Enformer Celltyping
+How to do hyperparameter tuning when models become very large
 
 \chapter{Choosing which genomic regions to train on}\label{choosing-which-genomic-regions-to-train-on}
 

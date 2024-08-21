@@ -7,12 +7,12 @@ representing-epigenetic-data
 transformations-to-stop-extreme-p-values
 sources-of-epigenetic-data
 ucscs-genome-browser
-handling-bigwig-files
+pre-processing-of-bigwig-files
 data-loaders-and-simplifying-pre-processing
 dealing-with-missing-data-oversampling-undersampling-weighting
 loss-functions-and-peak-metrics
-base-pair-averaging
 training-tricks
+training-on-reverse-complement
 choosing-which-genomic-regions-to-train-on
 effect-of-differences-in-sequencing-depths
 reproducibility-of-machine-learning-models

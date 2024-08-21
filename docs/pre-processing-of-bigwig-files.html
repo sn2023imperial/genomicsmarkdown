@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>16 Fine tuning of Enformer | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
+  <title>2 Pre-processing of bigWig files | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
   <meta name="description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="16 Fine tuning of Enformer | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta property="og:title" content="2 Pre-processing of bigWig files | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="16 Fine tuning of Enformer | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta name="twitter:title" content="2 Pre-processing of bigWig files | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   
   <meta name="twitter:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="using-the-grelu-model-zoo.html"/>
-<link rel="next" href="incorporating-atac-seq-info.html"/>
+<link rel="prev" href="epigenetic-data.html"/>
+<link rel="next" href="loss-functions-and-peak-metrics.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -245,20 +245,65 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="fine-tuning-of-enformer" class="section level1 hasAnchor" number="16">
-<h1><span class="header-section-number">16</span> Fine tuning of Enformer<a href="fine-tuning-of-enformer.html#fine-tuning-of-enformer" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="pre-processing-of-bigwig-files" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Pre-processing of bigWig files<a href="pre-processing-of-bigwig-files.html#pre-processing-of-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC’s programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br></p>
+<p>The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
+<br></p>
+<p><a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a></p>
+<p><a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)</a>
+<br></p>
+<p><u>note:</u> <br>MyBinder reduced their computational capacity in April 2023. If the interactive tutorial becomes stuck at “pulling image”, I’ve found that manually launching binder through <a href="https://notebooks.gesis.org/binder/">notebooks.gesis</a> has a higher success rate. Use the following information:<br><br>
+url: <code>https://github.com/sn2023imperial/tutorial_1</code>
+<br>
+notebook file: <code>Tutorial_1_bigWigs.ipynb</code>
+<br></p>
+<div id="data-loaders-and-simplifying-pre-processing" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data loaders and simplifying pre-processing<a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as <a href="https://kipoi.org/kipoiseq/dataloaders/" target="_blank">“Kipoi Dataloader”</a>, and <a href="https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md" target="_blank">“Dataloader for BigWig files”</a>.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>, depending on the data used and model you build, they won’t cover all of the use cases. When building one yourself, the PyTorch library has its own <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank">dataset and dataloader</a> modules, which include creating custom datasets.</p>
+</div>
+<div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
+<p>In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the pitfalls section, we will explore how a model performs with and without regions of zero signal. <br></p>
+<p>Methods for dealing with class imbalances: <br></p>
+<ul>
+<li><p><a href="https://imbalanced-learn.org/stable/user_guide.html#user-guide" target="_blank">Scikit-learn’s ‘imbalance-learn’ package</a> (Oversampling, Undersampling and Weighting)<br>
+“Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.”</p></li>
+<li><p><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/" target="_blank">SMOTE</a> (Oversampling) <br>
+“a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.” <br></p></li>
+<li><p><a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html" target="_blank">ADASYN</a> (Oversampling) <br>
+“similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.” <br></p></li>
+</ul>
 
+</div>
 </div>
 
 
 
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-retel_fast_2024" class="csl-entry">
+Retel, Joren Sebastian, Andreas Poehlmann, Josh Chiou, Andreas Steffen, and Djork-Arné Clevert. 2024. <span>“A Fast Machine Learning Dataloader for Epigenetic Tracks from <span>BigWig</span> Files.”</span> <em>Bioinformatics</em> 40 (1): btad767. <a href="https://doi.org/10.1093/bioinformatics/btad767">https://doi.org/10.1093/bioinformatics/btad767</a>.
+</div>
+<div id="ref-whalen2022" class="csl-entry">
+Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="17">
+<li id="fn17"><p><span class="citation">Retel et al. (<a href="#ref-retel_fast_2024">2024</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref18" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="using-the-grelu-model-zoo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="incorporating-atac-seq-info.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="epigenetic-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loss-functions-and-peak-metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -289,7 +334,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-using-existing-models.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-epigenetic-data.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -33,9 +33,54 @@ When selecting the optimal loss function for your machine learning model in geno
 In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use an MSE loss function, however I also compare its results to a model with a Poisson loss function. It is important to remember that “loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))”^[@toneyan2022] when optimising.
 
 
-# Base pair averaging
-
 # Training tricks
+
+## Training on reverse complement
+
+As explained in Part 1, DNA has a double helix structure. When we one-hot encode a segment of DNA in our models using a reference genome, we typically represent only one strand of the double helix. The complement of this strand is the opposite strand, where Adenine (A) pairs with Thymine (T), and Cytosine (C) pairs with Guanine (G). The reverse complement of a DNA strand is obtained by first taking its complement and then reading it in the reverse direction.
+
+<br>
+![](images/reverse_complement.png)
+<div style="text-align: center;">
+
+This figure shows the reverse complement of a DNA sequence^[@clark2021]
+
+</div><br>
+
+Training on DNA sequences and augmenting the data with their reverse complements has been shown to improve model accuracy, prediction, and interpretability in DNA sequence-related models. This approach involves "treating the reverse complement DNA sequence as another sample" [@cao2019]. By incorporating reverse complements, the model is exposed to a wider variety of sequence patterns, which helps reduce overfitting and enhances generalization. As a result, models become better at recognizing patterns regardless of strand orientation. Although the logic to obtain the reverse complement of a DNA strand is straightforward, the Bio.Seq module from the Biopython library provides a simple way to do this. Augmenting your dataset with reverse complements is usually done to training sets, but can be applied to validation and test sets as well.
+<br>
+
+```{python echo=TRUE}
+from Bio.Seq import Seq
+
+# Example DNA sequence
+dna_sequence = Seq("ATGCGTAC")
+
+# Generate the reverse complement
+reverse_complement = dna_sequence.reverse_complement()
+
+print("Original Sequence: ", dna_sequence)
+print("Reverse Complement: ", reverse_complement)
+```
+
+<br>
+
+##Training on sequence shifts
+<br>
+Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking "extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.^[@cao2019]
+<br>
+
+<u>note:</u><br>
+A paper on evaluating deep learning for predicting epigenomic profiles found that models trained with augmentations (reverse complement and jittering), "yielded improved robustness, especially when trained on peak-centered data. On the other hand, models that were trained on coverage-threshold data already benefited from the randomly-centered profiles."^[@toneyan2022]
+
+How many epochs are typically used to train on?
+Which learning rates are commonly used?
+Hyper-parameter optimisation 
+Raytune
+Successive halving algorithm (SHA) and Asynchronous SHA (ASHA) - ASHA is one of the current ‘best in class’ hyperparam opt
+How to optimise parameters when the models become huge, e.g. Enformer Celltyping
+How to do hyperparameter tuning when models become very large
+
 
 # Choosing which genomic regions to train on
 

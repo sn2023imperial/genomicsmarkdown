@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-20" />
+<meta name="date" content="2024-08-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="loss-functions-and-peak-metrics.html"/>
+<link rel="next" href="pre-processing-of-bigwig-files.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -54,6 +54,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -115,14 +179,18 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
 <li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
-<li class="chapter" data-level="1.5" data-path="epigenetic-data.html"><a href="epigenetic-data.html#handling-bigwig-files"><i class="fa fa-check"></i><b>1.5</b> Handling bigWig files</a></li>
-<li class="chapter" data-level="1.6" data-path="epigenetic-data.html"><a href="epigenetic-data.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>1.6</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="1.7" data-path="epigenetic-data.html"><a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>1.7</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
+<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="2" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>2</b> Loss functions, and peak metrics</a></li>
-<li class="chapter" data-level="3" data-path="base-pair-averaging.html"><a href="base-pair-averaging.html"><i class="fa fa-check"></i><b>3</b> Base pair averaging</a></li>
-<li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a></li>
+<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#training-on-reverse-complement"><i class="fa fa-check"></i><b>4.1</b> Training on reverse complement</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>5</b> Choosing which genomic regions to train on</a></li>
 <li class="chapter" data-level="6" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>6</b> Effect of differences in sequencing depths</a></li>
 <li class="chapter" data-level="7" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>7</b> Reproducibility of machine learning models</a>
@@ -261,8 +329,15 @@ The data is taken from Encode Experiment <a href="https://www.encodeproject.org/
 <br><br>o<code>A method used to identify regions in the genome where there is significant enrichment of sequencing reads. This indicates the presence of DNA-protein interactions (e.g., transcription factor binding sites or accessible chromatin regions).</code>
 <br><br>o<code>Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.</code>
 <br><br></p>
-<p>A common peak calling algorithm is <a href="https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html">MACS2</a>. Essentially, aligned sequencing reads are aggregated into regions where they ‘pile up’ to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, with the continuous -log10(p-value) often averaged over bins (e.g., 25 base pairs). While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment. In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. In ATAC-seq, the peaks primarily reflect regions of open chromatin.</p>
-<p><br></p>
+<p>A common peak calling algorithm is <a href="https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html">MACS2</a>. Essentially, aligned sequencing reads are aggregated into regions where they ‘pile up’ to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used.</p>
+Imagine you have a set of read coverage data from a sequencing experiment. At each base pair position along a chromosome, you have a read count representing how many times that base pair was sequenced. However, due to technical noise, these counts might fluctuate wildly from one base to the next. By applying <u>base pair averaging</u> over a window (e.g. 32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, and signal smoothing.
+<img src="notebook_tutorials/bp_resolution.png" />
+<div style="text-align: center;">
+<p>Figure showing a 32 base pair resolution following base pair averaging of CHip-seq data<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
+</div>
+<p><br>
+As you will see in the tutorials, you can re-average your data to a higher base pair average before using it in machine learning models. This can be implemented to decrease dimensionality, reduce computational intensity and tailor the model to understanding regions of a certain scale.
+<br></p>
 <div style="margin-left: 40px;">
 <p><strong><em>Representing Peaks:</em></strong>
 <br><br>
@@ -352,38 +427,7 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 <p><a href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&amp;lastVirtModeType=default&amp;lastVirtModeExtraState=&amp;virtModeType=default&amp;virtMode=0&amp;nonVirtPosition=&amp;position=chr1%3A88379533%2D113275174&amp;hgsid=2307721306_mcnECXS4Hy0fNQ4yz3ZQTL7nimkW" target="_blank">UCSC Genome Browser</a></p>
 </div>
 </div>
-<div id="handling-bigwig-files" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Handling bigWig files<a href="epigenetic-data.html#handling-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>BigWig files can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC’s programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br></p>
-<p>The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool, which outputs signals averaged over 25 base pair bins. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
-<br></p>
-<p><a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a></p>
-<p><br></p>
-<p><a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)</a></p>
 </div>
-<div id="data-loaders-and-simplifying-pre-processing" class="section level2 hasAnchor" number="1.6">
-<h2><span class="header-section-number">1.6</span> Data loaders and simplifying pre-processing<a href="epigenetic-data.html#data-loaders-and-simplifying-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as <a href="https://kipoi.org/kipoiseq/dataloaders/">“Kipoi Dataloader”</a>, and <a href="https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md">“Dataloader for BigWig files”</a>.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, depending on the data used and model you build, they won’t cover all of the use cases.</p>
-</div>
-<div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="1.7">
-<h2><span class="header-section-number">1.7</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="epigenetic-data.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
-<p>In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the pitfalls section, we will explore how a model performs with and without regions of zero signal. <br></p>
-<p>Methods for dealing with class imbalances: <br></p>
-<ul>
-<li><p><a href="https://imbalanced-learn.org/stable/user_guide.html#user-guide">Scikit-learn’s ‘imbalance-learn’ package</a> (Oversampling, Undersampling and Weighting)<br>
-“Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.”</p></li>
-<li><p><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/">SMOTE</a> (Oversampling) <br>
-“a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.” <br></p></li>
-<li><p><a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html">ADASYN</a> (Oversampling) <br>
-“similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.” <br></p></li>
-</ul>
-
-</div>
-</div>
-
-
-
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-akalin2020" class="csl-entry">
@@ -404,20 +448,20 @@ Kanani, Pratik, and Mamta Padole. 2020. <em>Improving Pattern Matching Performan
 <div id="ref-melanie2021" class="csl-entry">
 Kappelmann-Fenzl, Melanie. 2021. <em>Design and Analysis of Epigenetics and ChIP-Sequencing Data</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-62490-3_12">https://doi.org/10.1007/978-3-030-62490-3_12</a>.
 </div>
+<div id="ref-mistry2022" class="csl-entry">
+Mistry, Meeta, Jihe Liu, Radhika Khetani, and et al. 2022. <em>Peak Calling with MACS2</em>. Github Pages. <a href="https://hbctraining.github.io/Intro-to-ChIPseq-flipped/lessons/06_peak_calling_macs.html">https://hbctraining.github.io/Intro-to-ChIPseq-flipped/lessons/06_peak_calling_macs.html</a>.
+</div>
+<div id="ref-patel2024" class="csl-entry">
+Patel, Jai. 2024. <em>Leveraging Genetic Diversity with Machine Learning</em>. Imperial College London.
+</div>
 <div id="ref-ralston2008" class="csl-entry">
 Ralston, Amy, and Kenna Shaw. 2008. <em>Gene Expression Regulates Cell Differentiation</em>. Nature Education. <a href="https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.">https://www.nature.com/scitable/topicpage/gene-expression-regulates-cell-differentiation-931/#:~:text=All%20of%20the%20cells%20within,each%20cell%20deploys%20its%20genome.</a>
-</div>
-<div id="ref-retel_fast_2024" class="csl-entry">
-Retel, Joren Sebastian, Andreas Poehlmann, Josh Chiou, Andreas Steffen, and Djork-Arné Clevert. 2024. <span>“A Fast Machine Learning Dataloader for Epigenetic Tracks from <span>BigWig</span> Files.”</span> <em>Bioinformatics</em> 40 (1): btad767. <a href="https://doi.org/10.1093/bioinformatics/btad767">https://doi.org/10.1093/bioinformatics/btad767</a>.
 </div>
 <div id="ref-shahid2023" class="csl-entry">
 Shahid, Zainab, Brittany Simpson, Kathleen H. Miao, and Gurdeep Singh. 2023. <em>Genetics, Histone Code</em>. StatPearls Publishing LLC. <a href="https://www.ncbi.nlm.nih.gov/books/NBK538477/">https://www.ncbi.nlm.nih.gov/books/NBK538477/</a>.
 </div>
 <div id="ref-Kouzarides2007" class="csl-entry">
 T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. National Library of Medicine. <a href="https://doi.org/10.1016/j.cell.2007.02.005">https://doi.org/10.1016/j.cell.2007.02.005</a>.
-</div>
-<div id="ref-whalen2022" class="csl-entry">
-Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
 </div>
 <div id="ref-wilbanks2010" class="csl-entry">
 Wilbanks, Elizabeth, and Marc Facciotti. 2010. <em>Evaluation of Algorithm Performance in ChIP-Seq Peak Detection</em>. Plos One Journal. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471</a>.
@@ -439,9 +483,9 @@ Wilbanks, Elizabeth, and Marc Facciotti. 2010. <em>Evaluation of Algorithm Perfo
 <li id="fn11"><p><span class="citation">Akalin (<a href="#ref-akalin2020">2020</a>)</span><a href="epigenetic-data.html#fnref11" class="footnote-back">↩︎</a></p></li>
 <li id="fn12"><p><span class="citation">Akalin (<a href="#ref-akalin2020">2020</a>)</span><a href="epigenetic-data.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p><span class="citation">Green and Ewing (<a href="#ref-green">n.d.</a>)</span><a href="epigenetic-data.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p><span class="citation">Wilbanks and Facciotti (<a href="#ref-wilbanks2010">2010</a>)</span><a href="epigenetic-data.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p><span class="citation">Retel et al. (<a href="#ref-retel_fast_2024">2024</a>)</span><a href="epigenetic-data.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="epigenetic-data.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><span class="citation">Mistry et al. (<a href="#ref-mistry2022">2022</a>)</span><a href="epigenetic-data.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p><span class="citation">Wilbanks and Facciotti (<a href="#ref-wilbanks2010">2010</a>)</span><a href="epigenetic-data.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p><span class="citation">Patel (<a href="#ref-patel2024">2024</a>)</span><a href="epigenetic-data.html#fnref16" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -450,7 +494,7 @@ Wilbanks, Elizabeth, and Marc Facciotti. 2010. <em>Evaluation of Algorithm Perfo
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="loss-functions-and-peak-metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pre-processing-of-bigwig-files.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
