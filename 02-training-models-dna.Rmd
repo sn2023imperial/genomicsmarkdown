@@ -65,7 +65,7 @@ print("Reverse Complement: ", reverse_complement)
 
 <br>
 
-##Training on sequence shifts
+## Training on sequence shifts
 <br>
 Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking "extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.^[@cao2019]
 <br>
@@ -73,6 +73,7 @@ Training on small, random sequence shifts up and downstream by shifting the geno
 <u>note:</u><br>
 A paper on evaluating deep learning for predicting epigenomic profiles found that models trained with augmentations (reverse complement and jittering), "yielded improved robustness, especially when trained on peak-centered data. On the other hand, models that were trained on coverage-threshold data already benefited from the randomly-centered profiles."^[@toneyan2022]
 
+'''
 How many epochs are typically used to train on?
 Which learning rates are commonly used?
 Hyper-parameter optimisation 
@@ -80,7 +81,7 @@ Raytune
 Successive halving algorithm (SHA) and Asynchronous SHA (ASHA) - ASHA is one of the current ‘best in class’ hyperparam opt
 How to optimise parameters when the models become huge, e.g. Enformer Celltyping
 How to do hyperparameter tuning when models become very large
-
+'''
 
 # Choosing which genomic regions to train on
 
