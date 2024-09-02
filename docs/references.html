@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-21" />
+<meta name="date" content="2024-09-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -189,17 +189,17 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#training-on-reverse-complement"><i class="fa fa-check"></i><b>4.1</b> Training on reverse complement</a></li>
-<li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#training-on-sequence-shifts"><i class="fa fa-check"></i><b>4.2</b> Training on sequence shifts</a></li>
+<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
+<li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>5</b> Choosing which genomic regions to train on</a></li>
-<li class="chapter" data-level="6" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>6</b> Effect of differences in sequencing depths</a></li>
-<li class="chapter" data-level="7" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>7</b> Reproducibility of machine learning models</a>
+<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>7.1</b> Seeding</a></li>
-<li class="chapter" data-level="7.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>7.2</b> Dashboarding</a></li>
+<li class="chapter" data-level="5.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>5.1</b> Seeding</a></li>
+<li class="chapter" data-level="5.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>5.2</b> Dashboarding</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>8</b> Testing</a></li>
+<li class="chapter" data-level="6" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>6</b> Testing</a></li>
+<li class="chapter" data-level="7" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>7</b> Choosing which genomic regions to train on</a></li>
+<li class="chapter" data-level="8" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>8</b> Effect of differences in sequencing depths</a></li>
 <li class="part"><span><b>III Software libraries for model building</b></span></li>
 <li class="chapter" data-level="9" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>9</b> gReLU</a></li>
 <li class="chapter" data-level="10" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>10</b> Kipoi</a></li>
@@ -275,10 +275,19 @@ Cao, Zhen, and Shihua Zhang. 2019. <em>Simple Tricks of Convolutional Neural Net
 Green, Phil, and Brent Ewing. n.d. <em>Phred - Quality Base Calling</em>. CodonCode Corporation. <a href="https://www.phrap.com/phred/#:~:text=Phred%20is%20a%20base%2Dcalling,%22)%20to%20each%20base%20call.">https://www.phrap.com/phred/#:~:text=Phred%20is%20a%20base%2Dcalling,%22)%20to%20each%20base%20call.</a>
 </div>
 <div class="csl-entry">
+Hepkema, Jacob, Nicholas Lee, Benjamin Stewart, and et al. 2023. <em>Predicting the Impact of Sequence Motifs on Gene Regulation Using Single-Cell Data</em>. National Library of Medicine. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10426127/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10426127/</a>.
+</div>
+<div class="csl-entry">
 Kanani, Pratik, and Mamta Padole. 2020. <em>Improving Pattern Matching Performance in Genome Sequences Using Run Length Encoding in Distributed Raspberry Pi Clustering Environment</em>. Procedia Computer Science. <a href="https://www.sciencedirect.com/science/article/pii/S1877050920311601?via%3Dihub">https://www.sciencedirect.com/science/article/pii/S1877050920311601?via%3Dihub</a>.
 </div>
 <div class="csl-entry">
 Kappelmann-Fenzl, Melanie. 2021. <em>Design and Analysis of Epigenetics and ChIP-Sequencing Data</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-62490-3_12">https://doi.org/10.1007/978-3-030-62490-3_12</a>.
+</div>
+<div class="csl-entry">
+Li, Liam. 2018. <em>A System for Massively Parallel Hyperparameter Tuning</em>. Conference on Machine Learning; Systems. <a href="https://arxiv.org/abs/1810.05934">https://arxiv.org/abs/1810.05934</a>.
+</div>
+<div class="csl-entry">
+Liaw, Richard, Eric Liang, Robert Nishihara, Philipp Moritz, Joseph E Gonzalez, and Ion Stoica. 2018. <span>“Tune: A Research Platform for Distributed Model Selection and Training.”</span> <em>arXiv Preprint arXiv:1807.05118</em>.
 </div>
 <div class="csl-entry">
 Mistry, Meeta, Jihe Liu, Radhika Khetani, and et al. 2022. <em>Peak Calling with MACS2</em>. Github Pages. <a href="https://hbctraining.github.io/Intro-to-ChIPseq-flipped/lessons/06_peak_calling_macs.html">https://hbctraining.github.io/Intro-to-ChIPseq-flipped/lessons/06_peak_calling_macs.html</a>.
@@ -302,6 +311,9 @@ Retel, Joren Sebastian, Andreas Poehlmann, Josh Chiou, Andreas Steffen, and Djor
 Shahid, Zainab, Brittany Simpson, Kathleen H. Miao, and Gurdeep Singh. 2023. <em>Genetics, Histone Code</em>. StatPearls Publishing LLC. <a href="https://www.ncbi.nlm.nih.gov/books/NBK538477/">https://www.ncbi.nlm.nih.gov/books/NBK538477/</a>.
 </div>
 <div class="csl-entry">
+Shorten, Connor, and Taghi Khoshgoftaar. 2019. <em>Design Considerations for Image Data Augmentation</em>. Journal of Big Data. <a href="https://link.springer.com/article/10.1186/s40537-019-0197-0?">https://link.springer.com/article/10.1186/s40537-019-0197-0?</a>
+</div>
+<div class="csl-entry">
 T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. National Library of Medicine. <a href="https://doi.org/10.1016/j.cell.2007.02.005">https://doi.org/10.1016/j.cell.2007.02.005</a>.
 </div>
 <div class="csl-entry">
@@ -318,6 +330,17 @@ Youens-Clark, Ken. 2021. <em>Mastering Python for Bioinformatics</em>. O’Reily
 </div>
 </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

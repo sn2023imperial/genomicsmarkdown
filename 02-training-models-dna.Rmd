@@ -30,12 +30,14 @@ When selecting the optimal loss function for your machine learning model in geno
 <u>Example:</u><br> Researchers developed a combined [model](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10085982/){target="_blank"} that integrates cell-free DNA (cfDNA) methylation profile data with ATAC-seq data to enhance cancer detection and tissue-of-origin localization. This approach combines both epigenomic and chromatin accessibility information to improve the accuracy of identifying the specific tissue or organ from which a cancerous signal originates. The model employs a categorical cross-entropy loss function within each component to optimize tissue-of-origin localization, allowing it to effectively determine the most likely source of the cancerous signal.^[@bae2017]
 <br><br>
 
-In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use an MSE loss function, however I also compare its results to a model with a Poisson loss function. It is important to remember that “loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))”^[@toneyan2022] when optimising.
+In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use a Poisson loss function as the data represents read counts. It is important to remember that “loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))”^[@toneyan2022] when optimising.
 
 
 # Training tricks
 
-## Training on reverse complement
+## Reverse Complements and Sequence Shifts
+
+**Reverse Complements** <br>
 
 As explained in Part 1, DNA has a double helix structure. When we one-hot encode a segment of DNA in our models using a reference genome, we typically represent only one strand of the double helix. The complement of this strand is the opposite strand, where Adenine (A) pairs with Thymine (T), and Cytosine (C) pairs with Guanine (G). The reverse complement of a DNA strand is obtained by first taking its complement and then reading it in the reverse direction.
 
@@ -65,27 +67,37 @@ print("Reverse Complement: ", reverse_complement)
 
 <br>
 
-## Training on sequence shifts
-<br>
+**Sequence Shifts** <br>
+
 Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking "extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.^[@cao2019]
 <br>
 
-<u>note:</u><br>
-A paper on evaluating deep learning for predicting epigenomic profiles found that models trained with augmentations (reverse complement and jittering), "yielded improved robustness, especially when trained on peak-centered data. On the other hand, models that were trained on coverage-threshold data already benefited from the randomly-centered profiles."^[@toneyan2022]
+Implementing data augmentations using reverse complements and sequence shifts can be approached in different ways. Similar to the 'flanking' example, you can either expand your dataset by adding additional augmented data points or apply a random augmentation strategy, where only some data points are randomly augmented while keeping the total number of points in your dataset unchanged. Data augmentations are usually applied only to training sets, however in the context of computer vision "many research reports have shown the effectiveness of augmenting data at test-time as well".^[@connor2019] When implementing augmentations like reverse complements and sequence shifts, these are typically applied after splitting your data into training, validation, and test sets. When applying sequence shifting, it’s logical to shift the interval before retrieving the nucleotide sequence from the reference genome. The reverse complement should be applied after retrieving the nucleotide sequence but before one-hot encoding it. If you're using the BioPython library, this works well since BioPython's reverse complement function operates on string inputs.
+<br>
 
-'''
-How many epochs are typically used to train on?
-Which learning rates are commonly used?
-Hyper-parameter optimisation 
-Raytune
-Successive halving algorithm (SHA) and Asynchronous SHA (ASHA) - ASHA is one of the current ‘best in class’ hyperparam opt
-How to optimise parameters when the models become huge, e.g. Enformer Celltyping
-How to do hyperparameter tuning when models become very large
-'''
+In the genomics context, a paper on evaluating deep learning for predicting epigenomic profiles used two convolutional neural networks, [Basenji](https://github.com/calico/basenji){target="_blank"} and [BPNet](https://github.com/kundajelab/bpnet){target="_blank"}, trained on ATAC-seq data, to predict  coverage values as a regression. They found that convolutional models trained with augmentations (reverse complement and sequence shifts), "yielded improved robustness, especially when trained on peak-centered data (BPNet). On the other hand, models that were trained on coverage-threshold data (Basenji) already benefited from the randomly-centered profiles."^[@toneyan2022] Additionally, while they initially "used a MSE and multinomial NLL loss for BPNet, [they] found that optimization using Poisson NLL yielded better performance."^[@toneyan2022] This finding is another motivation of using at poisson loss function in subsequent tutorials.
+<br>
 
-# Choosing which genomic regions to train on
+## Hyper-parameter optimisation 
 
-# Effect of differences in sequencing depths
+Which learning rates are commonly used? How many epochs are typically used to train on?<br>
+
+While the learning rate and number of epochs differ by model and study, based on some of the research cited so far, common learning rates are in the range 1e-4^[[@cedric2019], [@avsec2021]] to 1e-3^[[@cao2019], [@toneyan2022]]. Additionally, some studies apply learning rate decay if the loss function shows no improvement over time^[@toneyan2022] while others lower the learning rate for fine tuning.^[@avsec2021]
+<br>
+
+The number of epochs used to train on differs by quite a margin. In training a convolution neural network to explore the effects of genomic data augmentation, 30 epochs were used.^[@cao2019] DeepImpute which constructs multiple sub-neural networks for genotype imputation, trains on a maximum of 500 epochs, while the study involving the Basenji and BPNet models were trained on a maximum of 100 epochs. The clear strategy for these larger models involve the use of early stopping if no improvements are evident after 5-10 epochs.
+<br>
+
+When hyperparameter optimising, the consensus for achieving the best model performance is to train with a high number of epochs to enable the model to confidently learn features as they apply to labels, starting with a high learning rate, and decreasing over time using a learning rate scheduler. Interestingly, a study on binary peak detection using CNNs on ChIP-Seq data manually tuned their model's hyperparameters and found that little changes in performance results^[@oh2020]. This highlights the challenges of hyperparameter tuning with larger models, where manually fine-tuning is not ideal. How can hyperparamter tuning on these larger models be done in practice?
+<br><br>
+
+**Raytune**
+
+[Raytune](https://docs.ray.io/en/latest/tune/index.html){target="_blank"} "is a Python library for experiment execution and hyperparameter tuning at any scale". It aids in leveraging state of the art hyperparameter optmisation algorithms while simplifying scaling for larger models. Raytune hyperparameter searching can also be scaled to cloud based clusters without the need for large changes in code structure. Additionally, it supports several machine learning frameworks such as pyTorch and TensorFlow^[@liaw2018]. One of the strongest current hyperparameter optmisation algorithms is the Asynchronous Successive Halving Algorithm or **[ASHA](https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/){target="_blank"}**. Asha "exploits parallelism and aggressive early-stopping to tackle large-scale hyperparameter optimization problems"^[@liam2018], allowing for faster optimisation and applicability to the larger models common in genomics. A study on predicting the impact of sequence motifs on gene regulation utilised Raytune and the ASHA algorithm to successfully optimise their model's hyperparameters^[@jacob2023]. 
+<br>
+
+In the genomic context, as a result of complex models using large genomic datasets, hyperparameter tuning using a brute force approach is untenable. Utilising existing libraries such as Raytune and incorporating asynchronous algorithms such as ASHA, has the potential to pave the way forward in improving model performance without unreasonable computational costs.
+
 
 # Reproducibility of machine learning models
 
@@ -94,3 +106,6 @@ How to do hyperparameter tuning when models become very large
 ## Dashboarding
 
 # Testing
+
+# Choosing which genomic regions to train on
+# Effect of differences in sequencing depths

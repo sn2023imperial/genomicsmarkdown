@@ -120,7 +120,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-08-21}
+\date{2024-09-02}
 
 \begin{document}
 \maketitle
@@ -236,7 +236,7 @@ o\texttt{Peaks\ represent\ areas\ where\ epigenetic\ marks\ or\ chromatin\ acces
 A common peak calling algorithm is \href{https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html}{MACS2}. Essentially, aligned sequencing reads are aggregated into regions where they `pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.\footnote{\citet{mistry2022}} In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.\footnote{\citet{wilbanks2010}} Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, base pair averaging is commonly used.
 
 Imagine you have a set of read coverage data from a sequencing experiment. At each base pair position along a chromosome, you have a read count representing how many times that base pair was sequenced. However, due to technical noise, these counts might fluctuate wildly from one base to the next. By applying base pair averaging over a window (e.g.~32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, and signal smoothing.
-\includegraphics{notebook_tutorials/bp_resolution.png}
+\includegraphics{images/bp_resolution.png}
 
 Figure showing a 32 base pair resolution following base pair averaging of CHip-seq data\footnote{\citet{patel2024}}
 
@@ -299,17 +299,13 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 
 \chapter{Pre-processing of bigWig files}\label{pre-processing-of-bigwig-files}
 
-BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.
+BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial on Google Colab. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.
 
 The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 
 Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)
 
 Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)
-
-note: MyBinder reduced their computational capacity in April 2023. If the interactive tutorial becomes stuck at ``pulling image'', I've found that manually launching binder through \href{https://notebooks.gesis.org/binder/}{notebooks.gesis} has a higher success rate. Use the following information:
-url: \texttt{https://github.com/sn2023imperial/tutorial\_1}
-notebook file: \texttt{Tutorial\_1\_bigWigs.ipynb}
 
 \section{Data loaders and simplifying pre-processing}\label{data-loaders-and-simplifying-pre-processing}
 
@@ -357,11 +353,13 @@ Example: A convolutional neural network was employed to create a software pipeli
 • Use Case: Multi-class classification problems.
 Example: Researchers developed a combined \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10085982/}{model} that integrates cell-free DNA (cfDNA) methylation profile data with ATAC-seq data to enhance cancer detection and tissue-of-origin localization. This approach combines both epigenomic and chromatin accessibility information to improve the accuracy of identifying the specific tissue or organ from which a cancerous signal originates. The model employs a categorical cross-entropy loss function within each component to optimize tissue-of-origin localization, allowing it to effectively determine the most likely source of the cancerous signal.\footnote{\citet{bae2017}}
 
-In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use an MSE loss function, however I also compare its results to a model with a Poisson loss function. It is important to remember that ``loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))''\footnote{\citet{toneyan2022}} when optimising.
+In the case of this tutorial and running models to predict continuous coverage values from bigwig p-value datasets, I have opted to use a Poisson loss function as the data represents read counts. It is important to remember that ``loss functions can penalize the shapes or the magnitudes (for example, the mean squared error (MSE))''\footnote{\citet{toneyan2022}} when optimising.
 
 \chapter{Training tricks}\label{training-tricks}
 
-\section{Training on reverse complement}\label{training-on-reverse-complement}
+\section{Reverse Complements and Sequence Shifts}\label{reverse-complements-and-sequence-shifts}
+
+\textbf{Reverse Complements}
 
 As explained in Part 1, DNA has a double helix structure. When we one-hot encode a segment of DNA in our models using a reference genome, we typically represent only one strand of the double helix. The complement of this strand is the opposite strand, where Adenine (A) pairs with Thymine (T), and Cytosine (C) pairs with Guanine (G). The reverse complement of a DNA strand is obtained by first taking its complement and then reading it in the reverse direction.
 
@@ -399,26 +397,29 @@ Training on DNA sequences and augmenting the data with their reverse complements
 ## Reverse Complement:  GTACGCAT
 \end{verbatim}
 
-\section{Training on sequence shifts}\label{training-on-sequence-shifts}
+\textbf{Sequence Shifts}
 
 Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking ``extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.\footnote{\citet{cao2019}}
 
-note:
-A paper on evaluating deep learning for predicting epigenomic profiles found that models trained with augmentations (reverse complement and jittering), ``yielded improved robustness, especially when trained on peak-centered data. On the other hand, models that were trained on coverage-threshold data already benefited from the randomly-centered profiles.''\footnote{\citet{toneyan2022}}
+Implementing data augmentations using reverse complements and sequence shifts can be approached in different ways. Similar to the `flanking' example, you can either expand your dataset by adding additional augmented data points or apply a random augmentation strategy, where only some data points are randomly augmented while keeping the total number of points in your dataset unchanged. Data augmentations are usually applied only to training sets, however in the context of computer vision ``many research reports have shown the effectiveness of augmenting data at test-time as well''.\footnote{\citet{connor2019}} When implementing augmentations like reverse complements and sequence shifts, these are typically applied after splitting your data into training, validation, and test sets. When applying sequence shifting, it's logical to shift the interval before retrieving the nucleotide sequence from the reference genome. The reverse complement should be applied after retrieving the nucleotide sequence but before one-hot encoding it. If you're using the BioPython library, this works well since BioPython's reverse complement function operates on string inputs.
 
-'\,'\,'
-How many epochs are typically used to train on?
-Which learning rates are commonly used?
-Hyper-parameter optimisation
-Raytune
-Successive halving algorithm (SHA) and Asynchronous SHA (ASHA) - ASHA is one of the current `best in class' hyperparam opt
-How to optimise parameters when the models become huge, e.g.~Enformer Celltyping
-How to do hyperparameter tuning when models become very large
-'\,'\,'
+In the genomics context, a paper on evaluating deep learning for predicting epigenomic profiles used two convolutional neural networks, \href{https://github.com/calico/basenji}{Basenji} and \href{https://github.com/kundajelab/bpnet}{BPNet}, trained on ATAC-seq data, to predict coverage values as a regression. They found that convolutional models trained with augmentations (reverse complement and sequence shifts), ``yielded improved robustness, especially when trained on peak-centered data (BPNet). On the other hand, models that were trained on coverage-threshold data (Basenji) already benefited from the randomly-centered profiles.''\footnote{\citet{toneyan2022}} Additionally, while they initially ``used a MSE and multinomial NLL loss for BPNet, {[}they{]} found that optimization using Poisson NLL yielded better performance.''\footnote{\citet{toneyan2022}} This finding is another motivation of using at poisson loss function in subsequent tutorials.
 
-\chapter{Choosing which genomic regions to train on}\label{choosing-which-genomic-regions-to-train-on}
+\section{Hyper-parameter optimisation}\label{hyper-parameter-optimisation}
 
-\chapter{Effect of differences in sequencing depths}\label{effect-of-differences-in-sequencing-depths}
+Which learning rates are commonly used? How many epochs are typically used to train on?
+
+While the learning rate and number of epochs differ by model and study, based on some of the research cited so far, common learning rates are in the range 1e-4\footnote{\citep{cedric2019}, \citep{avsec2021}} to 1e-3\footnote{\citep{cao2019}, \citep{toneyan2022}}. Additionally, some studies apply learning rate decay if the loss function shows no improvement over time\footnote{\citet{toneyan2022}} while others lower the learning rate for fine tuning.\footnote{\citet{avsec2021}}
+
+The number of epochs used to train on differs by quite a margin. In training a convolution neural network to explore the effects of genomic data augmentation, 30 epochs were used.\footnote{\citet{cao2019}} DeepImpute which constructs multiple sub-neural networks for genotype imputation, trains on a maximum of 500 epochs, while the study involving the Basenji and BPNet models were trained on a maximum of 100 epochs. The clear strategy for these larger models involve the use of early stopping if no improvements are evident after 5-10 epochs.
+
+When hyperparameter optimising, the consensus for achieving the best model performance is to train with a high number of epochs to enable the model to confidently learn features as they apply to labels, starting with a high learning rate, and decreasing over time using a learning rate scheduler. Interestingly, a study on binary peak detection using CNNs on ChIP-Seq data manually tuned their model's hyperparameters and found that little changes in performance results\footnote{\citet{oh2020}}. This highlights the challenges of hyperparameter tuning with larger models, where manually fine-tuning is not ideal. How can hyperparamter tuning on these larger models be done in practice?
+
+\textbf{Raytune}
+
+\href{https://docs.ray.io/en/latest/tune/index.html}{Raytune} ``is a Python library for experiment execution and hyperparameter tuning at any scale''. It aids in leveraging state of the art hyperparameter optmisation algorithms while simplifying scaling for larger models. Raytune hyperparameter searching can also be scaled to cloud based clusters without the need for large changes in code structure. Additionally, it supports several machine learning frameworks such as pyTorch and TensorFlow\footnote{\citet{liaw2018}}. One of the strongest current hyperparameter optmisation algorithms is the Asynchronous Successive Halving Algorithm or \textbf{\href{https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/}{ASHA}}. Asha ``exploits parallelism and aggressive early-stopping to tackle large-scale hyperparameter optimization problems''\footnote{\citet{liam2018}}, allowing for faster optimisation and applicability to the larger models common in genomics. A study on predicting the impact of sequence motifs on gene regulation utilised Raytune and the ASHA algorithm to successfully optimise their model's hyperparameters\footnote{\citet{jacob2023}}.
+
+In the genomic context, as a result of complex models using large genomic datasets, hyperparameter tuning using a brute force approach is untenable. Utilising existing libraries such as Raytune and incorporating asynchronous algorithms such as ASHA, has the potential to pave the way forward in improving model performance without unreasonable computational costs.
 
 \chapter{Reproducibility of machine learning models}\label{reproducibility-of-machine-learning-models}
 
@@ -427,6 +428,10 @@ How to do hyperparameter tuning when models become very large
 \section{Dashboarding}\label{dashboarding}
 
 \chapter{Testing}\label{testing}
+
+\chapter{Choosing which genomic regions to train on}\label{choosing-which-genomic-regions-to-train-on}
+
+\chapter{Effect of differences in sequencing depths}\label{effect-of-differences-in-sequencing-depths}
 
 \part{Software libraries for model building}\label{part-software-libraries-for-model-building}
 
@@ -454,6 +459,10 @@ In genomics, imbalance is a frequent challenge, often necessitating the use of s
 
 Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.
 \#\# Balancing the proportion of peaks / no-peaks in validation sets
+
+\url{https://colab.research.google.com/drive/1wWlFffwBpOuK9yyCWp1hY6oiG9FK_6aX?usp=sharing}
+
+\url{https://colab.research.google.com/drive/17xdEjl6TDew8Fb-bZvjRMIQSZX5s95Ae?usp=sharing}
 
 \part{Model interpretability}\label{part-model-interpretability}
 

@@ -40,7 +40,7 @@ Genes are sequences of DNA located at specific positions on chromosomes and can 
 ![](images/dna_sequence.png)
 <div style="text-align: center;">
 
-Image highlighting part of a [dna sequence and base pairs](https://www.researchgate.net/profile/Pratik-Kanani/publication/341901570/figure/fig1/AS:898621708984321@1591259519483/A-human-DNA-and-Part-of-DNA-sequence-28-29.jpg).^[@kanani2020]
+Image highlighting part of a [dna sequence and base pairs](https://www.researchgate.net/profile/Pratik-Kanani/publication/341901570/figure/fig1/AS:898621708984321@1591259519483/A-human-DNA-and-Part-of-DNA-sequence-28-29.jpg){target="_blank"}.^[@kanani2020]
 
 </div>
 <br>
@@ -63,14 +63,14 @@ Epigenetic data can be represented in various forms, depending on the type of mo
 
 ### Representing epigenetic data
 <br>
-Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they 'pile up' to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also examine mismatches where a read's base differs from the genome's base, and use them to identify SNPs ([single nucleotide polymorphisms](https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism))^[@ncidefinitions]. This mismatch information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.^[@akalin2020]
+Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they 'pile up' to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also examine mismatches where a read's base differs from the genome's base, and use them to identify SNPs ([single nucleotide polymorphisms](https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism){target="_blank"})^[@ncidefinitions]. This mismatch information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.^[@akalin2020]
 
 <br>
 
 ![](images/sequencing_pipeline.png)
 <div style="text-align: center;">
 
-Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images/HTseq.png) from high-throughput sequencing methods^[@akalin2020].
+Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images/HTseq.png){target="_blank"} from high-throughput sequencing methods^[@akalin2020].
 
 </div>
 
@@ -82,7 +82,7 @@ Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images
 <br><br>
 
 Lets look at what a few lines of raw sequence read data consists of: 
-The data is taken from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/) (chIP-Seq). The accession ID of the raw sequence read data is [ENCFF397NRK](https://www.encodeproject.org/files/ENCFF397NRK/). Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.
+The data is taken from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/){target="_blank"} (chIP-Seq). The accession ID of the raw sequence read data is [ENCFF397NRK](https://www.encodeproject.org/files/ENCFF397NRK/){target="_blank"}. Genomic data comes in many file formats. This specific raw sequence read data is a compressed FASTQ file.
 
 ```{r setup-python, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -126,10 +126,10 @@ As you can see, each data entry is a DNA sequence (read). While I'm only showing
 <br><br>o```      Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.```
 <br><br>
 
-A common peak calling algorithm is [MACS2](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html). Essentially, aligned sequencing reads are aggregated into regions where they 'pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.^[@mistry2022] In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.^[@wilbanks2010] Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used.
+A common peak calling algorithm is [MACS2](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html){target="_blank"}. Essentially, aligned sequencing reads are aggregated into regions where they 'pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.^[@mistry2022] In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.^[@wilbanks2010] Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used.
 
 Imagine you have a set of read coverage data from a sequencing experiment. At each base pair position along a chromosome, you have a read count representing how many times that base pair was sequenced. However, due to technical noise, these counts might fluctuate wildly from one base to the next. By applying <u>base pair averaging</u> over a window (e.g. 32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, and signal smoothing. 
-![](notebook_tutorials/bp_resolution.png)
+![](images/bp_resolution.png)
 <div style="text-align: center;">
 
 Figure showing a 32 base pair resolution following base pair averaging of CHip-seq data^[@patel2024]
@@ -149,7 +149,7 @@ o ***P-value or Fold-change:***
 <br><br>Fold-change: Represents the difference in read density between treated and control samples, indicating the strength of the signal. <br>
 
 ![](images/coverage_p.png)
-This image shows the signal p-value coverage over a small region (11,176bps) in chromosome one from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/) (The same chIP-Seq experiment we saw the raw sequence reads from). For further context, experiment ENCSR817LUF targets the H3K36me3 histone modification in brain tissue. The experiment aims to map the locations where the H3K36me3 histone modification is present along the genome. Therefore the peaks represent regions of the genome where the the H3K36me3 histone modification is enriched compared to the background or control. The accession ID of the signal p-value data is [ENCFF601VTB](https://www.encodeproject.org/files/ENCFF601VTB/). Genomic data comes in many file formats. This specific signal p-value data is a bigWig file.
+This image shows the signal p-value coverage over a small region (11,176bps) in chromosome one from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/){target="_blank"} (The same chIP-Seq experiment we saw the raw sequence reads from). For further context, experiment ENCSR817LUF targets the H3K36me3 histone modification in brain tissue. The experiment aims to map the locations where the H3K36me3 histone modification is present along the genome. Therefore the peaks represent regions of the genome where the the H3K36me3 histone modification is enriched compared to the background or control. The accession ID of the signal p-value data is [ENCFF601VTB](https://www.encodeproject.org/files/ENCFF601VTB/){target="_blank"}. Genomic data comes in many file formats. This specific signal p-value data is a bigWig file.
 <br><br>
 o ***Types of Peaks:***
 <br><br>Categorical Peaks: Simple yes/no indication of a peak’s presence.
@@ -177,7 +177,7 @@ o ***Types of Peaks:***
 <br>
 
 
-This is an example data pipeline from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/), the same chIP-Seq experiment we saw the raw sequence reads, and signal p-value coverage from. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g. peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.
+This is an example data pipeline from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/){target="_blank"}, the same chIP-Seq experiment we saw the raw sequence reads, and signal p-value coverage from. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g. peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.
 
 <br>
 
@@ -257,21 +257,15 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 <br>
 
 # Pre-processing of bigWig files
-BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br>
+BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial on Google Colab. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br>
 
 The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 <br>
 
-<a href="https://mybinder.org/v2/gh/sn2023imperial/tutorial_1/main?labpath=Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a>
+<a href="https://colab.research.google.com/drive/1gRjjTHL5RrlDoo1j7BzWqlYlPrBJBO8A?usp=sharing" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a>
 
 
 <a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)</a>
-<br>
-
-<u>note:</u> <br>MyBinder reduced their computational capacity in April 2023. If the interactive tutorial becomes stuck at "pulling image", I've found that manually launching binder through [notebooks.gesis](https://notebooks.gesis.org/binder/) has a higher success rate. Use the following information:<br><br>
-url: `https://github.com/sn2023imperial/tutorial_1`
-<br>
-notebook file: `Tutorial_1_bigWigs.ipynb`
 <br>
 
 

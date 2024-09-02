@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-08-21" />
+<meta name="date" content="2024-09-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -189,17 +189,17 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#training-on-reverse-complement"><i class="fa fa-check"></i><b>4.1</b> Training on reverse complement</a></li>
-<li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#training-on-sequence-shifts"><i class="fa fa-check"></i><b>4.2</b> Training on sequence shifts</a></li>
+<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
+<li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>5</b> Choosing which genomic regions to train on</a></li>
-<li class="chapter" data-level="6" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>6</b> Effect of differences in sequencing depths</a></li>
-<li class="chapter" data-level="7" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>7</b> Reproducibility of machine learning models</a>
+<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>7.1</b> Seeding</a></li>
-<li class="chapter" data-level="7.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>7.2</b> Dashboarding</a></li>
+<li class="chapter" data-level="5.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>5.1</b> Seeding</a></li>
+<li class="chapter" data-level="5.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>5.2</b> Dashboarding</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>8</b> Testing</a></li>
+<li class="chapter" data-level="6" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>6</b> Testing</a></li>
+<li class="chapter" data-level="7" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>7</b> Choosing which genomic regions to train on</a></li>
+<li class="chapter" data-level="8" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>8</b> Effect of differences in sequencing depths</a></li>
 <li class="part"><span><b>III Software libraries for model building</b></span></li>
 <li class="chapter" data-level="9" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>9</b> gReLU</a></li>
 <li class="chapter" data-level="10" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>10</b> Kipoi</a></li>
@@ -265,6 +265,8 @@ div.csl-indent {
 <p>In genomics, imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, models can threaten to over-learn the majority class and under-learn the minority class. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. The extensive size of the human genome exacerbates this issue, especially in problems related to non-coding variants, such as predicting chromatin states, gene expression, and disease status from sequence data.</p>
 <p>Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.
 ## Balancing the proportion of peaks / no-peaks in validation sets</p>
+<p><a href="https://colab.research.google.com/drive/1wWlFffwBpOuK9yyCWp1hY6oiG9FK_6aX?usp=sharing" class="uri">https://colab.research.google.com/drive/1wWlFffwBpOuK9yyCWp1hY6oiG9FK_6aX?usp=sharing</a></p>
+<p><a href="https://colab.research.google.com/drive/17xdEjl6TDew8Fb-bZvjRMIQSZX5s95Ae?usp=sharing" class="uri">https://colab.research.google.com/drive/17xdEjl6TDew8Fb-bZvjRMIQSZX5s95Ae?usp=sharing</a></p>
 
 </div>
 </div>
