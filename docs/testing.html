@@ -12,7 +12,7 @@
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
-  
+  <meta name="github-repo" content="https://github.com/sn2023imperial/genomicsmarkdown" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="6 Testing | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-02" />
+<meta name="date" content="2024-09-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="reproducibility-of-machine-learning-models.html"/>
-<link rel="next" href="choosing-which-genomic-regions-to-train-on.html"/>
+<link rel="next" href="software-libraries-for-model-building.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -192,39 +192,17 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
 <li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>5.1</b> Seeding</a></li>
-<li class="chapter" data-level="5.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>5.2</b> Dashboarding</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a></li>
 <li class="chapter" data-level="6" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>6</b> Testing</a></li>
-<li class="chapter" data-level="7" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>7</b> Choosing which genomic regions to train on</a></li>
-<li class="chapter" data-level="8" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>8</b> Effect of differences in sequencing depths</a></li>
-<li class="part"><span><b>III Software libraries for model building</b></span></li>
-<li class="chapter" data-level="9" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>9</b> gReLU</a></li>
-<li class="chapter" data-level="10" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>10</b> Kipoi</a></li>
-<li class="chapter" data-level="11" data-path="weights-and-biases.html"><a href="weights-and-biases.html"><i class="fa fa-check"></i><b>11</b> Weights and Biases</a></li>
-<li class="part"><span><b>IV ML pitfalls in genomics</b></span></li>
-<li class="chapter" data-level="12" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>12</b> Pitfalls overview</a>
+<li class="chapter" data-level="7" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html"><i class="fa fa-check"></i><b>7</b> Software libraries for model building</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#distributional-differences"><i class="fa fa-check"></i><b>12.1</b> Distributional differences</a></li>
-<li class="chapter" data-level="12.2" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#dependent-examples"><i class="fa fa-check"></i><b>12.2</b> Dependent examples</a></li>
-<li class="chapter" data-level="12.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>12.3</b> Confounding</a></li>
-<li class="chapter" data-level="12.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>12.4</b> Leaky pre-processing</a></li>
-<li class="chapter" data-level="12.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>12.5</b> Unbalanced classes</a></li>
+<li class="chapter" data-level="7.1" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#grelu"><i class="fa fa-check"></i><b>7.1</b> gReLU</a></li>
+<li class="chapter" data-level="7.2" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#kipoi"><i class="fa fa-check"></i><b>7.2</b> Kipoi</a></li>
 </ul></li>
-<li class="part"><span><b>V Model interpretability</b></span></li>
-<li class="chapter" data-level="13" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>13</b> Creating and visualising a simple model</a></li>
-<li class="chapter" data-level="14" data-path="tf-mo-disco.html"><a href="tf-mo-disco.html"><i class="fa fa-check"></i><b>14</b> TF mo-Disco</a></li>
-<li class="part"><span><b>VI Using existing models</b></span></li>
-<li class="chapter" data-level="15" data-path="using-the-grelu-model-zoo.html"><a href="using-the-grelu-model-zoo.html"><i class="fa fa-check"></i><b>15</b> Using the gReLU model zoo</a></li>
-<li class="chapter" data-level="16" data-path="fine-tuning-of-enformer.html"><a href="fine-tuning-of-enformer.html"><i class="fa fa-check"></i><b>16</b> Fine tuning of Enformer</a></li>
-<li class="part"><span><b>VII Predicting in novel cell types</b></span></li>
-<li class="chapter" data-level="17" data-path="incorporating-atac-seq-info.html"><a href="incorporating-atac-seq-info.html"><i class="fa fa-check"></i><b>17</b> Incorporating ATAC-seq info</a></li>
-<li class="chapter" data-level="18" data-path="use-of-cell-type-averages.html"><a href="use-of-cell-type-averages.html"><i class="fa fa-check"></i><b>18</b> Use of cell type averages</a></li>
-<li class="part"><span><b>VIII More complex models</b></span></li>
-<li class="chapter" data-level="19" data-path="training-multi-headed-models.html"><a href="training-multi-headed-models.html"><i class="fa fa-check"></i><b>19</b> Training multi-headed models</a></li>
-<li class="chapter" data-level="20" data-path="training-siamese-twin-models.html"><a href="training-siamese-twin-models.html"><i class="fa fa-check"></i><b>20</b> Training siamese twin models</a></li>
+<li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
+<li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
+<li class="part"><span><b>IV Using existing models</b></span></li>
+<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -248,6 +226,40 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="testing" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> Testing<a href="testing.html#testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Testing and evaluating genomic models is similar to other machine learning contexts in that it involves assessing model performance using metrics such as accuracy, precision, recall, and F1-scores. However, the genomic context often requires additional considerations due to the complexity and high-dimensionality of genomic data. There are several pitfalls which when fallen into, inflate model performance and make test metrics untrustworthy. Genomic data can be extremely imbalanced, as we will find out in subsequent tutorials. In these unbalanced classes scenarios, the choice of test metric usually between the area under the receiver operating characteristic (auROC) and the area under the precision-recall curve (auPRC), as only predicting the majority class will result in high accuracy for categorical models.</p>
+<img src="images/auroc_auprc.png" />
+<div style="text-align: center;">
+<p>Source: <a href="https://juandelacalle.medium.com/how-and-why-i-switched-from-the-roc-curve-to-the-precision-recall-curve-to-analyze-my-imbalanced-6171da91c6b8" target="_blank">BlogPost</a></p>
+</div>
+<p><br>
+In genomic situations with extreme imbalance in data, plotting ROC and precision-recall curves and calculating the auROC and auPRC is beneficial to properly test your model’s performance. AuROC and auPRC both provide insight into the model’s ability to distinguish between classes and are both functions of recall (true positive rate). “In many genomics problems, high recall can be achieved at a very low [false positive rate] owing to the large number of negatives in the test set, making it easy to obtain a high auROC even when false positives vastly outnumber true positives”<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>. However, auPRC offers a more focused evaluation as the absolute number of false positives is taken into account in precision versus the false positive rate. Therefore, a model trained on imbalanced data that predicts many false positives could have a high auROC and a low auPRC. In cases where we are interested in a minority of positive classes, research suggests using the auPRC as a measure of performance<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>.
+<br></p>
+<p>In regression settings, classic metrics such as the mean squared error, and mean absolute error are used alongside measures of variance (<span class="math inline">\(R^2\)</span>) and correlation (pearson correlation). It is important to note that differences in the order of magnitude of multiple sets of predictions can affect MSE metrics when evaluated together. For example, if a multi-task model has two prediction sets where one set “has values entirely between 1,000 and 10,000 and the other [set] has values between 0.01 and 0.1, then evaluating the model simply using mean squared error (MSE) across the two tasks will largely ignore the second task.”<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>
+<br></p>
+<p>In the genomic context one can also perform marginalisation experiments to ensure models are recognizing biologically relevant patterns. “Marginalisation is a method that requires summing over the possible values of one variable to determine the marginal contribution of another”<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>. Given a model trained on DNA sequences, performing a marginalisation experiment using sequence motifs is possible. “Motifs are short, recurring patterns in DNA that are presumed to have a biological function”<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>. Marginalising with motifs involves comparing a model’s predictions before and after the motif is inserted into a test/prediction set. The difference in predictions allows us to quantify the influence of a motif on a model’s predictions and understand how well our model recognises biological patterns. More specific types of marginalisation experiments include variant effect prediction, which aims to understand the effect of specific genetic variants in sequences on a model’s predictions.</p>
+
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-jonny2018" class="csl-entry">
+Brooks-Bartlett, Jonny. 2018. <em>Probability Concepts Explained: Marginalisation</em>. Towards Data Science. <a href="https://towardsdatascience.com/probability-concepts-explained-marginalisation-2296846344fc">https://towardsdatascience.com/probability-concepts-explained-marginalisation-2296846344fc</a>.
+</div>
+<div id="ref-pat2006" class="csl-entry">
+D’haeseleer, Patrik. 2006. <em>What Are DNA Sequence Motifs?</em> Nat Biotechnol. <a href="https://www.nature.com/articles/nbt0406-423">https://www.nature.com/articles/nbt0406-423</a>.
+</div>
+<div id="ref-whalen2022" class="csl-entry">
+Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="40">
+<li id="fn40"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="testing.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="testing.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="testing.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p><span class="citation">Brooks-Bartlett (<a href="#ref-jonny2018">2018</a>)</span><a href="testing.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p><span class="citation">D’haeseleer (<a href="#ref-pat2006">2006</a>)</span><a href="testing.html#fnref44" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
@@ -255,7 +267,7 @@ div.csl-indent {
         </div>
       </div>
 <a href="reproducibility-of-machine-learning-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="choosing-which-genomic-regions-to-train-on.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="software-libraries-for-model-building.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

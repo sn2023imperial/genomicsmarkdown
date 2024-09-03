@@ -1,5 +1,20 @@
 # (PART) Using existing models {-}
 
-# Using the gReLU model zoo
+# Using gReLU models
 
-# Fine tuning of Enformer
+Continuing from previous tutorials, the next tutorial similarly uses chIP-Seq data from Encode Experiment [ENCSR817LUF](https://www.encodeproject.org/experiments/ENCSR817LUF/){target="_blank"} trained on a gRelu model in order to to predict the coverage levels and examine several of the pitfalls mentioned in section 4. An additional tutorial is included to explain how data was pre-processed for gRelu to explore 
+
+
+<a href="https://colab.research.google.com/drive/1wWlFffwBpOuK9yyCWp1hY6oiG9FK_6aX?usp=sharing" target="_blank">Tutorial 1.5: Preprocessing Data for gRelu Models (interactive)</a>
+
+
+<a href="https://nbviewer.org/github/sn2023imperial/genomicsmarkdown/blob/main/notebook_tutorials/Tutorial_1.5_Preprocessing_gRelu/Tutorial1.5_Preprocessing_gRelu.ipynb" target="_blank">Tutorial 1.5: Preprocessing Data for gRelu Models (nbviewer)</a>
+<br>
+
+
+<a href="https://colab.research.google.com/drive/17xdEjl6TDew8Fb-bZvjRMIQSZX5s95Ae?usp=sharing" target="_blank">Tutorial 2: Training Models with gRelu and Examining Pitfalls (interactive)</a>
+
+
+<a href="https://nbviewer.org/github/sn2023imperial/genomicsmarkdown/blob/main/notebook_tutorials/Tutorial_2_Examining_Pitfalls_with_gRelu/Tutorial2_Grelu.ipynb" target="_blank">Tutorial 2: Training Models with gRelu and Examining Pitfalls (nbviewer)</a>
+<br>
+

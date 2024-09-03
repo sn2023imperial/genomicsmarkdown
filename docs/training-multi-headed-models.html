@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>19 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
+  <title>12 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
   <meta name="description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="19 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta property="og:title" content="12 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
-  
+  <meta name="github-repo" content="https://github.com/sn2023imperial/genomicsmarkdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="19 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta name="twitter:title" content="12 Training multi-headed models | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   
   <meta name="twitter:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-02" />
+<meta name="date" content="2024-09-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,39 +192,23 @@ div.csl-indent {
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
 <li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#seeding"><i class="fa fa-check"></i><b>5.1</b> Seeding</a></li>
-<li class="chapter" data-level="5.2" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html#dashboarding"><i class="fa fa-check"></i><b>5.2</b> Dashboarding</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a></li>
 <li class="chapter" data-level="6" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>6</b> Testing</a></li>
-<li class="chapter" data-level="7" data-path="choosing-which-genomic-regions-to-train-on.html"><a href="choosing-which-genomic-regions-to-train-on.html"><i class="fa fa-check"></i><b>7</b> Choosing which genomic regions to train on</a></li>
-<li class="chapter" data-level="8" data-path="effect-of-differences-in-sequencing-depths.html"><a href="effect-of-differences-in-sequencing-depths.html"><i class="fa fa-check"></i><b>8</b> Effect of differences in sequencing depths</a></li>
-<li class="part"><span><b>III Software libraries for model building</b></span></li>
-<li class="chapter" data-level="9" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>9</b> gReLU</a></li>
-<li class="chapter" data-level="10" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>10</b> Kipoi</a></li>
-<li class="chapter" data-level="11" data-path="weights-and-biases.html"><a href="weights-and-biases.html"><i class="fa fa-check"></i><b>11</b> Weights and Biases</a></li>
-<li class="part"><span><b>IV ML pitfalls in genomics</b></span></li>
-<li class="chapter" data-level="12" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>12</b> Pitfalls overview</a>
+<li class="chapter" data-level="7" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html"><i class="fa fa-check"></i><b>7</b> Software libraries for model building</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#distributional-differences"><i class="fa fa-check"></i><b>12.1</b> Distributional differences</a></li>
-<li class="chapter" data-level="12.2" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#dependent-examples"><i class="fa fa-check"></i><b>12.2</b> Dependent examples</a></li>
-<li class="chapter" data-level="12.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>12.3</b> Confounding</a></li>
-<li class="chapter" data-level="12.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>12.4</b> Leaky pre-processing</a></li>
-<li class="chapter" data-level="12.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>12.5</b> Unbalanced classes</a></li>
+<li class="chapter" data-level="7.1" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#grelu"><i class="fa fa-check"></i><b>7.1</b> gReLU</a></li>
+<li class="chapter" data-level="7.2" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#kipoi"><i class="fa fa-check"></i><b>7.2</b> Kipoi</a></li>
 </ul></li>
-<li class="part"><span><b>V Model interpretability</b></span></li>
-<li class="chapter" data-level="13" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>13</b> Creating and visualising a simple model</a></li>
-<li class="chapter" data-level="14" data-path="tf-mo-disco.html"><a href="tf-mo-disco.html"><i class="fa fa-check"></i><b>14</b> TF mo-Disco</a></li>
-<li class="part"><span><b>VI Using existing models</b></span></li>
-<li class="chapter" data-level="15" data-path="using-the-grelu-model-zoo.html"><a href="using-the-grelu-model-zoo.html"><i class="fa fa-check"></i><b>15</b> Using the gReLU model zoo</a></li>
-<li class="chapter" data-level="16" data-path="fine-tuning-of-enformer.html"><a href="fine-tuning-of-enformer.html"><i class="fa fa-check"></i><b>16</b> Fine tuning of Enformer</a></li>
-<li class="part"><span><b>VII Predicting in novel cell types</b></span></li>
-<li class="chapter" data-level="17" data-path="incorporating-atac-seq-info.html"><a href="incorporating-atac-seq-info.html"><i class="fa fa-check"></i><b>17</b> Incorporating ATAC-seq info</a></li>
-<li class="chapter" data-level="18" data-path="use-of-cell-type-averages.html"><a href="use-of-cell-type-averages.html"><i class="fa fa-check"></i><b>18</b> Use of cell type averages</a></li>
-<li class="part"><span><b>VIII More complex models</b></span></li>
-<li class="chapter" data-level="19" data-path="training-multi-headed-models.html"><a href="training-multi-headed-models.html"><i class="fa fa-check"></i><b>19</b> Training multi-headed models</a></li>
-<li class="chapter" data-level="20" data-path="training-siamese-twin-models.html"><a href="training-siamese-twin-models.html"><i class="fa fa-check"></i><b>20</b> Training siamese twin models</a></li>
+<li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
+<li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
+<li class="part"><span><b>IV Using existing models</b></span></li>
+<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
+<li class="part"><span><b>V Predicting in novel cell types</b></span></li>
+<li class="chapter" data-level="10" data-path="incorporating-atac-seq-info.html"><a href="incorporating-atac-seq-info.html"><i class="fa fa-check"></i><b>10</b> Incorporating ATAC-seq info</a></li>
+<li class="chapter" data-level="11" data-path="use-of-cell-type-averages.html"><a href="use-of-cell-type-averages.html"><i class="fa fa-check"></i><b>11</b> Use of cell type averages</a></li>
+<li class="part"><span><b>VI More complex models</b></span></li>
+<li class="chapter" data-level="12" data-path="training-multi-headed-models.html"><a href="training-multi-headed-models.html"><i class="fa fa-check"></i><b>12</b> Training multi-headed models</a></li>
+<li class="chapter" data-level="13" data-path="training-siamese-twin-models.html"><a href="training-siamese-twin-models.html"><i class="fa fa-check"></i><b>13</b> Training siamese twin models</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -246,8 +230,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="training-multi-headed-models" class="section level1 hasAnchor" number="19">
-<h1><span class="header-section-number">19</span> Training multi-headed models<a href="training-multi-headed-models.html#training-multi-headed-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="training-multi-headed-models" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">12</span> Training multi-headed models<a href="training-multi-headed-models.html#training-multi-headed-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 </div>
             </section>
 

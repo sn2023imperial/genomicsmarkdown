@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
+  <title>1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility</title>
   <meta name="description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta property="og:title" content="1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
-  
+  <meta name="github-repo" content="https://github.com/sn2023imperial/genomicsmarkdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
+  <meta name="twitter:title" content="1 Epigenetic Data | Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility" />
   
   <meta name="twitter:description" content="a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls in the field of genomics." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-02" />
+<meta name="date" content="2024-09-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,6 +54,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -99,61 +163,46 @@ div.csl-indent {
 <li><a href="./">Machine Learning in Genomics</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: my gitpages url</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="part"><span><b>I Introduction</b></span></li>
-<li class="chapter" data-level="2" data-path="epigenetic-data.html"><a href="epigenetic-data.html"><i class="fa fa-check"></i><b>2</b> Epigenetic Data</a>
+<li class="chapter" data-level="1" data-path="epigenetic-data.html"><a href="epigenetic-data.html"><i class="fa fa-check"></i><b>1</b> Epigenetic Data</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-is-epigenetic-data"><i class="fa fa-check"></i><b>2.1</b> What is epigenetic data?</a>
+<li class="chapter" data-level="1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-is-epigenetic-data"><i class="fa fa-check"></i><b>1.1</b> What is epigenetic data?</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-dna-look-like"><i class="fa fa-check"></i><b>2.1.1</b> What Does DNA Look Like?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#common-epigenetic-sequencing-techniques"><i class="fa fa-check"></i><b>2.1.2</b> Common Epigenetic Sequencing Techniques:</a></li>
+<li class="chapter" data-level="1.1.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-dna-look-like"><i class="fa fa-check"></i><b>1.1.1</b> What Does DNA Look Like?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#common-epigenetic-sequencing-techniques"><i class="fa fa-check"></i><b>1.1.2</b> Common Epigenetic Sequencing Techniques:</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>2.2</b> What does epigenetic data look like?</a>
+<li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>2.2.1</b> Representing epigenetic data</a></li>
-<li class="chapter" data-level="2.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>2.2.2</b> Transformations to stop extreme p-values</a></li>
+<li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
+<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.2</b> Transformations to stop extreme p-values</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>2.3</b> Sources of epigenetic data</a></li>
-<li class="chapter" data-level="2.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>2.4</b> UCSC’S Genome Browser</a></li>
+<li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
+<li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bigWig files</a>
+<li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>3.1</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="3.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>3.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
+<li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
+<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="4" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>4</b> Loss functions, and peak metrics</a>
+<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
-<li class="chapter" data-level="4.2" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
-<li class="chapter" data-level="4.3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html#seeding"><i class="fa fa-check"></i><b>4.3</b> Seeding</a></li>
-<li class="chapter" data-level="4.4" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html#dashboarding"><i class="fa fa-check"></i><b>4.4</b> Dashboarding</a></li>
+<li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
+<li class="chapter" data-level="4.2" data-path="training-tricks.html"><a href="training-tricks.html#hyper-parameter-optimisation"><i class="fa fa-check"></i><b>4.2</b> Hyper-parameter optimisation</a></li>
 </ul></li>
-<li class="part"><span><b>III Software libraries for model building</b></span></li>
-<li class="chapter" data-level="5" data-path="grelu.html"><a href="grelu.html"><i class="fa fa-check"></i><b>5</b> gReLU</a></li>
-<li class="chapter" data-level="6" data-path="kipoi.html"><a href="kipoi.html"><i class="fa fa-check"></i><b>6</b> Kipoi</a></li>
-<li class="chapter" data-level="7" data-path="weights-and-biases.html"><a href="weights-and-biases.html"><i class="fa fa-check"></i><b>7</b> Weights and Biases</a></li>
-<li class="part"><span><b>IV ML pitfalls in genomics</b></span></li>
-<li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a>
+<li class="chapter" data-level="5" data-path="reproducibility-of-machine-learning-models.html"><a href="reproducibility-of-machine-learning-models.html"><i class="fa fa-check"></i><b>5</b> Reproducibility of machine learning models</a></li>
+<li class="chapter" data-level="6" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>6</b> Testing</a></li>
+<li class="chapter" data-level="7" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html"><i class="fa fa-check"></i><b>7</b> Software libraries for model building</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#distributional-differences"><i class="fa fa-check"></i><b>8.1</b> Distributional differences</a></li>
-<li class="chapter" data-level="8.2" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#dependent-examples"><i class="fa fa-check"></i><b>8.2</b> Dependent examples</a></li>
-<li class="chapter" data-level="8.3" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#confounding"><i class="fa fa-check"></i><b>8.3</b> Confounding</a></li>
-<li class="chapter" data-level="8.4" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#leaky-pre-processing"><i class="fa fa-check"></i><b>8.4</b> Leaky pre-processing</a></li>
-<li class="chapter" data-level="8.5" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html#unbalanced-classes"><i class="fa fa-check"></i><b>8.5</b> Unbalanced classes</a></li>
+<li class="chapter" data-level="7.1" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#grelu"><i class="fa fa-check"></i><b>7.1</b> gReLU</a></li>
+<li class="chapter" data-level="7.2" data-path="software-libraries-for-model-building.html"><a href="software-libraries-for-model-building.html#kipoi"><i class="fa fa-check"></i><b>7.2</b> Kipoi</a></li>
 </ul></li>
-<li class="part"><span><b>V Model interpretability</b></span></li>
-<li class="chapter" data-level="9" data-path="creating-and-visualising-a-simple-model.html"><a href="creating-and-visualising-a-simple-model.html"><i class="fa fa-check"></i><b>9</b> Creating and visualising a simple model</a></li>
-<li class="chapter" data-level="10" data-path="tf-mo-disco.html"><a href="tf-mo-disco.html"><i class="fa fa-check"></i><b>10</b> TF mo-Disco</a></li>
-<li class="part"><span><b>VI Using existing models</b></span></li>
-<li class="chapter" data-level="11" data-path="using-the-grelu-model-zoo.html"><a href="using-the-grelu-model-zoo.html"><i class="fa fa-check"></i><b>11</b> Using the gReLU model zoo</a></li>
-<li class="chapter" data-level="12" data-path="fine-tuning-of-enformer.html"><a href="fine-tuning-of-enformer.html"><i class="fa fa-check"></i><b>12</b> Fine tuning of Enformer</a></li>
-<li class="part"><span><b>VII Predicting in novel cell types</b></span></li>
-<li class="chapter" data-level="13" data-path="incorporating-atac-seq-info.html"><a href="incorporating-atac-seq-info.html"><i class="fa fa-check"></i><b>13</b> Incorporating ATAC-seq info</a></li>
-<li class="chapter" data-level="14" data-path="use-of-cell-type-averages.html"><a href="use-of-cell-type-averages.html"><i class="fa fa-check"></i><b>14</b> Use of cell type averages</a></li>
-<li class="part"><span><b>VIII More complex models</b></span></li>
-<li class="chapter" data-level="15" data-path="training-multi-headed-models.html"><a href="training-multi-headed-models.html"><i class="fa fa-check"></i><b>15</b> Training multi-headed models</a></li>
-<li class="chapter" data-level="16" data-path="training-siamese-twin-models.html"><a href="training-siamese-twin-models.html"><i class="fa fa-check"></i><b>16</b> Training siamese twin models</a></li>
+<li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
+<li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
+<li class="part"><span><b>IV Using existing models</b></span></li>
+<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -175,10 +224,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="epigenetic-data" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> Epigenetic Data<a href="epigenetic-data.html#epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="what-is-epigenetic-data" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> What is epigenetic data?<a href="epigenetic-data.html#what-is-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="epigenetic-data" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Epigenetic Data<a href="epigenetic-data.html#epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-epigenetic-data" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is epigenetic data?<a href="epigenetic-data.html#what-is-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><br> As you may already know, typically all of the cells in your body contain the same DNA. How, then, do we have different cell types in our body? Your DNA contains a script that is able to produce the proteins required for each specific cell in your body. Which proteins, and subsequently which cells are made, depends on gene expression and regulation, i.e. “the way each cell deploys its genome.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p><br><strong><em>Epigenetic data</em></strong> arises from “the study of heritable and stable changes in gene expression that occur through alterations in the chromosome rather than in the DNA sequence.”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <br>
@@ -198,8 +247,8 @@ Some common epigenetic modifications include:</p>
 </ol>
 <p>In studying gene expression and epigenetic modifications, we aim to more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.</p>
 <p><br></p>
-<div id="what-does-dna-look-like" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> What Does DNA Look Like?<a href="epigenetic-data.html#what-does-dna-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="what-does-dna-look-like" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> What Does DNA Look Like?<a href="epigenetic-data.html#what-does-dna-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As illustrated in the image above, DNA is structured as a double helix, with two complementary strands intertwined to form the characteristic helical shape. DNA consists of an extremely long sequence composed of four types of nucleotides: Adenine (A), Cytosine (C), Thymine (T), and Guanine (G).</p>
 <p>According to the National Cancer Institute (USA), nucleotides within the DNA double helix form complementary pairs—Adenine pairs with Thymine, and Guanine pairs with Cytosine<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. These pairs are commonly referred to as base pairs (bps). For example, if one strand of the double helix has the sequence “ATCGG”, the complementary strand will have the sequence “TAGCC”.</p>
 <p>Genes are sequences of DNA located at specific positions on chromosomes and can vary in length. Each gene encodes information necessary for producing proteins or RNA molecules, which are essential for the structure, function, and regulation of an organism<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. The complete set of genetic material in an organism is known as its genome.</p>
@@ -209,8 +258,8 @@ Some common epigenetic modifications include:</p>
 </div>
 <p><br></p>
 </div>
-<div id="common-epigenetic-sequencing-techniques" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Common Epigenetic Sequencing Techniques:<a href="epigenetic-data.html#common-epigenetic-sequencing-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="common-epigenetic-sequencing-techniques" class="section level3 hasAnchor" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Common Epigenetic Sequencing Techniques:<a href="epigenetic-data.html#common-epigenetic-sequencing-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p><strong><em>ATAC-Seq</em></strong> (Assay for Transposase-Accessible Chromatin with Sequencing):
 <br><br>o<code>Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.</code>
@@ -222,11 +271,11 @@ Some common epigenetic modifications include:</p>
 </ol>
 </div>
 </div>
-<div id="what-does-epigenetic-data-look-like" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> What does epigenetic data look like?<a href="epigenetic-data.html#what-does-epigenetic-data-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-does-epigenetic-data-look-like" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> What does epigenetic data look like?<a href="epigenetic-data.html#what-does-epigenetic-data-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Epigenetic data can be represented in various forms, depending on the type of modification being studied and the methods used to gather the data. <strong>ATAC-Seq</strong> and <strong>ChIP-Seq</strong> are the common methods I will focus on, but there are others that may produce different forms of data, such as WGS (whole-genome sequencing) which produces nucleotide sequencing data, or Bisulfite conversion of DNA producing data on methylation levels across the genome.</p>
-<div id="representing-epigenetic-data" class="section level3 hasAnchor" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Representing epigenetic data<a href="epigenetic-data.html#representing-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="representing-epigenetic-data" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Representing epigenetic data<a href="epigenetic-data.html#representing-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><br>
 Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they ‘pile up’ to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also examine mismatches where a read’s base differs from the genome’s base, and use them to identify SNPs (<a href="https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism" target="_blank">single nucleotide polymorphisms</a>)<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. This mismatch information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
 <p><br></p>
@@ -296,8 +345,8 @@ o <strong><em>Types of Peaks:</em></strong>
 <p>This is an example data pipeline from Encode Experiment <a href="https://www.encodeproject.org/experiments/ENCSR817LUF/" target="_blank">ENCSR817LUF</a>, the same chIP-Seq experiment we saw the raw sequence reads, and signal p-value coverage from. The yellow bubbles represent downloadable data sets of different types, while the blue boxes represent step types (e.g. peak calling). In the left column are multiple data sets of raw sequence reads, which then undergo data quality steps before being aligned (first blue box) to the reference human genome GRCh38 (denoted by ENCFF110MCL below the reads). The next steps include Peak calling (categorical peaks) and signal generation (continuous peaks) to produce the data we normally use in our machine learning models. This data pipeline process aids in normalisation, noise reduction, and dimensionality reduction of the data.</p>
 <p><br></p>
 </div>
-<div id="transformations-to-stop-extreme-p-values" class="section level3 hasAnchor" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Transformations to stop extreme p-values<a href="epigenetic-data.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="transformations-to-stop-extreme-p-values" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Transformations to stop extreme p-values<a href="epigenetic-data.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine).
 <br><br>
 <span class="math inline">\(\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)\)</span>
@@ -309,8 +358,8 @@ o <strong><em>Types of Peaks:</em></strong>
 </div>
 </div>
 </div>
-<div id="sources-of-epigenetic-data" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Sources of epigenetic data<a href="epigenetic-data.html#sources-of-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="sources-of-epigenetic-data" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Sources of epigenetic data<a href="epigenetic-data.html#sources-of-epigenetic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are numerous public data banks which contain genomic datasets ready to be downloaded.
 <br><br>
 <a href="https://projects.ensembl.org/blueprint/" target="_blank">Blueprint</a>
@@ -328,8 +377,8 @@ The Encode Project contains a large amount of publicly available genomic data ea
 <p>The largest genomic data bank is the <a href="https://www.ukbiobank.ac.uk/" target="_blank">UK Biobank</a>, however they require that you apply for access to their datasets.
 <br></p>
 </div>
-<div id="ucscs-genome-browser" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> UCSC’S Genome Browser<a href="epigenetic-data.html#ucscs-genome-browser" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ucscs-genome-browser" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> UCSC’S Genome Browser<a href="epigenetic-data.html#ucscs-genome-browser" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><br>
 The UCSC Genome Browser is a powerful and versatile tool that allows the visualisation and exploration of many sets of genomic data, especially bigWig files. It offers an extensive collection of genome assemblies, annotation tracks, and functional data, enabling users to examine gene structures, regulatory elements, and genetic variations. With its user-friendly interface and customisable display options, the UCSC Genome Browser facilitates detailed genomic analyses and supports a wide range of applications in genomics and bioinformatics. Whether you’re investigating gene functions, exploring genetic variants, or studying comparative genomics, the UCSC Genome Browser serves as an essential resource for understanding complex genomic information. It is also possible to load and visualise genomic data from other sources such as Encode. While the visualisations are extensive, as you can explore below, the browser can be quite overwhelming for first time users.
 <br></p>

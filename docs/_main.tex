@@ -120,7 +120,7 @@
 
 \title{Machine Learning in Genomics: Containerised tutorials demonstrating best practises, pitfalls, and reproducibility}
 \author{Sach Nehal}
-\date{2024-09-02}
+\date{2024-09-03}
 
 \begin{document}
 \maketitle
@@ -134,7 +134,7 @@
 
 Applied machine learning utilising vast amounts of data has aided in pattern identification, predictive analytics, and solving complex problems across a multitude of fields. Solving these complex problems within these fields, researchers would find differing answers to the following questions; \textbf{what machine learning techniques can we apply to the problem, how do we apply the techniques in the context of this field, and why do we need to apply them in this way?} In any case, applied machine learning requires an interdisciplinary understanding of computing techniques and the field in question.
 
-The aim of this project is to provide you with \textbf{a set of reproducible, containerized tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls, in the field of genomics}. It is designed for users with knowledge of machine learning but little or no background in biology as a process to learn about applying machine learning techniques in genomics.
+The aim of this project is to provide you with \textbf{a set of reproducible tutorials that include all necessary data, code, and descriptions to replicate key results, along with demonstrations of common pitfalls, in the field of genomics}. It is designed for users with knowledge of machine learning but little or no background in biology as a process to learn about applying machine learning techniques in genomics.
 
 \part{Introduction}\label{part-introduction}
 
@@ -363,8 +363,6 @@ In the case of this tutorial and running models to predict continuous coverage v
 
 As explained in Part 1, DNA has a double helix structure. When we one-hot encode a segment of DNA in our models using a reference genome, we typically represent only one strand of the double helix. The complement of this strand is the opposite strand, where Adenine (A) pairs with Thymine (T), and Cytosine (C) pairs with Guanine (G). The reverse complement of a DNA strand is obtained by first taking its complement and then reading it in the reverse direction.
 
-\includegraphics{images/reverse_complement.png}
-
 This figure shows the reverse complement of a DNA sequence\footnote{\citet{clark2021}}
 
 Training on DNA sequences and augmenting the data with their reverse complements has been shown to improve model accuracy, prediction, and interpretability in DNA sequence-related models. This approach involves ``treating the reverse complement DNA sequence as another sample'' \citep{cao2019}. By incorporating reverse complements, the model is exposed to a wider variety of sequence patterns, which helps reduce overfitting and enhances generalization. As a result, models become better at recognizing patterns regardless of strand orientation. Although the logic to obtain the reverse complement of a DNA strand is straightforward, the Bio.Seq module from the Biopython library provides a simple way to do this. Augmenting your dataset with reverse complements is usually done to training sets, but can be applied to validation and test sets as well.
@@ -423,70 +421,120 @@ In the genomic context, as a result of complex models using large genomic datase
 
 \chapter{Reproducibility of machine learning models}\label{reproducibility-of-machine-learning-models}
 
-\section{Seeding}\label{seeding}
+The ability to reproduce machine learning models and results is of extreme importance in the genomic context. According to an article on reproducibility standards for machine learning in the life sciences, the bronze standard for reproducibility includes access to the original data, trained model and source code. The silver standard incorporates computational environment considerations as well as inherent non-determinism, while the gold standard requires automation such that the experiment is reproducible with a single command.\footnote{\citet{ben2021}}
 
-\section{Dashboarding}\label{dashboarding}
+\textbf{Seeding}
+
+Seeding runs and setting random number seeds aids in eliminating the inherent non-determinism of creating data splits and training models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Seeding to ensure reproducibility}
+\ImportTok{import}\NormalTok{ random}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ torch}
+
+\NormalTok{seed }\OperatorTok{=} \DecValTok{42}  \CommentTok{\# or any other integer}
+\NormalTok{random.seed(seed)}
+\NormalTok{np.random.seed(seed)}
+\NormalTok{torch.manual\_seed(seed) }\CommentTok{\#CPU}
+\NormalTok{torch.cuda.manual\_seed(seed) }\CommentTok{\#GPU}
+\NormalTok{torch.backends.cudnn.deterministic }\OperatorTok{=} \VariableTok{True}  \CommentTok{\# To ensure deterministic behavior}
+\NormalTok{torch.backends.cudnn.benchmark }\OperatorTok{=} \VariableTok{False}     \CommentTok{\# Ensures reproducibility}
+\end{Highlighting}
+\end{Shaded}
+
+This seeding example shows a seed being used for python's built in random library, numpy's random library, and the PyTorch library for both CPUs and GPUs. Additionally, PyTorch's CuDNN library accelerates computations on GPUs. By setting CuDNN to deterministic mode and disabling benchmarking, you ensure that the same algorithm is used in each run. This approach reduces variability due to hardware differences at the cost of computational efficiency.
+
+\textbf{Dashboarding}
+
+Dashboarding can be used to keep track of model performance as well as model and training parameters by visualising logged data. Dashboards such as Weights and Biases (WandB) can be leveraged to keep track of model runs, hyperparameters and even trained models and data through uploading them as artifacts.
+
+\includegraphics{images/wandb.png}
+
+Source: \href{https://docs.wandb.ai/quickstart}{WandB}
+
+Real time updates on metrics are important in the genomic context when models can take extended periods of time to train. Furthermore, downloading and sharing specific models, additional artifacts and training logs with information on environment settings becomes easier when utilising dashboards. While not explicitly ensuring or enabling reproducibility, dashboarding helps provide transparency.
 
 \chapter{Testing}\label{testing}
 
-\chapter{Choosing which genomic regions to train on}\label{choosing-which-genomic-regions-to-train-on}
+Testing and evaluating genomic models is similar to other machine learning contexts in that it involves assessing model performance using metrics such as accuracy, precision, recall, and F1-scores. However, the genomic context often requires additional considerations due to the complexity and high-dimensionality of genomic data. There are several pitfalls which when fallen into, inflate model performance and make test metrics untrustworthy. Genomic data can be extremely imbalanced, as we will find out in subsequent tutorials. In these unbalanced classes scenarios, the choice of test metric usually between the area under the receiver operating characteristic (auROC) and the area under the precision-recall curve (auPRC), as only predicting the majority class will result in high accuracy for categorical models.
 
-\chapter{Effect of differences in sequencing depths}\label{effect-of-differences-in-sequencing-depths}
+\includegraphics{images/auroc_auprc.png}
 
-\part{Software libraries for model building}\label{part-software-libraries-for-model-building}
+Source: \href{https://juandelacalle.medium.com/how-and-why-i-switched-from-the-roc-curve-to-the-precision-recall-curve-to-analyze-my-imbalanced-6171da91c6b8}{BlogPost}
 
-\chapter{gReLU}\label{grelu}
+In genomic situations with extreme imbalance in data, plotting ROC and precision-recall curves and calculating the auROC and auPRC is beneficial to properly test your model's performance. AuROC and auPRC both provide insight into the model's ability to distinguish between classes and are both functions of recall (true positive rate). ``In many genomics problems, high recall can be achieved at a very low {[}false positive rate{]} owing to the large number of negatives in the test set, making it easy to obtain a high auROC even when false positives vastly outnumber true positives''\footnote{\citet{whalen2022}}. However, auPRC offers a more focused evaluation as the absolute number of false positives is taken into account in precision versus the false positive rate. Therefore, a model trained on imbalanced data that predicts many false positives could have a high auROC and a low auPRC. In cases where we are interested in a minority of positive classes, research suggests using the auPRC as a measure of performance\footnote{\citet{whalen2022}}.
 
-\chapter{Kipoi}\label{kipoi}
+In regression settings, classic metrics such as the mean squared error, and mean absolute error are used alongside measures of variance (\(R^2\)) and correlation (pearson correlation). It is important to note that differences in the order of magnitude of multiple sets of predictions can affect MSE metrics when evaluated together. For example, if a multi-task model has two prediction sets where one set ``has values entirely between 1,000 and 10,000 and the other {[}set{]} has values between 0.01 and 0.1, then evaluating the model simply using mean squared error (MSE) across the two tasks will largely ignore the second task.''\footnote{\citet{whalen2022}}
 
-\chapter{Weights and Biases}\label{weights-and-biases}
+In the genomic context one can also perform marginalisation experiments to ensure models are recognizing biologically relevant patterns. ``Marginalisation is a method that requires summing over the possible values of one variable to determine the marginal contribution of another''\footnote{\citet{jonny2018}}. Given a model trained on DNA sequences, performing a marginalisation experiment using sequence motifs is possible. ``Motifs are short, recurring patterns in DNA that are presumed to have a biological function''\footnote{\citet{pat2006}}. Marginalising with motifs involves comparing a model's predictions before and after the motif is inserted into a test/prediction set. The difference in predictions allows us to quantify the influence of a motif on a model's predictions and understand how well our model recognises biological patterns. More specific types of marginalisation experiments include variant effect prediction, which aims to understand the effect of specific genetic variants in sequences on a model's predictions.
+
+\chapter{Software libraries for model building}\label{software-libraries-for-model-building}
+
+\section{gReLU}\label{grelu}
+
+gReLU is a Python library to train, interpret, and apply deep learning models to DNA sequences''. The gRelu library contains a model zoo allowing for easy access to several models such as Borzoi, Enformer, or a dilated convolutional model based on the BPnet model architecture. Some of these models can be imported pre-trained. Additionally, simpler base models and convolutional neural networks are also available. On top of access to already built models, the software library allows for designing your own models.
+
+\includegraphics{images/grelu.png}
+
+Source: \href{https://github.com/Genentech/gReLU/blob/main/README.md}{gRelu}
+
+Their documentation contains all their available functions and includes tutorials on using gRelu.
+
+\section{Kipoi}\label{kipoi}
+
+Kipoi is a repository of ready-to-use trained models for genomics. Referring back to the reproducibility of machine learning models, Kipoi contains 2206 different gold standard models, available to be downloaded and tested in a few lines of code.
+
+\includegraphics{images/kipoi.png}
+
+Source: \href{https://kipoi.org/docs/}{Kipoi}
+
+Similarly to gRelu, they include several use case tutorials and a model zoo. Downloaded models can also be built upon to conduct further research as links to the github source code of each model are provided.
 
 \part{ML pitfalls in genomics}\label{part-ml-pitfalls-in-genomics}
 
 \chapter{Pitfalls overview}\label{pitfalls-overview}
 
-\section{Distributional differences}\label{distributional-differences}
+Applying machine learning in the field of genomics comes with its own challenges. Genomic data is highly complex, featuring high dimensionality, heterogeneity, and noise. It is important to consider the assumptions models make and whether those assumptions hold true within the data. According to research, available \href{https://www.nature.com/articles/s41576-021-00434-9}{here}, on pitfalls in machine learning, the most common errors include not taking into account distributional differences between contexts or batches, dependencies within the data, confounding effects distorting true relationships, unbalanced classes and leaking information between datasets.\footnote{\citet{whalen2022}} Lets examine the pitfalls mentioned in the research above and methods to mitigate these effects in more detail.
 
-\section{Dependent examples}\label{dependent-examples}
+\includegraphics{images/pitfalls.png}
 
-\section{Confounding}\label{confounding}
+Source: \href{https://www.nature.com/articles/s41576-021-00434-9/figures/1}{Nature Reviews Genetics}
 
-\section{Leaky pre-processing}\label{leaky-pre-processing}
+\textbf{Distributional differences}
 
-\section{Unbalanced classes}\label{unbalanced-classes}
+Distributional differences between the context in which a model was trained and tested, and the context in which a model makes predictions, results in different model performances. These different contexts can be attributed to batch effects or applying the model on different cell types. ``One should expect that performance will be higher in {[}the same setting{]} than on {[}different settings{]}\footnote{\citet{whalen2022}}. It is crucial then, for models which aim to predict biological relationships across contexts to be validated and tested across these different settings that accurately reflect the real-world variability. Even models that aim to predict across one context such as cell type-specific models common in disease prediction, are still susceptible to this pitfall. When using data from multiple experiments, batch effects can introduce variability that lead to differences between training, test, and prediction sets. To address this, it is important to consider batch effects during model development and evaluation. One approach is to ensure that training and test sets are sourced from different batches to evaluate the generalisability of the model and prevent inflated performance. Additionally, applying batch effect correction techniques such can help account for these distributional differences.
 
-In genomics, imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, models can threaten to over-learn the majority class and under-learn the minority class. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. The extensive size of the human genome exacerbates this issue, especially in problems related to non-coding variants, such as predicting chromatin states, gene expression, and disease status from sequence data.
+\textbf{Dependent examples}
 
-Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.
-\#\# Balancing the proportion of peaks / no-peaks in validation sets
+When studying machine learning, a constant assumption is that of independence. Whether it be independent test sets or data points being independent of each other, the assumption of independence is key in creating fair models. Many biological processes in genomics are not independent.\footnote{\citet{allis2015}} A research paper focused on understanding the pitfalls of neural networks predicting across cell types found that several models had been evaluated on test sets comprising of cell type independent of training, but not independent of chromosomes leading to inflated performances.\footnote{\citet{jacob2020}} That is, gene expression predictions were evaluated on different cells but on the same chromosomes. The inflated performances were due to chromosomes ``themselves {[}being{]} dependent across samples because the underlying functional activity is generally shared''\footnote{\citet{whalen2022}}. While hard to identify in the designing phase even through visualisation, mitigation techniques include preventing overfitting during evaluation and group k-fold cross-validation to prevent leakage between training and test sets.\footnote{\citet{whalen2022}}
 
-\url{https://colab.research.google.com/drive/1wWlFffwBpOuK9yyCWp1hY6oiG9FK_6aX?usp=sharing}
+\textbf{Confounding}
 
-\url{https://colab.research.google.com/drive/17xdEjl6TDew8Fb-bZvjRMIQSZX5s95Ae?usp=sharing}
+Confounders are additional variables that affect the variables being studied, resulting in models not capturing the correct relationships in the data.\footnote{\citet{mo2012}} ``Confounding in genetic studies can arise from unmodelled environmental factors and population structure, as well as other factors''.\footnote{\citet{whalen2022}} In the context of ATAC-Seq and chIP-Seq data, differences in the sequencing depth of the experiment can have a confounding effect on models if not handled. As explained in part 1, ATAC-Seq and chIP-Seq data consists of reads that are alligned to a reference genome and aggregated. The sequencing depth of the experiment refers to on average how many times a region was sequenced.\footnote{\citet{sims2014}} A higher sequencing depth means a higher overall coverage level. If not accounted for, models using data of different sequencing depths are confounded. Similarly when predicting on a dataset with a different sequencing depth than the training set, the model would biased. While sequencing depth as a confounder can be more easily corrected by downsampling the raw reads from the dataset with higher sequencing depth, other confounding effects can be harder to account for. However, it is possible to use statistical tools such as PEER\footnote{\citet{oliver2012}}, Inter-sample Correlation Emended (ICE) and Surrogate Variable Analysis (SVA)\footnote{\citet{jen2010}} to understand confounders in your dataset.
 
-\part{Model interpretability}\label{part-model-interpretability}
+\textbf{Leaky pre-processing}
 
-\chapter{Creating and visualising a simple model}\label{creating-and-visualising-a-simple-model}
+Leaky pre-processing involves information leaks between the training and test sets resulting in altered testing metrics. In genomics, as a result of many dependencies, pre-processing steps involving the dataset as a whole can introduce this bias. This includes standardisation techniques, supervised feature selection or principle component analysis, before splitting data into test splits.\footnote{\citet{whalen2022}} A solution to this is to perform these transformations and analysis after data splits, preferably within cross-validation. Leaky preprocessing has been prevalent in various genomic fields, including microarray analysis, DNA methylation, gene expression studies, and more, often leading to misleading results.\footnote{\citet{whalen2022}}
 
-\chapter{TF mo-Disco}\label{tf-mo-disco}
+\textbf{Unbalanced classes}
+
+Unbalanced datasets can be common in genomics often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, the pitfall is a model ``learns most of the target concepts of the majority class and learns target concepts from the minority class poorly or not at all.''\footnote{\citet{muk2014}} This is particularly evident in disease related tasks where the focus is on a few disease causing genes or non-coding variants.\footnote{\citet{muk2014}} Additionally, many experiments that implement conservative significance thresholds to determine true signals involve data imbalance, such as peak detection\footnote{\citet{oh2020}}, gene expression\footnote{\citet{avsec2021}}, and chromatin accessibility. The extensive size of the human genome exacerbates this issue when the areas of interest are small. Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.\footnote{\citet{whalen2022}}
 
 \part{Using existing models}\label{part-using-existing-models}
 
-\chapter{Using the gReLU model zoo}\label{using-the-grelu-model-zoo}
+\chapter{Using gReLU models}\label{using-grelu-models}
 
-\chapter{Fine tuning of Enformer}\label{fine-tuning-of-enformer}
+Continuing from previous tutorials, the next tutorial similarly uses chIP-Seq data from Encode Experiment \href{https://www.encodeproject.org/experiments/ENCSR817LUF/}{ENCSR817LUF} trained on a gRelu model in order to to predict the coverage levels and examine several of the pitfalls mentioned in section 4. An additional tutorial is included to explain how data was pre-processed for gRelu to explore
 
-\part{Predicting in novel cell types}\label{part-predicting-in-novel-cell-types}
+Tutorial 1.5: Preprocessing Data for gRelu Models (interactive)
 
-\chapter{Incorporating ATAC-seq info}\label{incorporating-atac-seq-info}
+Tutorial 1.5: Preprocessing Data for gRelu Models (nbviewer)
 
-\chapter{Use of cell type averages}\label{use-of-cell-type-averages}
+Tutorial 2: Training Models with gRelu and Examining Pitfalls (interactive)
 
-\part{More complex models}\label{part-more-complex-models}
-
-\chapter{Training multi-headed models}\label{training-multi-headed-models}
-
-\chapter{Training siamese twin models}\label{training-siamese-twin-models}
+Tutorial 2: Training Models with gRelu and Examining Pitfalls (nbviewer)
 
   \bibliography{book.bib,packages.bib}
 
