@@ -20,5 +20,4 @@ Their <a href="https://genentech.github.io/gReLU/index.html" target="_blank">doc
 <div style="text-align: center;">
 Source: [Kipoi](https://kipoi.org/docs/){target="_blank"}
 </div><br>
-
 Similarly to gRelu, they include several use case tutorials and a model zoo. Downloaded models can also be built upon to conduct further research as links to the github source code of each model are provided.
