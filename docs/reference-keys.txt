@@ -4,13 +4,12 @@ what-does-dna-look-like
 common-epigenetic-sequencing-techniques
 what-does-epigenetic-data-look-like
 representing-epigenetic-data
-transformations-to-stop-extreme-p-values
 sources-of-epigenetic-data
 ucscs-genome-browser
 pre-processing-of-bigwig-files
+transformations-to-stop-extreme-p-values
 data-loaders-and-simplifying-pre-processing
-dealing-with-missing-data-oversampling-undersampling-weighting
-loss-functions-and-peak-metrics
+loss-functions
 training-tricks
 reverse-complements-and-sequence-shifts
 hyper-parameter-optimisation
@@ -20,4 +19,4 @@ software-libraries-for-model-building
 grelu
 kipoi
 pitfalls-overview
-using-grelu-models
+training-grelu-models-and-examining-pitfalls

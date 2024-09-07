@@ -23,14 +23,14 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-03" />
+<meta name="date" content="2024-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="using-grelu-models.html"/>
+<link rel="prev" href="training-grelu-models-and-examining-pitfalls.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -175,18 +175,17 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
-<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.2</b> Transformations to stop extreme p-values</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
 <li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
 <ul>
+<li class="chapter" data-level="2.0.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>2.0.1</b> Transformations to stop extreme p-values</a></li>
 <li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="3" data-path="loss-functions.html"><a href="loss-functions.html"><i class="fa fa-check"></i><b>3</b> Loss functions</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
@@ -202,7 +201,7 @@ div.csl-indent {
 <li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
 <li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
 <li class="part"><span><b>IV Using existing models</b></span></li>
-<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
+<li class="chapter" data-level="9" data-path="training-grelu-models-and-examining-pitfalls.html"><a href="training-grelu-models-and-examining-pitfalls.html"><i class="fa fa-check"></i><b>9</b> Training gReLU models and examining pitfalls</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -235,9 +234,6 @@ Akalin, Altuna. 2020. <em>Computational Genomics with r</em>. Github Pages. <a h
 Al-Aboud, Nora M., Connor Tupper, and Ishwarlal Jialal. 2023. <em>Genetics, Epigenetic Mechanism</em>. National Library of Medicine. <a href="https://www.ncbi.nlm.nih.gov/books/NBK532999/#article-22137.r1">https://www.ncbi.nlm.nih.gov/books/NBK532999/#article-22137.r1</a>.
 </div>
 <div class="csl-entry">
-Allis, D., Jenuwein T, Reinberg D, and Caparros M. L. 2015. <em>EPIGENETICS</em>. 2nd ed. Cold Spring Harbor Laboratory Press. <a href="https://www.cshlpress.com/pdf/sample/2014/epigenetics2/EPIFM.pdf">https://www.cshlpress.com/pdf/sample/2014/epigenetics2/EPIFM.pdf</a>.
-</div>
-<div class="csl-entry">
 Arisdakessian, Cédric, Olivier Poirion, Breck Yunits, Xun Zhu, and Lana Garmire. 2019. <em>DeepImpute: An Accurate, Fast, and Scalable Deep Neural Network Method to Impute Single-Cell RNA-Seq Data</em>. Springer Nature. <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6</a>.
 </div>
 <div class="csl-entry">
@@ -257,6 +253,9 @@ Cao, Zhen, and Shihua Zhang. 2019. <em>Simple Tricks of Convolutional Neural Net
 </div>
 <div class="csl-entry">
 D’haeseleer, Patrik. 2006. <em>What Are DNA Sequence Motifs?</em> Nat Biotechnol. <a href="https://www.nature.com/articles/nbt0406-423">https://www.nature.com/articles/nbt0406-423</a>.
+</div>
+<div class="csl-entry">
+<em>General Transcription Factor / Transcription Factor</em>. 2014. Learn Science at Scitable. <a href="https://www.nature.com/scitable/definition/transcription-factor-167/">https://www.nature.com/scitable/definition/transcription-factor-167/</a>.
 </div>
 <div class="csl-entry">
 Green, Phil, and Brent Ewing. n.d. <em>Phred - Quality Base Calling</em>. CodonCode Corporation. <a href="https://www.phrap.com/phred/#:~:text=Phred%20is%20a%20base%2Dcalling,%22)%20to%20each%20base%20call.">https://www.phrap.com/phred/#:~:text=Phred%20is%20a%20base%2Dcalling,%22)%20to%20each%20base%20call.</a>
@@ -307,6 +306,9 @@ Ralston, Amy, and Kenna Shaw. 2008. <em>Gene Expression Regulates Cell Different
 Retel, Joren Sebastian, Andreas Poehlmann, Josh Chiou, Andreas Steffen, and Djork-Arné Clevert. 2024. <span>“A Fast Machine Learning Dataloader for Epigenetic Tracks from <span>BigWig</span> Files.”</span> <em>Bioinformatics</em> 40 (1): btad767. <a href="https://doi.org/10.1093/bioinformatics/btad767">https://doi.org/10.1093/bioinformatics/btad767</a>.
 </div>
 <div class="csl-entry">
+RY, Li, and et al. 2022. <em>Comprehensive 100-Bp Resolution Genome-Wide Epigenomic Profiling Data for the Hg38 Human Reference Genome</em>. Data Brief. <a href="https://pubmed.ncbi.nlm.nih.gov/36582986/">https://pubmed.ncbi.nlm.nih.gov/36582986/</a>.
+</div>
+<div class="csl-entry">
 Schreiber, Jacob, and et al. 2020. <em>A Pitfall for Machine Learning Methods Aiming to Predict Across Cell Types</em>. Springer Nature. <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02177-y">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02177-y</a>.
 </div>
 <div class="csl-entry">
@@ -326,6 +328,9 @@ T., Kouzarides. 2007. <em>Chromatin Modifications and Their Function</em>. Natio
 </div>
 <div class="csl-entry">
 Toneyan, Shushan, Ziqi Tang, and Peter Koo. 2022. <em>Evaluating Deep Learning for Predicting Epigenomic Profiles</em>. Springer Nature. <a href="https://www.nature.com/articles/s42256-022-00570-9">https://www.nature.com/articles/s42256-022-00570-9</a>.
+</div>
+<div class="csl-entry">
+Völker-Albert, Moritz, and et al. 2020. <em>Histone Modifications in Stem Cell Development and Their Clinical Implications</em>. PMC PubMed Central. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7724464/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7724464/</a>.
 </div>
 <div class="csl-entry">
 Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
@@ -403,14 +408,12 @@ Youens-Clark, Ken. 2021. <em>Mastering Python for Bioinformatics</em>. O’Reily
 
 
 
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="using-grelu-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="training-grelu-models-and-examining-pitfalls.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

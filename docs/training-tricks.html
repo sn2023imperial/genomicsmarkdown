@@ -23,14 +23,14 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-03" />
+<meta name="date" content="2024-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="loss-functions-and-peak-metrics.html"/>
+<link rel="prev" href="loss-functions.html"/>
 <link rel="next" href="reproducibility-of-machine-learning-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -175,18 +175,17 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
-<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.2</b> Transformations to stop extreme p-values</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
 <li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
 <ul>
+<li class="chapter" data-level="2.0.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>2.0.1</b> Transformations to stop extreme p-values</a></li>
 <li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="3" data-path="loss-functions.html"><a href="loss-functions.html"><i class="fa fa-check"></i><b>3</b> Loss functions</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
@@ -202,7 +201,7 @@ div.csl-indent {
 <li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
 <li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
 <li class="part"><span><b>IV Using existing models</b></span></li>
-<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
+<li class="chapter" data-level="9" data-path="training-grelu-models-and-examining-pitfalls.html"><a href="training-grelu-models-and-examining-pitfalls.html"><i class="fa fa-check"></i><b>9</b> Training gReLU models and examining pitfalls</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -233,10 +232,10 @@ div.csl-indent {
 <p><br></p>
 <div style="text-align: center;">
 <p><img src="images/reverse_complement.png" alt="Reverse Complement" width="300" /></p>
-<p>This figure shows the reverse complement of a DNA sequence<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a></p>
+<p>This figure shows the reverse complement of a DNA sequence<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a></p>
 </div>
 <p><br></p>
-<p>Training on DNA sequences and augmenting the data with their reverse complements has been shown to improve model accuracy, prediction, and interpretability in DNA sequence-related models. This approach involves “treating the reverse complement DNA sequence as another sample” <span class="citation">(<a href="#ref-cao2019">Cao and Zhang 2019</a>)</span>. By incorporating reverse complements, the model is exposed to a wider variety of sequence patterns, which helps reduce overfitting and enhances generalization. As a result, models become better at recognizing patterns regardless of strand orientation. Although the logic to obtain the reverse complement of a DNA strand is straightforward, the Bio.Seq module from the Biopython library provides a simple way to do this. Augmenting your dataset with reverse complements is usually done to training sets, but can be applied to validation and test sets as well.
+<p>Training on DNA sequences and augmenting the data with their reverse complements has been shown to improve model accuracy, prediction, and interpretability in DNA sequence-related models. This approach involves “treating the reverse complement DNA sequence as another sample”<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>. By incorporating reverse complements, the model is exposed to a wider variety of sequence patterns, which helps reduce overfitting and enhances generalization. As a result, models become better at recognizing patterns regardless of strand orientation. Although the logic to obtain the reverse complement of a DNA strand is straightforward, the Bio.Seq module from the Biopython library provides a simple way to do this. Augmenting your dataset with reverse complements is usually done to training sets, but can be applied to validation and test sets as well.
 <br></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="training-tricks.html#cb2-1" tabindex="-1"></a><span class="im">from</span> Bio.Seq <span class="im">import</span> Seq</span>
 <span id="cb2-2"><a href="training-tricks.html#cb2-2" tabindex="-1"></a></span>
@@ -252,24 +251,24 @@ div.csl-indent {
 <pre><code>## Reverse Complement:  GTACGCAT</code></pre>
 <p><br></p>
 <p><strong>Sequence Shifts</strong> <br></p>
-<p>Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking “extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>
+<p>Training on small, random sequence shifts up and downstream by shifting the genomic coordinates of the input sequence is also known as jitter. Jittering adds diversity to the training data by creating slightly different versions of the same sequence. This allows models to be less sensitive to the exact positioning of features, making them more robust to variations in the data. It also allows models to generalise better to unseen data where sites may not always be perfectly aligned. A variation of jittering, called flanking “extends DNA sequences from its midpoint by X base pairs and takes the left, middle and right input windows of the extended sequence as training samples with the same labels, tripling the size of training set.<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>
 <br></p>
-<p>Implementing data augmentations using reverse complements and sequence shifts can be approached in different ways. Similar to the ‘flanking’ example, you can either expand your dataset by adding additional augmented data points or apply a random augmentation strategy, where only some data points are randomly augmented while keeping the total number of points in your dataset unchanged. Data augmentations are usually applied only to training sets, however in the context of computer vision “many research reports have shown the effectiveness of augmenting data at test-time as well”.<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> When implementing augmentations like reverse complements and sequence shifts, these are typically applied after splitting your data into training, validation, and test sets. When applying sequence shifting, it’s logical to shift the interval before retrieving the nucleotide sequence from the reference genome. The reverse complement should be applied after retrieving the nucleotide sequence but before one-hot encoding it. If you’re using the BioPython library, this works well since BioPython’s reverse complement function operates on string inputs.
+<p>Implementing data augmentations using reverse complements and sequence shifts can be approached in different ways. Similar to the ‘flanking’ example, you can either expand your dataset by adding additional augmented data points or apply a random augmentation strategy, where only some data points are randomly augmented while keeping the total number of points in your dataset unchanged. Data augmentations are usually applied only to training sets, however in the context of computer vision “many research reports have shown the effectiveness of augmenting data at test-time as well”.<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a> When implementing augmentations like reverse complements and sequence shifts, these are typically applied after splitting your data into training, validation, and test sets. When applying sequence shifting, it’s logical to shift the interval before retrieving the nucleotide sequence from the reference genome. The reverse complement should be applied after retrieving the nucleotide sequence but before one-hot encoding it. If you’re using the BioPython library, this works well since BioPython’s reverse complement function operates on string inputs.
 <br></p>
-<p>In the genomics context, a paper on evaluating deep learning for predicting epigenomic profiles used two convolutional neural networks, <a href="https://github.com/calico/basenji" target="_blank">Basenji</a> and <a href="https://github.com/kundajelab/bpnet" target="_blank">BPNet</a>, trained on ATAC-seq data, to predict coverage values as a regression. They found that convolutional models trained with augmentations (reverse complement and sequence shifts), “yielded improved robustness, especially when trained on peak-centered data (BPNet). On the other hand, models that were trained on coverage-threshold data (Basenji) already benefited from the randomly-centered profiles.”<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> Additionally, while they initially “used a MSE and multinomial NLL loss for BPNet, [they] found that optimization using Poisson NLL yielded better performance.”<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> This finding is another motivation of using at poisson loss function in subsequent tutorials.
+<p>In the genomics context, a paper on evaluating deep learning for predicting epigenomic profiles used two convolutional neural networks, <a href="https://github.com/calico/basenji" target="_blank">Basenji</a> and <a href="https://github.com/kundajelab/bpnet" target="_blank">BPNet</a>, trained on ATAC-seq data, to predict coverage values as a regression. They found that convolutional models trained with augmentations (reverse complement and sequence shifts), “yielded improved robustness, especially when trained on peak-centered data (BPNet). On the other hand, models that were trained on coverage-threshold data (Basenji) already benefited from the randomly-centered profiles.”<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a> Additionally, while they initially “used a MSE and multinomial NLL loss for BPNet, [they] found that optimization using Poisson NLL yielded better performance.”<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a> This finding is another motivation of using at poisson loss function in subsequent tutorials.
 <br></p>
 </div>
 <div id="hyper-parameter-optimisation" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Hyper-parameter optimisation<a href="training-tricks.html#hyper-parameter-optimisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Which learning rates are commonly used? How many epochs are typically used to train on?<br></p>
-<p>While the learning rate and number of epochs differ by model and study, based on some of the research cited so far, common learning rates are in the range 1e-4<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a> to 1e-3<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>. Additionally, some studies apply learning rate decay if the loss function shows no improvement over time<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a> while others lower the learning rate for fine tuning.<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>
+<p>While the learning rate and number of epochs differ by model and study, based on some of the research cited so far, common learning rates are in the range 1e-4<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a> to 1e-3<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>. Additionally, some studies apply learning rate decay if the loss function shows no improvement over time<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a> while others lower the learning rate for fine tuning.<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>
 <br></p>
-<p>The number of epochs used to train on differs by quite a margin. In training a convolution neural network to explore the effects of genomic data augmentation, 30 epochs were used.<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a> DeepImpute which constructs multiple sub-neural networks for genotype imputation, trains on a maximum of 500 epochs, while the study involving the Basenji and BPNet models were trained on a maximum of 100 epochs. The clear strategy for these larger models involve the use of early stopping if no improvements are evident after 5-10 epochs.
+<p>The number of epochs used to train on differs by quite a margin. In training a convolution neural network to explore the effects of genomic data augmentation, 30 epochs were used.<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a> DeepImpute which constructs multiple sub-neural networks for genotype imputation, trains on a maximum of 500 epochs, while the study involving the Basenji and BPNet models were trained on a maximum of 100 epochs. The clear strategy for these larger models involve the use of early stopping if no improvements are evident after 5-10 epochs.
 <br></p>
-<p>When hyperparameter optimising, the consensus for achieving the best model performance is to train with a high number of epochs to enable the model to confidently learn features as they apply to labels, starting with a high learning rate, and decreasing over time using a learning rate scheduler. Interestingly, a study on binary peak detection using CNNs on ChIP-Seq data manually tuned their model’s hyperparameters and found that little changes in performance results<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>. This highlights the challenges of hyperparameter tuning with larger models, where manually fine-tuning is not ideal. How can hyperparamter tuning on these larger models be done in practice?
+<p>When hyperparameter optimising, the consensus for achieving the best model performance is to train with a high number of epochs to enable the model to confidently learn features as they apply to labels, starting with a high learning rate, and decreasing over time using a learning rate scheduler. Interestingly, a study on binary peak detection using CNNs on ChIP-Seq data manually tuned their model’s hyperparameters and found that little changes in performance results<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>. This highlights the challenges of hyperparameter tuning with larger models, where manually fine-tuning is not ideal. How can hyperparameter tuning on these larger models be done in practice?
 <br><br></p>
 <p><strong>Raytune</strong></p>
-<p><a href="https://docs.ray.io/en/latest/tune/index.html" target="_blank">Raytune</a> “is a Python library for experiment execution and hyperparameter tuning at any scale”. It aids in leveraging state of the art hyperparameter optmisation algorithms while simplifying scaling for larger models. Raytune hyperparameter searching can also be scaled to cloud based clusters without the need for large changes in code structure. Additionally, it supports several machine learning frameworks such as pyTorch and TensorFlow<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>. One of the strongest current hyperparameter optmisation algorithms is the Asynchronous Successive Halving Algorithm or <strong><a href="https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/" target="_blank">ASHA</a></strong>. Asha “exploits parallelism and aggressive early-stopping to tackle large-scale hyperparameter optimization problems”<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, allowing for faster optimisation and applicability to the larger models common in genomics. A study on predicting the impact of sequence motifs on gene regulation utilised Raytune and the ASHA algorithm to successfully optimise their model’s hyperparameters<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>.
+<p><a href="https://docs.ray.io/en/latest/tune/index.html" target="_blank">Raytune</a> “is a Python library for experiment execution and hyperparameter tuning at any scale”. It aids in leveraging state of the art hyperparameter optimisation algorithms while simplifying scaling for larger models. Raytune hyperparameter searching can also be scaled to cloud based clusters without the need for large changes in code structure. Additionally, it supports several machine learning frameworks such as pyTorch and TensorFlow<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>. One of the strongest current hyperparameter optimisation algorithms is the Asynchronous Successive Halving Algorithm or <strong><a href="https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/" target="_blank">ASHA</a></strong>. Asha “exploits parallelism and aggressive early-stopping to tackle large-scale hyperparameter optimization problems”<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, allowing for faster optimisation and applicability to the larger models common in genomics. A study on predicting the impact of sequence motifs on gene regulation utilised Raytune and the ASHA algorithm to successfully optimise their model’s hyperparameters<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>.
 <br></p>
 <p>In the genomic context, as a result of complex models using large genomic datasets, hyperparameter tuning using a brute force approach is untenable. Utilising existing libraries such as Raytune and incorporating asynchronous algorithms such as ASHA, has the potential to pave the way forward in improving model performance without unreasonable computational costs.</p>
 </div>
@@ -309,21 +308,22 @@ Youens-Clark, Ken. 2021. <em>Mastering Python for Bioinformatics</em>. O’Reily
 </div>
 <div class="footnotes">
 <hr />
-<ol start="25">
-<li id="fn25"><p><span class="citation">Youens-Clark (<a href="#ref-clark2021">2021</a>)</span><a href="training-tricks.html#fnref25" class="footnote-back">↩︎</a></p></li>
-<li id="fn26"><p><span class="citation">Cao and Zhang (<a href="#ref-cao2019">2019</a>)</span><a href="training-tricks.html#fnref26" class="footnote-back">↩︎</a></p></li>
-<li id="fn27"><p><span class="citation">Shorten and Khoshgoftaar (<a href="#ref-connor2019">2019</a>)</span><a href="training-tricks.html#fnref27" class="footnote-back">↩︎</a></p></li>
-<li id="fn28"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref28" class="footnote-back">↩︎</a></p></li>
-<li id="fn29"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref29" class="footnote-back">↩︎</a></p></li>
-<li id="fn30"><p><span class="citation">(<a href="#ref-cedric2019">Arisdakessian et al. 2019</a>)</span>, <span class="citation">(<a href="#ref-avsec2021">Avsec et al. 2021</a>)</span><a href="training-tricks.html#fnref30" class="footnote-back">↩︎</a></p></li>
-<li id="fn31"><p><span class="citation">(<a href="#ref-cao2019">Cao and Zhang 2019</a>)</span>, <span class="citation">(<a href="#ref-toneyan2022">Toneyan, Tang, and Koo 2022</a>)</span><a href="training-tricks.html#fnref31" class="footnote-back">↩︎</a></p></li>
-<li id="fn32"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref32" class="footnote-back">↩︎</a></p></li>
-<li id="fn33"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="training-tricks.html#fnref33" class="footnote-back">↩︎</a></p></li>
-<li id="fn34"><p><span class="citation">Cao and Zhang (<a href="#ref-cao2019">2019</a>)</span><a href="training-tricks.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p><span class="citation">Oh et al. (<a href="#ref-oh2020">2020</a>)</span><a href="training-tricks.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p><span class="citation">Liaw et al. (<a href="#ref-liaw2018">2018</a>)</span><a href="training-tricks.html#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p><span class="citation">Li (<a href="#ref-liam2018">2018</a>)</span><a href="training-tricks.html#fnref37" class="footnote-back">↩︎</a></p></li>
-<li id="fn38"><p><span class="citation">Hepkema et al. (<a href="#ref-jacob2023">2023</a>)</span><a href="training-tricks.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<ol start="29">
+<li id="fn29"><p><span class="citation">Youens-Clark (<a href="#ref-clark2021">2021</a>)</span><a href="training-tricks.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p><span class="citation">Cao and Zhang (<a href="#ref-cao2019">2019</a>)</span><a href="training-tricks.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p><span class="citation">Cao and Zhang (<a href="#ref-cao2019">2019</a>)</span><a href="training-tricks.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p><span class="citation">Shorten and Khoshgoftaar (<a href="#ref-connor2019">2019</a>)</span><a href="training-tricks.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p><span class="citation">(<a href="#ref-cedric2019">Arisdakessian et al. 2019</a>)</span>, <span class="citation">(<a href="#ref-avsec2021">Avsec et al. 2021</a>)</span><a href="training-tricks.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p><span class="citation">(<a href="#ref-cao2019">Cao and Zhang 2019</a>)</span>, <span class="citation">(<a href="#ref-toneyan2022">Toneyan, Tang, and Koo 2022</a>)</span><a href="training-tricks.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="training-tricks.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="training-tricks.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p><span class="citation">Cao and Zhang (<a href="#ref-cao2019">2019</a>)</span><a href="training-tricks.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p><span class="citation">Oh et al. (<a href="#ref-oh2020">2020</a>)</span><a href="training-tricks.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p><span class="citation">Liaw et al. (<a href="#ref-liaw2018">2018</a>)</span><a href="training-tricks.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p><span class="citation">Li (<a href="#ref-liam2018">2018</a>)</span><a href="training-tricks.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p><span class="citation">Hepkema et al. (<a href="#ref-jacob2023">2023</a>)</span><a href="training-tricks.html#fnref43" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -331,7 +331,7 @@ Youens-Clark, Ken. 2021. <em>Mastering Python for Bioinformatics</em>. O’Reily
           </div>
         </div>
       </div>
-<a href="loss-functions-and-peak-metrics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loss-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="reproducibility-of-machine-learning-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

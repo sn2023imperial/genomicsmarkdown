@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-03" />
+<meta name="date" content="2024-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="epigenetic-data.html"/>
-<link rel="next" href="loss-functions-and-peak-metrics.html"/>
+<link rel="next" href="loss-functions.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -175,18 +175,17 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
-<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.2</b> Transformations to stop extreme p-values</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
 <li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
 <ul>
+<li class="chapter" data-level="2.0.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>2.0.1</b> Transformations to stop extreme p-values</a></li>
 <li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="3" data-path="loss-functions.html"><a href="loss-functions.html"><i class="fa fa-check"></i><b>3</b> Loss functions</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
@@ -202,7 +201,7 @@ div.csl-indent {
 <li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
 <li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
 <li class="part"><span><b>IV Using existing models</b></span></li>
-<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
+<li class="chapter" data-level="9" data-path="training-grelu-models-and-examining-pitfalls.html"><a href="training-grelu-models-and-examining-pitfalls.html"><i class="fa fa-check"></i><b>9</b> Training gReLU models and examining pitfalls</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -226,29 +225,45 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="pre-processing-of-bigwig-files" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">2</span> Pre-processing of bigWig files<a href="pre-processing-of-bigwig-files.html#pre-processing-of-bigwig-files" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+In Machine Learning tasks, data used to train models are usually sourced from downstream analysis such as p-values and fold change data for several reasons. These include being aligned to a reference genome, and being of higher quality due to the peak calling process. However, sequencing errors and noise can still be present. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used to further reduce this noise by changing the resolution of the data through aggregation. This is additionally done to prepare the data for the window/region size we intend to examine and predict.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>
+<img src="images/bp_resolution.png" />
+<div style="text-align: center;">
+<p>Figure showing a 32 base pair resolution following base pair averaging of ChIP-Seq data<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></p>
+</div>
+<br>
+By applying base pair averaging over a window (e.g. 32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, signal smoothing as well as reducing computational costs due to binning. You generally do not want to predict at a base pair level as there is not much biological relevance to one base pair as opposed to a region (peaks, binding sites, open chromatin regions etc). <br>
+<div style="text-align: center;">
+<p><img src="images/inputsize.png" alt="" height="500"/>
+<br></p>
+<p>Figure showing some data preprocessing choices in training convolutional neural networks to predict peaks.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
+</div>
+<p><br>
+An important point to introduce regarding the input size / input window / input sequence length is this is the genomic ‘context’ your model will use to make predictions. For example, a model trained on an input window of 2048bp could be used to predict the centre 32bp (output window) at a 32bp resolution (prediction resolution). This prediction will be based on the genomic information the model learns from the 2048bp region. Some current models like Basenji and Enformer have input windows in the kbps with prediction resolutions as small as 128bp<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>. The motivation being that the model has a larger ‘context’ in which to learn distal effects/relationships to make predictions. However, the receptive fields of these models need to be large in order to capture these effects. Enformer utilises transformer architecture, while Basenji uses dilated convolutional layers to boost their receptive fields. As you will see in the tutorials, you can re-average your data to a higher base pair average before using it in machine learning models. This can be implemented to decrease dimensionality, reduce computational intensity and tailor the model to understanding regions of a certain scale.
+<br><br></p>
+<div id="transformations-to-stop-extreme-p-values" class="section level3 hasAnchor" number="2.0.1">
+<h3><span class="header-section-number">2.0.1</span> Transformations to stop extreme p-values<a href="pre-processing-of-bigwig-files.html#transformations-to-stop-extreme-p-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When utilising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine).
+<br><br>
+<span class="math inline">\(\text{arcsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)\)</span>
+<br></p>
+<p>The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing errors while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage. The graph below visualises how the transformation works. While extreme values are transformed logarithmically, the smaller values are barely transformed as the function for smaller values is more linear in nature.</p>
+<p><img src="images/arcsinh.png" /></p>
+<div style="text-align: center;">
+<p>Plot of <a href="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png">Arcsinh Transformation</a> compared to a log function, made with Desmos. <a href="https://towardsdatascience.com/transform-data-with-hyperbolic-sine-e39e9275b6ba">Source</a></p>
+</div>
+<p><br>
+In the genomic context, beware of normalising using sample statistics such as the mean or standard deviation, before splitting your data to avoid leaky preprocessing effects. The arcsinh function does not depend on sample statistics in normalising the data.
+<br></p>
 <p>BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial on Google Colab. The tutorial begins using UCSC’s programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br></p>
 <p>The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
 <br></p>
 <p><a href="https://colab.research.google.com/drive/1gRjjTHL5RrlDoo1j7BzWqlYlPrBJBO8A?usp=sharing" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (interactive)</a></p>
 <p><a href="https://nbviewer.org/github/sn2023imperial/tutorial_1/blob/main/Tutorial_1_bigWigs.ipynb" target="_blank">Tutorial 1: Loading and Pre-Processsing Data from bigWigs (nbviewer)</a>
 <br></p>
+</div>
 <div id="data-loaders-and-simplifying-pre-processing" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data loaders and simplifying pre-processing<a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as <a href="https://kipoi.org/kipoiseq/dataloaders/" target="_blank">“Kipoi Dataloader”</a>, and <a href="https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md" target="_blank">“Dataloader for BigWig files”</a>.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>, depending on the data used and model you build, they won’t cover all of the use cases. When building one yourself, the PyTorch library has its own <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank">dataset and dataloader</a> modules, which include creating custom datasets.</p>
-</div>
-<div id="dealing-with-missing-data-oversampling-undersampling-weighting" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Dealing with missing data (oversampling, undersampling, weighting)<a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
-<p>In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the pitfalls section, we will explore how a model performs with and without regions of zero signal. <br></p>
-<p>Methods for dealing with class imbalances: <br></p>
-<ul>
-<li><p><a href="https://imbalanced-learn.org/stable/user_guide.html#user-guide" target="_blank">Scikit-learn’s ‘imbalance-learn’ package</a> (Oversampling, Undersampling and Weighting)<br>
-“Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.”</p></li>
-<li><p><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/" target="_blank">SMOTE</a> (Oversampling) <br>
-“a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.” <br></p></li>
-<li><p><a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html" target="_blank">ADASYN</a> (Oversampling) <br>
-“similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.” <br></p></li>
-</ul>
+<p>Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with genomic data loaders, such as <a href="https://kipoi.org/kipoiseq/dataloaders/" target="_blank">“Kipoi Dataloader”</a>, and <a href="https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md" target="_blank">“Dataloader for BigWig files”</a>.<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> Depending on the data used and model you build, they won’t cover all of the use cases. When building one yourself, the PyTorch library has its own <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank">dataset and dataloader</a> modules, which include creating custom datasets.</p>
 
 </div>
 </div>
@@ -257,18 +272,30 @@ div.csl-indent {
 
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-avsec2021" class="csl-entry">
+Avsec, Žiga, Vikram Agarwal, Daniel Visentin, and et al. 2021. <em>Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions</em>. Springer Nature. <a href="https://www.nature.com/articles/s41592-021-01252-x">https://www.nature.com/articles/s41592-021-01252-x</a>.
+</div>
+<div id="ref-patel2024" class="csl-entry">
+Patel, Jai. 2024. <em>Leveraging Genetic Diversity with Machine Learning</em>. Imperial College London.
+</div>
 <div id="ref-retel_fast_2024" class="csl-entry">
 Retel, Joren Sebastian, Andreas Poehlmann, Josh Chiou, Andreas Steffen, and Djork-Arné Clevert. 2024. <span>“A Fast Machine Learning Dataloader for Epigenetic Tracks from <span>BigWig</span> Files.”</span> <em>Bioinformatics</em> 40 (1): btad767. <a href="https://doi.org/10.1093/bioinformatics/btad767">https://doi.org/10.1093/bioinformatics/btad767</a>.
 </div>
-<div id="ref-whalen2022" class="csl-entry">
-Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span>“Navigating the Pitfalls of Applying Machine Learning in Genomics.”</span> <a href="https://www.nature.com/articles/s41576-021-00434-9">https://www.nature.com/articles/s41576-021-00434-9</a>.
+<div id="ref-li2022" class="csl-entry">
+RY, Li, and et al. 2022. <em>Comprehensive 100-Bp Resolution Genome-Wide Epigenomic Profiling Data for the Hg38 Human Reference Genome</em>. Data Brief. <a href="https://pubmed.ncbi.nlm.nih.gov/36582986/">https://pubmed.ncbi.nlm.nih.gov/36582986/</a>.
+</div>
+<div id="ref-toneyan2022" class="csl-entry">
+Toneyan, Shushan, Ziqi Tang, and Peter Koo. 2022. <em>Evaluating Deep Learning for Predicting Epigenomic Profiles</em>. Springer Nature. <a href="https://www.nature.com/articles/s42256-022-00570-9">https://www.nature.com/articles/s42256-022-00570-9</a>.
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="17">
-<li id="fn17"><p><span class="citation">Retel et al. (<a href="#ref-retel_fast_2024">2024</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<ol start="18">
+<li id="fn18"><p><span class="citation">RY and al (<a href="#ref-li2022">2022</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p><span class="citation">Patel (<a href="#ref-patel2024">2024</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p><span class="citation">Toneyan, Tang, and Koo (<a href="#ref-toneyan2022">2022</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p><span class="citation">Retel et al. (<a href="#ref-retel_fast_2024">2024</a>)</span><a href="pre-processing-of-bigwig-files.html#fnref22" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -277,7 +304,7 @@ Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span
         </div>
       </div>
 <a href="epigenetic-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="loss-functions-and-peak-metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="loss-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

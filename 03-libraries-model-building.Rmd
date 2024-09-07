@@ -2,7 +2,7 @@
 
 ## gReLU
 
-<a href="https://github.com/Genentech/gReLU/blob/main/README.md" target="_blank">gReLU</a> is a Python library to train, interpret, and apply deep learning models to DNA sequences". The gRelu library contains a model zoo allowing for easy access to several models such as Borzoi, Enformer, or a dilated convolutional model based on the BPnet model architecture. Some of these models can be imported pre-trained. Additionally, simpler base models and convolutional neural networks are also available. On top of access to already built models, the software library allows for designing your own models.
+"<a href="https://github.com/Genentech/gReLU/blob/main/README.md" target="_blank">gReLU</a> is a Python library to train, interpret, and apply deep learning models to DNA sequences". The gRelu library contains a model zoo allowing for easy access to several models such as Borzoi, Enformer, or a dilated convolutional model based on the BPnet model architecture. Some of these models can be imported pre-trained. Additionally, simpler base models and convolutional neural networks are also available. On top of access to already built models, the software library allows for designing your own models.
 
 ![](images/grelu.png)
 <div style="text-align: center;">

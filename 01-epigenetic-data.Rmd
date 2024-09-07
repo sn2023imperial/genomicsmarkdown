@@ -15,7 +15,7 @@
 [commonfund.nih.gov](https://commonfund.nih.gov/sites/default/files/epigeneticmechanisms.pdf){target="_blank"}
 </div>
 <br>
-The image above shows quite simply the basics of genetic structures. Several more complex processes are involved during cell replication such as DNA transcription and translation in order to make proteins. A key takeaway in coming closer to understanding gene expression is that **Chromatin** is a complex structure made up of DNA wound around histone proteins, with some segments of DNA being accessible/inaccessible to further processes. **Euchromatin** refers to the accessible state, while **Heterochromatin** refers to a chromatin state in which DNA cannot be transcribed (inaccessible).^[@shahid2023] There are many different epigenetic modifications that affect chromatin accessibility.
+The image above shows quite simply the basics of genetic structures. Cell nuclei contain 23 chromosomes containing our DNA that dictate cellular function. Several more complex processes are involved during cell replication such as DNA transcription and translation in order to make proteins. A key takeaway in coming closer to understanding gene expression is that Chromatin is a complex structure made up of DNA wound around histone proteins, with some segments of DNA being accessible/inaccessible to further processes that determine gene expression, such as transcription factors^[@tf2014]. Euchromatin refers to the accessible state, while Heterochromatin refers to a chromatin state in which DNA cannot be transcribed (inaccessible).^[@shahid2023] Changes to portions of these structures affect which genes can be expressed and at what levels.  There are many different epigenetic modifications that affect chromatin accessibility.
 
 <br>
 Some common epigenetic modifications include:
@@ -25,7 +25,7 @@ Some common epigenetic modifications include:
 3. **Chromatin Accessibility**: Regions of open chromatin that are accessible to transcription factors (special types of proteins that bind to DNA sequences and regulate gene expression) further dictate which regions of DNA can be expressed^[@melanie2021].
 <br>
 
-In studying gene expression and epigenetic modifications, we aim to more closely understand biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors.
+In studying gene expression and epigenetic modifications, we aim to more closely understand the biological mechanisms that regulate development, disease, and how cells respond to epigenetic factors. For example, certain histone modifications have been understood to  regulate the activation or repression of genes that control whether a stem cell becomes a muscle cell, nerve cell, or another specialized type.^[@moritz2020]
 
 <br>
 
@@ -49,12 +49,12 @@ Image highlighting part of a [dna sequence and base pairs](https://www.researchg
 ### Common Epigenetic Sequencing Techniques:
 1.	***ATAC-Seq*** (Assay for Transposase-Accessible Chromatin with Sequencing):
 <br><br>o```      Measures chromatin accessibility to identify open regions of the genome where transcription factors can bind.```
-<br><br>o```      Output: Peaks indicating accessible chromatin regions.```
+<br><br>o```      Downstream Output: Peaks indicating accessible chromatin regions.```
 <br><br>
 
 2. ***ChIP-Seq*** (Chromatin Immunoprecipitation Sequencing):
 <br><br>o```      Used to identify DNA regions bound by specific proteins (e.g., transcription factors, histones with specific modifications).```
-<br><br>o```      Output: Peaks indicating binding sites or modification locations.```
+<br><br>o```      Downstream Output: Peaks indicating binding sites or modification locations.```
 
 ## What does epigenetic data look like?
 
@@ -63,14 +63,14 @@ Epigenetic data can be represented in various forms, depending on the type of mo
 
 ### Representing epigenetic data
 <br>
-Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they 'pile up' to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also examine mismatches where a read's base differs from the genome's base, and use them to identify SNPs ([single nucleotide polymorphisms](https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism){target="_blank"})^[@ncidefinitions]. This mismatch information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.^[@akalin2020]
+Epigenetic data originates from sequencing methods such as ATAC-Seq or ChIP-Seq experiments. The initial experiments produce raw sequencing reads (fragments), which are then aligned to a reference genome. By aligning these sequences, we can aggregate the reads into regions where they 'pile up' to form peaks, indicating areas of significant biological activity or modification. This can be done per base across the genome, or per gene. Additionally, we could also identify variations in single DNA base pairs called SNPs ([single nucleotide polymorphisms](https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/single-nucleotide-polymorphism){target="_blank"})^[@ncidefinitions] by examining mismatches where a read’s base differs from the reference genome’s base. This mismatched information can be recorded in a table showing the position, type of mismatch, and the number of reads supporting each mismatch.^[@akalin2020]
 
 <br>
 
 ![](images/sequencing_pipeline.png)
 <div style="text-align: center;">
 
-Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images/HTseq.png){target="_blank"} from high-throughput sequencing methods^[@akalin2020].
+Image showing the [sequencing pipeline](https://compgenomr.github.io/book/images/HTseq.png){target="_blank"} from high-throughput sequencing methods, and how reads ‘pile up’ to form peaks^[@akalin2020].
 
 </div>
 
@@ -126,19 +126,8 @@ As you can see, each data entry is a DNA sequence (read). While I'm only showing
 <br><br>o```      Peaks represent areas where epigenetic marks or chromatin accessibility are concentrated.```
 <br><br>
 
-A common peak calling algorithm is [MACS2](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html){target="_blank"}. Essentially, aligned sequencing reads are aggregated into regions where they 'pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.^[@mistry2022] In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.^[@wilbanks2010] Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used.
+A common peak calling algorithm is [MACS2](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html){target="_blank"}. Essentially, aligned sequencing reads are aggregated into regions where they 'pile up' to form peaks as a read count per base. The outputs typically include signal p-values or fold change over control values, representing the expectation of a peak. Signal p-values are negative log transformed resulting in -log10 signal p-values. While MACS2 is traditionally used in ChIP-seq experiments, it is also applied to ATAC-seq to identify significant peaks and assess their enrichment.^[@mistry2022] In ChIP-seq, broad peaks often represent histone modifications covering entire gene bodies, while narrow peaks are indicative of transcription factor binding sites. In ATAC-seq, the peaks primarily reflect regions of open chromatin.^[@wilbanks2010] Peak calling reduces background noise and utilises signal smoothing techniques to more accurately detect peaks. 
 
-Imagine you have a set of read coverage data from a sequencing experiment. At each base pair position along a chromosome, you have a read count representing how many times that base pair was sequenced. However, due to technical noise, these counts might fluctuate wildly from one base to the next. By applying <u>base pair averaging</u> over a window (e.g. 32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, and signal smoothing. 
-![](images/bp_resolution.png)
-<div style="text-align: center;">
-
-Figure showing a 32 base pair resolution following base pair averaging of CHip-seq data^[@patel2024]
-
-
-</div>
-
-<br>
-As you will see in the tutorials, you can re-average your data to a higher base pair average before using it in machine learning models. This can be implemented  to decrease dimensionality, reduce computational intensity and tailor the model to understanding regions of a certain scale.
 <br>
 
 <div style="margin-left: 40px;">
@@ -158,6 +147,8 @@ o ***Types of Peaks:***
 </div>
 
 <br>
+
+
 <div style="text-align: center;">
 ***Example Data Pipeline***
 </div>
@@ -181,27 +172,6 @@ This is an example data pipeline from Encode Experiment [ENCSR817LUF](https://ww
 
 <br>
 
-
-
-### Transformations to stop extreme p-values
-When utlising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine). 
-<br><br>
-$\text{arsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)$
-<br>
-
-
-
-The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing depth while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage. The graph below visualises how the transformation works. While extreme values are transformed logarithmically, the smaller values are barely transformed as the function for smaller values is more linear in nature. 
-
-![](images/arcsinh.png)
-
-<div style="text-align: center;">
-
-Plot of [Arcsinh Transformation](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png) compared to a log function, made with Desmos available under [CC BY-SA 4.0.](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png) Text, arrows, and box shape added to image.
-
-
-</div>
-
 ## Sources of epigenetic data
 There are numerous public data banks which contain genomic datasets ready to be downloaded.
 <br><br>
@@ -212,7 +182,7 @@ Blueprint's genomic datasets are focused on gene expression in healthy and disea
 
 [Roadmap](https://www.ncbi.nlm.nih.gov/geo/roadmap/epigenomics/){target="_blank"}
 <br>
-The National Institute of Health's Roadmap Epigenomics Project contains sample datasets from multiple experiements as well as reference and mapping datasets. 
+The National Institute of Health's Roadmap Epigenomics Project contains sample datasets from multiple experiments as well as reference and mapping datasets. 
 <br>
 
 [Encode](https://www.encodeproject.org/){target="_blank"}
@@ -227,7 +197,7 @@ The largest genomic data bank is the [UK Biobank](https://www.ukbiobank.ac.uk/){
 ## UCSC'S Genome Browser
 
 <br>
-The UCSC Genome Browser is a powerful and versatile tool that allows the visualisation and exploration of many sets of genomic data, especially bigWig files. It offers an extensive collection of genome assemblies, annotation tracks, and functional data, enabling users to examine gene structures, regulatory elements, and genetic variations. With its user-friendly interface and customisable display options, the UCSC Genome Browser facilitates detailed genomic analyses and supports a wide range of applications in genomics and bioinformatics. Whether you're investigating gene functions, exploring genetic variants, or studying comparative genomics, the UCSC Genome Browser serves as an essential resource for understanding complex genomic information. It is also possible to load and visualise genomic data from other sources such as Encode. While the visualisations are extensive, as you can explore below, the browser can be quite overwhelming for first time users. 
+The UCSC Genome Browser is a tool that allows for the visualisation of many sets of genomic data, especially bigWig files. It offers a large collection of genome assemblies, annotation tracks, and functional data, enabling users to examine gene structures, regulatory elements, and genetic variations. Whether you're investigating gene functions, exploring genetic variants, or studying comparative genomics, the UCSC Genome Browser can be a good resource to begin understanding complex genomic information. It is also possible to load and visualise genomic data from other sources such as Encode. While the visualisations are extensive, as you can explore below, the browser can be quite overwhelming for first time users. 
 <br>
 
 <br>
@@ -257,6 +227,50 @@ The following is an example of ATAC-Seq data from an experiment on T-helper 17 c
 <br>
 
 # Pre-processing of bigWig files
+
+In Machine Learning tasks, data used to train models are usually sourced from downstream analysis such as p-values and fold change data for several reasons. These include being aligned to a reference genome, and being of higher quality due to the peak calling process. However, sequencing errors and noise can still be present. When using -log10 p-value and fold change data, <u>base pair averaging</u> is commonly used to further reduce this noise by changing the resolution of the data through aggregation. This is additionally done to prepare the data for the window/region size we intend to examine and predict.^[@li2022]
+![](images/bp_resolution.png)
+<div style="text-align: center;">
+
+Figure showing a 32 base pair resolution following base pair averaging of ChIP-Seq data^[@patel2024]
+
+</div>
+<br>
+By applying base pair averaging over a window (e.g. 32bp), you might see that while individual counts vary, there is a broader region where the average read coverage is consistently high, indicating a potential region of interest. The intended effect of base pair averaging is further reducing noise, signal smoothing as well as reducing computational costs due to binning. You generally do not want to predict at a base pair level as there is not much biological relevance to one base pair as opposed to a region (peaks, binding sites, open chromatin regions etc). <br>
+<div style="text-align: center;">
+<img src="images/inputsize.png" alt="" height="500"/>
+<br>
+
+
+Figure showing some data preprocessing choices in training convolutional neural networks to predict peaks.^[@toneyan2022]
+
+</div>
+<br>
+An important point to introduce regarding the input size / input window / input sequence length is this is the genomic ‘context’ your model will use to make predictions. For example, a model trained on an input window of 2048bp could be used to predict the centre 32bp (output window) at a 32bp resolution (prediction resolution). This prediction will be based on the genomic information the model  learns from the 2048bp region. Some current models like Basenji and Enformer have input windows in the kbps with prediction resolutions as small as 128bp^[@avsec2021]. The motivation being that the model has a larger ‘context’ in which to learn distal effects/relationships to make predictions. However, the receptive fields of these models need to be large in order to capture these effects. Enformer utilises transformer architecture, while Basenji uses dilated convolutional layers to boost their receptive fields. As you will see in the tutorials, you can re-average your data to a higher base pair average before using it in machine learning models. This can be implemented to decrease dimensionality, reduce computational intensity and tailor the model to understanding regions of a certain scale.
+<br><br>
+
+### Transformations to stop extreme p-values
+When utilising genomic data which incorporates p-values, it is important to consider and deal with extreme p-values. One way this is done is through using an Arcsinh-transformation (inverse hyperbolic sine). 
+<br><br>
+$\text{arcsinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right)$
+<br>
+
+
+
+The arcsinh-transformation as a logarithmic function helps in reducing the significance of outliers and sequencing errors while maintaining variance by compressing the range of the data. This transformation can be used in the data preprocessing stage. The graph below visualises how the transformation works. While extreme values are transformed logarithmically, the smaller values are barely transformed as the function for smaller values is more linear in nature. 
+
+![](images/arcsinh.png)
+
+<div style="text-align: center;">
+
+Plot of [Arcsinh Transformation](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*glJtHk1HRZpYHsk79QxgwQ.png) compared to a log function, made with Desmos. [Source](https://towardsdatascience.com/transform-data-with-hyperbolic-sine-e39e9275b6ba)
+
+
+</div>
+<br>
+In the genomic context, beware of normalising using sample statistics such as the mean or standard deviation, before splitting your data to avoid leaky preprocessing effects. The arcsinh function does not depend on sample statistics in normalising the data.
+<br>
+
 BigWig files containing signal p-value or fold change data can be quite tricky to deal with. However, libraries such as pyBigWig enable easier access of data. In order to understand how to handle the data pre-processing stage, I have created a jupyter notebook tutorial on Google Colab. The tutorial begins using UCSC's programs to quickly understand the genomic data within BigWigs, before using the pyBigWig library to simply extract BigWig data.<br>
 
 The final part of the tutorial uses the pyBigWig library to load, filter, and split BigWig data into training, validation, and test sets. The data consists of signal p-values from ChIP-seq experiments, processed using the MACS2 tool. We will re-average these signals to a resolution of 32 base pairs. Additionally, we will implement threshold-based filtering and consistent data splits to understand how to ready data for a model.
@@ -271,25 +285,7 @@ The final part of the tutorial uses the pyBigWig library to load, filter, and sp
 
 ## Data loaders and simplifying pre-processing
 
-Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with data loaders, such as ["Kipoi Dataloader"](https://kipoi.org/kipoiseq/dataloaders/){target="_blank"}, and ["Dataloader for BigWig files"](https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md){target="_blank"}.^[@retel_fast_2024], depending on the data used and model you build, they won't cover all of the use cases. When building one yourself, the PyTorch library has its own [dataset and dataloader](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html){target="_blank"} modules, which include creating custom datasets.
-
-
-## Dealing with missing data (oversampling, undersampling, weighting)
-
-In genomics, class imbalance is a frequent challenge, often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. This is particularly evident in tasks such as alignment queries, GWAS projects, and motif scanning, where conservative significance thresholds are essential to control false positives due to the low frequency of true positives across the genome. Researchers tend to address these imbalances by either oversampling the minority class, undersampling the majority class or by employing weighting.^[@whalen2022] 
-
-In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the pitfalls section, we will explore how a model performs with and without regions of zero signal. <br>
-
-Methods for dealing with class imbalances: <br> 
-
-- [Scikit-learn's 'imbalance-learn' package](https://imbalanced-learn.org/stable/user_guide.html#user-guide){target="_blank"} (Oversampling, Undersampling and Weighting)<br>
-"Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes."
-
-- [SMOTE](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/){target="_blank"} (Oversampling) <br>
-"a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space." <br>
-- [ADASYN](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html){target="_blank"} (Oversampling) <br>
-"similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled." <br>
-
+Data loaders are scripts/functions to load batches of data into your model. They are crucial in machine learning because they simplify how data is fed into models, making the whole process smoother and more efficient. This becomes especially important with the large datasets used in genomic studies, where managing and processing data manually would be cumbersome. By automating these tasks, data loaders help ensure that data is processed efficiently, allowing for faster and more effective model training. While there are existing github repositories with genomic data loaders, such as ["Kipoi Dataloader"](https://kipoi.org/kipoiseq/dataloaders/){target="_blank"}, and ["Dataloader for BigWig files"](https://github.com/pfizer-opensource/bigwig-loader/blob/main/README.md){target="_blank"}.^[@retel_fast_2024] Depending on the data used and model you build, they won't cover all of the use cases. When building one yourself, the PyTorch library has its own [dataset and dataloader](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html){target="_blank"} modules, which include creating custom datasets.
 
 
 

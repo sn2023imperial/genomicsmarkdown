@@ -23,7 +23,7 @@
 <meta name="author" content=" Sach Nehal" />
 
 
-<meta name="date" content="2024-09-03" />
+<meta name="date" content="2024-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="software-libraries-for-model-building.html"/>
-<link rel="next" href="using-grelu-models.html"/>
+<link rel="next" href="training-grelu-models-and-examining-pitfalls.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -175,18 +175,17 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#what-does-epigenetic-data-look-like"><i class="fa fa-check"></i><b>1.2</b> What does epigenetic data look like?</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="epigenetic-data.html"><a href="epigenetic-data.html#representing-epigenetic-data"><i class="fa fa-check"></i><b>1.2.1</b> Representing epigenetic data</a></li>
-<li class="chapter" data-level="1.2.2" data-path="epigenetic-data.html"><a href="epigenetic-data.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>1.2.2</b> Transformations to stop extreme p-values</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="epigenetic-data.html"><a href="epigenetic-data.html#sources-of-epigenetic-data"><i class="fa fa-check"></i><b>1.3</b> Sources of epigenetic data</a></li>
 <li class="chapter" data-level="1.4" data-path="epigenetic-data.html"><a href="epigenetic-data.html#ucscs-genome-browser"><i class="fa fa-check"></i><b>1.4</b> UCSC’S Genome Browser</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bigWig files</a>
 <ul>
+<li class="chapter" data-level="2.0.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#transformations-to-stop-extreme-p-values"><i class="fa fa-check"></i><b>2.0.1</b> Transformations to stop extreme p-values</a></li>
 <li class="chapter" data-level="2.1" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#data-loaders-and-simplifying-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Data loaders and simplifying pre-processing</a></li>
-<li class="chapter" data-level="2.2" data-path="pre-processing-of-bigwig-files.html"><a href="pre-processing-of-bigwig-files.html#dealing-with-missing-data-oversampling-undersampling-weighting"><i class="fa fa-check"></i><b>2.2</b> Dealing with missing data (oversampling, undersampling, weighting)</a></li>
 </ul></li>
 <li class="part"><span><b>II Training models with DNA input</b></span></li>
-<li class="chapter" data-level="3" data-path="loss-functions-and-peak-metrics.html"><a href="loss-functions-and-peak-metrics.html"><i class="fa fa-check"></i><b>3</b> Loss functions, and peak metrics</a></li>
+<li class="chapter" data-level="3" data-path="loss-functions.html"><a href="loss-functions.html"><i class="fa fa-check"></i><b>3</b> Loss functions</a></li>
 <li class="chapter" data-level="4" data-path="training-tricks.html"><a href="training-tricks.html"><i class="fa fa-check"></i><b>4</b> Training tricks</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="training-tricks.html"><a href="training-tricks.html#reverse-complements-and-sequence-shifts"><i class="fa fa-check"></i><b>4.1</b> Reverse Complements and Sequence Shifts</a></li>
@@ -202,7 +201,7 @@ div.csl-indent {
 <li class="part"><span><b>III ML pitfalls in genomics</b></span></li>
 <li class="chapter" data-level="8" data-path="pitfalls-overview.html"><a href="pitfalls-overview.html"><i class="fa fa-check"></i><b>8</b> Pitfalls overview</a></li>
 <li class="part"><span><b>IV Using existing models</b></span></li>
-<li class="chapter" data-level="9" data-path="using-grelu-models.html"><a href="using-grelu-models.html"><i class="fa fa-check"></i><b>9</b> Using gReLU models</a></li>
+<li class="chapter" data-level="9" data-path="training-grelu-models-and-examining-pitfalls.html"><a href="training-grelu-models-and-examining-pitfalls.html"><i class="fa fa-check"></i><b>9</b> Training gReLU models and examining pitfalls</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -226,26 +225,42 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="pitfalls-overview" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">8</span> Pitfalls overview<a href="pitfalls-overview.html#pitfalls-overview" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Applying machine learning in the field of genomics comes with its own challenges. Genomic data is highly complex, featuring high dimensionality, heterogeneity, and noise. It is important to consider the assumptions models make and whether those assumptions hold true within the data. According to research, available <a href="https://www.nature.com/articles/s41576-021-00434-9" target="_blank">here</a>, on pitfalls in machine learning, the most common errors include not taking into account distributional differences between contexts or batches, dependencies within the data, confounding effects distorting true relationships, unbalanced classes and leaking information between datasets.<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a> Lets examine the pitfalls mentioned in the research above and methods to mitigate these effects in more detail.</p>
+<p>Applying machine learning in the field of genomics comes with its own challenges. Genomic data is highly complex, featuring high dimensionality, heterogeneity, and noise. It is important to consider the assumptions models make and whether those assumptions hold true within the data. According to research, available <a href="https://www.nature.com/articles/s41576-021-00434-9" target="_blank">here</a> from Whalen et. al., on the pitfalls in machine learning, the most common errors include not taking into account distributional differences between contexts or batches, dependencies within the data, confounding effects distorting true relationships, unbalanced classes and leaking information between datasets.<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a> These pitfalls are interconnected where falling into one likely means falling into several. For example leaky preprocessing practices may result in introducing confounding effects. Lets examine the pitfalls mentioned in the research above and methods to mitigate these effects in more detail.</p>
 <img src="images/pitfalls.png" />
 <div style="text-align: center;">
 <p>Source: <a href="https://www.nature.com/articles/s41576-021-00434-9/figures/1" target="_blank">Nature Reviews Genetics</a></p>
 </div>
 <p><br></p>
 <p><strong>Distributional differences</strong></p>
-<p>Distributional differences between the context in which a model was trained and tested, and the context in which a model makes predictions, results in different model performances. These different contexts can be attributed to batch effects or applying the model on different cell types. “One should expect that performance will be higher in [the same setting] than on [different settings]<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>. It is crucial then, for models which aim to predict biological relationships across contexts to be validated and tested across these different settings that accurately reflect the real-world variability. Even models that aim to predict across one context such as cell type-specific models common in disease prediction, are still susceptible to this pitfall. When using data from multiple experiments, batch effects can introduce variability that lead to differences between training, test, and prediction sets. To address this, it is important to consider batch effects during model development and evaluation. One approach is to ensure that training and test sets are sourced from different batches to evaluate the generalisability of the model and prevent inflated performance. Additionally, applying batch effect correction techniques such can help account for these distributional differences.
+<p>Whalen et. al. discuss the issues that arise when distributions between experiments or batches differ. The example given for distributional differences between experiments involves understanding transcription factor binding sites using experiment data from in vitro assays (out of cell) versus in vivo assays (in cell). The context in which either experiment was conducted is different introducing unique biases. Training models in one context can perform well within the same context, but performance drops when tested/predicting in the other context. This can also be true when predicting across species. The authors note this is not inherently a bad thing as the differences in distributions can be studied to reveal biological insights. It is important to keep this in mind when attempting to predict across contexts.
+<br>
+Distributional differences between batches can occur due to noise or other factors introduced by the specific experiment design. The key point Whalen et. al. conveys as seen in figure 2.9, is in order to train models that generalise well, test sets must be from different batches as to separate these potential distributional differences. Otherwise, test performance will be artificially inflated. Additionally, applying batch effect correction techniques such can help account for these distributional differences.
 <br><br></p>
 <p><strong>Dependent examples</strong></p>
-<p>When studying machine learning, a constant assumption is that of independence. Whether it be independent test sets or data points being independent of each other, the assumption of independence is key in creating fair models. Many biological processes in genomics are not independent.<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a> A research paper focused on understanding the pitfalls of neural networks predicting across cell types found that several models had been evaluated on test sets comprising of cell type independent of training, but not independent of chromosomes leading to inflated performances.<a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a> That is, gene expression predictions were evaluated on different cells but on the same chromosomes. The inflated performances were due to chromosomes “themselves [being] dependent across samples because the underlying functional activity is generally shared”<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>. While hard to identify in the designing phase even through visualisation, mitigation techniques include preventing overfitting during evaluation and group k-fold cross-validation to prevent leakage between training and test sets.<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>
+<p>Genomics contains many biological dependencies. The main issue arises when data in test sets are correlated or dependent on data in training sets or vice versa. Predictions become easier as the model learns the correlation between dependencies versus the underlying biological factors. The example given by Whalen et. al. argues that a model predicting protein interactions would have an inflated test performance learning dependencies between proteins present in both the training and test set versus novel proteins.
+<br>
+Another genomic example of problematic dependency comes from a research paper focused on understanding the pitfalls of neural networks predicting across cell types<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>. They found that several models had been evaluated on test sets comprising of a cell type independent of training, but not independent of chromosomes, leading to inflated performances. That is, gene expression predictions were evaluated on different cells but on the same chromosomes. The inflated performances were due to the general expression levels of test chromosomes being similar across cells. The correct way to evaluate the model’s performance would be to test it on a different cell type and chromosome than it was trained on.
 <br><br></p>
 <p><strong>Confounding</strong></p>
-<p>Confounders are additional variables that affect the variables being studied, resulting in models not capturing the correct relationships in the data.<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a> “Confounding in genetic studies can arise from unmodelled environmental factors and population structure, as well as other factors”.<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a> In the context of ATAC-Seq and chIP-Seq data, differences in the sequencing depth of the experiment can have a confounding effect on models if not handled. As explained in part 1, ATAC-Seq and chIP-Seq data consists of reads that are alligned to a reference genome and aggregated. The sequencing depth of the experiment refers to on average how many times a region was sequenced.<a href="#fn53" class="footnote-ref" id="fnref53"><sup>53</sup></a> A higher sequencing depth means a higher overall coverage level. If not accounted for, models using data of different sequencing depths are confounded. Similarly when predicting on a dataset with a different sequencing depth than the training set, the model would biased. While sequencing depth as a confounder can be more easily corrected by downsampling the raw reads from the dataset with higher sequencing depth, other confounding effects can be harder to account for. However, it is possible to use statistical tools such as PEER<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a>, Inter-sample Correlation Emended (ICE) and Surrogate Variable Analysis (SVA)<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a> to understand confounders in your dataset.
+<p>Confounders are additional variables that affect the variables being studied, resulting in models not capturing the correct relationships in the data.<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a> According to Whalen et. al. confounders in genomics can come from various factors such as unmodelled environmental factors or population structures in genome wide association studies, with the problem being models learning an association between the outcome and features that is actually driven by a confounding variable but interpreted as a biological insight.
+In the context of ATAC-Seq and chIP-Seq data, differences in the sequencing depth of the experiment can have a confounding effect on models if not handled. As explained in section 2.2.1, ATAC-Seq and chIP-Seq data consists of reads that are aligned to a reference genome and aggregated. The sequencing depth of the experiment refers to on average how many times a region was sequenced<a href="#fn53" class="footnote-ref" id="fnref53"><sup>53</sup></a>. A higher sequencing depth means a higher overall coverage level. If not accounted for, models using data of different sequencing depths are confounded. Similarly when predicting on a dataset with a different sequencing depth than the training set, the model would biased. While sequencing depth as a confounder can be more easily corrected by downsampling the raw reads from the dataset with higher sequencing depth, other confounding effects can be harder to account for. However, it is possible to use statistical tools such as PEER<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a>, Inter-sample Correlation Emended (ICE) and Surrogate Variable Analysis (SVA)<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a> to understand confounders in your dataset.
 <br><br></p>
 <p><strong>Leaky pre-processing</strong></p>
-<p>Leaky pre-processing involves information leaks between the training and test sets resulting in altered testing metrics. In genomics, as a result of many dependencies, pre-processing steps involving the dataset as a whole can introduce this bias. This includes standardisation techniques, supervised feature selection or principle component analysis, before splitting data into test splits.<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a> A solution to this is to perform these transformations and analysis after data splits, preferably within cross-validation. Leaky preprocessing has been prevalent in various genomic fields, including microarray analysis, DNA methylation, gene expression studies, and more, often leading to misleading results.<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>
+<p>Leaky preprocessing involves information leaks between the training and test sets resulting in altered testing metrics. Pre-processing steps involving the dataset as a whole can introduce dependency. This includes standardisation techniques, supervised feature selection or principle component analysis, before splitting data into test splits. It is ideal to perform these transformations and analysis after data splits or within cross-validation. Whalen et. al. states that leaky preprocessing has been prevalent in various genomic fields, including microarray analysis, DNA methylation, gene expression studies, and more, often leading to misleading results.
 <br><br></p>
 <p><strong>Unbalanced classes</strong></p>
-<p>Unbalanced datasets can be common in genomics often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, the pitfall is a model “learns most of the target concepts of the majority class and learns target concepts from the minority class poorly or not at all.”<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a> This is particularly evident in disease related tasks where the focus is on a few disease causing genes or non-coding variants.<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a> Additionally, many experiments that implement conservative significance thresholds to determine true signals involve data imbalance, such as peak detection<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>, gene expression<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a>, and chromatin accessibility. The extensive size of the human genome exacerbates this issue when the areas of interest are small. Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.<a href="#fn62" class="footnote-ref" id="fnref62"><sup>62</sup></a></p>
+<p>Unbalanced datasets can be common in genomics often necessitating the use of statistical methods to validate the few positive instances amid vast amounts of data. In these cases, the pitfall is a model “learns most of the target concepts of the majority class and learns target concepts from the minority class poorly or not at all.”<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a> This is particularly evident in disease related tasks where the focus is on a few disease causing genes or non-coding variants.<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a> Additionally, many experiments that implement conservative significance thresholds to determine true signals involve data imbalance, such as peak detection<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>, gene expression<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a>, and chromatin accessibility. The extensive size of the human genome exacerbates this issue when the areas of interest are small. Researchers address this imbalance by employing balancing algorithms that oversample the negative class and undersample the majority class. For instance, in training models to predict functional peaks from ChIP-seq or chromatin accessibility data, an approach might involve using all identified peaks along with a matching number of negative regions, thus effectively undersampling the majority class. For datasets with no such negative regions, researchers have to construct their own. While such imbalances are commonly discussed in classification, they also pose challenges in regression models predicting quantitative outcomes, where performance may be compromised in regions with sparse data, such as genomic areas or genes with low read counts in single-cell genomics studies.<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>
+<br></p>
+<p>In Tutorial 1, we utilised thresholding to filter our data to focus on regions with significant coverage. While there were around 300,000 bins across the three chromosomes we looked at, after thresholding our data consisted of roughly 10% or 30,000 bins. Our data does not contain any coverage values below the threshold. In the next tutorials, we will explore how a model performs with and without regions of zero signal. <br></p>
+<p>More general methods for dealing with class imbalances: <br></p>
+<ul>
+<li><p><a href="https://imbalanced-learn.org/stable/user_guide.html#user-guide" target="_blank">Scikit-learn’s ‘imbalance-learn’ package</a> (Oversampling, Undersampling and Weighting)<br>
+“Imbalanced-learn (imported as imblearn) is an open source, MIT-licensed library relying on scikit-learn (imported as sklearn) and provides tools when dealing with classification with imbalanced classes.”</p></li>
+<li><p><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/" target="_blank">SMOTE</a> (Oversampling) <br>
+“a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.” <br></p></li>
+<li><p><a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html" target="_blank">ADASYN</a> (Oversampling) <br>
+“similar to SMOTE but it generates different number of samples depending on an estimate of the local distribution of the class to be oversampled.” <br></p></li>
+</ul>
 
 
 </div>
@@ -254,9 +269,6 @@ div.csl-indent {
 
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-allis2015" class="csl-entry">
-Allis, D., Jenuwein T, Reinberg D, and Caparros M. L. 2015. <em>EPIGENETICS</em>. 2nd ed. Cold Spring Harbor Laboratory Press. <a href="https://www.cshlpress.com/pdf/sample/2014/epigenetics2/EPIFM.pdf">https://www.cshlpress.com/pdf/sample/2014/epigenetics2/EPIFM.pdf</a>.
-</div>
 <div id="ref-avsec2021" class="csl-entry">
 Avsec, Žiga, Vikram Agarwal, Daniel Visentin, and et al. 2021. <em>Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions</em>. Springer Nature. <a href="https://www.nature.com/articles/s41592-021-01252-x">https://www.nature.com/articles/s41592-021-01252-x</a>.
 </div>
@@ -287,25 +299,18 @@ Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span
 </div>
 <div class="footnotes">
 <hr />
-<ol start="45">
-<li id="fn45"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref45" class="footnote-back">↩︎</a></p></li>
-<li id="fn46"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref46" class="footnote-back">↩︎</a></p></li>
-<li id="fn47"><p><span class="citation">Allis et al. (<a href="#ref-allis2015">2015</a>)</span><a href="pitfalls-overview.html#fnref47" class="footnote-back">↩︎</a></p></li>
-<li id="fn48"><p><span class="citation">Schreiber and al (<a href="#ref-jacob2020">2020</a>)</span><a href="pitfalls-overview.html#fnref48" class="footnote-back">↩︎</a></p></li>
-<li id="fn49"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref49" class="footnote-back">↩︎</a></p></li>
+<ol start="50">
 <li id="fn50"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref50" class="footnote-back">↩︎</a></p></li>
-<li id="fn51"><p><span class="citation">Pourhoseingholi and al (<a href="#ref-mo2012">2012</a>)</span><a href="pitfalls-overview.html#fnref51" class="footnote-back">↩︎</a></p></li>
-<li id="fn52"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref52" class="footnote-back">↩︎</a></p></li>
+<li id="fn51"><p><span class="citation">Schreiber and al (<a href="#ref-jacob2020">2020</a>)</span><a href="pitfalls-overview.html#fnref51" class="footnote-back">↩︎</a></p></li>
+<li id="fn52"><p><span class="citation">Pourhoseingholi and al (<a href="#ref-mo2012">2012</a>)</span><a href="pitfalls-overview.html#fnref52" class="footnote-back">↩︎</a></p></li>
 <li id="fn53"><p><span class="citation">Sims and al (<a href="#ref-sims2014">2014</a>)</span><a href="pitfalls-overview.html#fnref53" class="footnote-back">↩︎</a></p></li>
 <li id="fn54"><p><span class="citation">Stegle and al (<a href="#ref-oliver2012">2012</a>)</span><a href="pitfalls-overview.html#fnref54" class="footnote-back">↩︎</a></p></li>
 <li id="fn55"><p><span class="citation">Listgarten and al (<a href="#ref-jen2010">2010</a>)</span><a href="pitfalls-overview.html#fnref55" class="footnote-back">↩︎</a></p></li>
-<li id="fn56"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref56" class="footnote-back">↩︎</a></p></li>
-<li id="fn57"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref57" class="footnote-back">↩︎</a></p></li>
-<li id="fn58"><p><span class="citation">Haque and al (<a href="#ref-muk2014">2014</a>)</span><a href="pitfalls-overview.html#fnref58" class="footnote-back">↩︎</a></p></li>
-<li id="fn59"><p><span class="citation">Haque and al (<a href="#ref-muk2014">2014</a>)</span><a href="pitfalls-overview.html#fnref59" class="footnote-back">↩︎</a></p></li>
-<li id="fn60"><p><span class="citation">Oh et al. (<a href="#ref-oh2020">2020</a>)</span><a href="pitfalls-overview.html#fnref60" class="footnote-back">↩︎</a></p></li>
-<li id="fn61"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="pitfalls-overview.html#fnref61" class="footnote-back">↩︎</a></p></li>
-<li id="fn62"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<li id="fn56"><p><span class="citation">Haque and al (<a href="#ref-muk2014">2014</a>)</span><a href="pitfalls-overview.html#fnref56" class="footnote-back">↩︎</a></p></li>
+<li id="fn57"><p><span class="citation">Haque and al (<a href="#ref-muk2014">2014</a>)</span><a href="pitfalls-overview.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p><span class="citation">Oh et al. (<a href="#ref-oh2020">2020</a>)</span><a href="pitfalls-overview.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p><span class="citation">Avsec et al. (<a href="#ref-avsec2021">2021</a>)</span><a href="pitfalls-overview.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p><span class="citation">Whalen et al. (<a href="#ref-whalen2022">2022</a>)</span><a href="pitfalls-overview.html#fnref60" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -314,7 +319,7 @@ Whalen, Sean, Jacob Schreiber, William Noble, and Katherine Pollard. 2022. <span
         </div>
       </div>
 <a href="software-libraries-for-model-building.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="using-grelu-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="training-grelu-models-and-examining-pitfalls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
