@@ -37,3 +37,6 @@ source venv/bin/activate
 pip install from requirements.txt
 
 pip install -r requirements.txt
+<br>
+
+The tutorials are available in the notebook_tutorials folder and can be run using jupyter.
