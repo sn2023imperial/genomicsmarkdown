@@ -16,11 +16,12 @@ install.packages("reticulate")
 
 library(reticulate)
 <br>
-(for browser)
+(for browser) <br>
 bookdown::serve_book() 
 <br>
-(for pdf)
+(for pdf) <br>
 rmarkdown::render_site(encoding = 'UTF-8')
+<br>
 <br>
 
 The tutorials are available online through the markdown book. However to access them locally, pull the Github Repository and follow these steps:
