@@ -16,8 +16,10 @@ install.packages("reticulate")
 
 library(reticulate)
 <br>
+<br>
 (for browser) <br>
 bookdown::serve_book() 
+<br>
 <br>
 (for pdf) <br>
 rmarkdown::render_site(encoding = 'UTF-8')
